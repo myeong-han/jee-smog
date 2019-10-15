@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<!-- auth : 권한 : 컨테이너(톰캣) -->
+	<Resource
+		name="jdbc/oracledb"
+		type="javax.sql.DataSource"
+		
+		auth="Container"
+		driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@localhost:1521:xe"
+		username="scott"
+		password="tiger"
+	/>
+</Context>

@@ -1,0 +1,139 @@
+@charset 'UTF-8'; 
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+body {
+	font-size: large;
+	font-family: 'Noto Sans KR';
+	background-color: #222222;
+	color: #DDDDDD;
+}
+#all {
+	width: 1280px;
+	margin: auto;
+}
+#title_div {
+	text-align: center;
+}
+img#home_icon {
+	position: absolute;
+	left: 20%;
+	top: 10%;
+	width: 200px;
+}
+
+
+/* nav */
+nav>fieldset>ul {
+	text-align: center;
+	margin-top: 0px; margin-bottom: 0px;
+	padding-left: 30px;
+}
+
+nav>fieldset>ul>li {
+	text-decoration: none;
+	list-style: none;
+	display: inline;
+	float: left;
+}
+.nav_btn {
+	margin-left: 20px; margin-right: 20px;
+	margin-top: 15px;
+	height: 70px;
+}
+#s-hyp {
+	float: right;
+	text-align: right;
+}
+
+#hyp1 {
+	position: relative;
+	top: 35px;
+	right: 30px;
+	font-size: large;
+	font-weight: bold;
+}
+#hyp2 {
+	position: relative;
+	bottom: 100px;
+	right: 30px;
+	font-size: large;
+	font-weight: bold;
+}
+.welcome {
+	font-size: small;
+}
+.hyp>a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+#crop {
+	position: relative;
+	right: 190px;
+}
+#crop>img {
+	width: 100px; height: 100px;
+	overflow: hidden;
+	border-radius: 200px;
+	border: 2px solid #BBBBBB;
+}
+
+
+/* All */
+legend {
+	text-align: center;
+}
+fieldset {
+	margin: auto;
+	border-radius: 2em;
+}
+fieldset#navf {
+	padding: 0px;
+	height: 102px;
+}
+fieldset.f0 {
+	width: 1280px;
+	padding-left: 0px; padding-right: 0px;
+}
+fieldset.f1 {
+	width: 500px;
+	text-align: right;
+	margin-bottom: 30px;
+}
+fieldset.f2 {
+	width: 300px;
+	text-align: center;
+}
+.notnull {
+	color: red;
+	font-size: large;
+}
+input {
+	font-size: medium;
+	border-radius: 30px;
+}
+.input-check {
+	margin: 0px;
+	font-size: small;
+}
+span {
+	font-size: 0.7em;
+}
+button {
+	font-family: 'Noto Sans KR';
+	font-size: medium;
+	border-radius: 30px;
+}
+.login-button {
+	font-size: small;
+}
+.frm_b {
+	text-align: right;
+}
+
+/* login */
+#login-title {
+	margin: 0px;
+}
+.login-text {
+	font-size: small;
+	margin: 0px;
+}
