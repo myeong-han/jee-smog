@@ -10,7 +10,7 @@
 <body>
 <div class="all">
 	<fieldset class="f2">
-	<legend><h2 id="login-title">Log In</h2></legend>4--+
+	<legend><h2 id="login-title">Log In</h2></legend>
 	<form action="" name="frm" method="post">
 		<p class="login-text">ID</p>
 		<input type="text" name="id" placeholder="Insert ID here" /><br />

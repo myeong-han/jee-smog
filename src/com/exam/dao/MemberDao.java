@@ -157,4 +157,43 @@ public class MemberDao {
 		}
 		return memberVO;
 	}
+	
+	public int userCheck(String id, String passwd) {
+		int userCheck = -1;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT passwd ");
+		sb.append("FROM member ");
+		sb.append("WHERE id = ? ");
+		
+		try {
+			con = DBManager.getConnection();
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				if (passwd.equals(rs.getString(1))) {
+					userCheck = 1; // 비밀번호 일치
+				} else {
+					userCheck = 0; // 비밀번호 불일치
+				}
+			} else {
+				userCheck = -1; // 아이디 없음
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt, rs);
+		}
+		
+		return userCheck;
+	}
 }
