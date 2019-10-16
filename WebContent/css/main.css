@@ -62,7 +62,7 @@ nav>fieldset>ul>li {
 	font-size: small;
 }
 .hyp>a {
-	color: #FFFFFF;
+	color: #DDDDDD;
 	text-decoration: none;
 }
 #crop {
@@ -109,6 +109,7 @@ fieldset.f2 {
 input {
 	font-size: medium;
 	border-radius: 30px;
+	background-color: #DDDDDD;
 }
 .input-check {
 	margin: 0px;

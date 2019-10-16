@@ -14,7 +14,7 @@
 		<li><a href="../news/news.jsp"><img class="nav_btn" src="../images/include/news_button.png" alt="news_button.png" /></a></li>
 		<li><a href="../community/community.jsp"><img class="nav_btn" src="../images/include/community_button.png" alt="community_button.png" /></a></li>
 		<li><a href="../gallery/gallery.jsp"><img class="nav_btn" src="../images/include/gallery_button.png" alt="gallery_button.png" /></a></li>
-		<li><a href="#"><img class="nav_btn" src="../images/include/my_page_button.png" alt="my_page_button.png" /></a></li>
+		<li><a href="#"><img class="nav_btn" src="../images/include/support_button.png" alt="support_button.png" /></a></li>
 	</ul>
 	<span id="s-hyp">
 	<%
