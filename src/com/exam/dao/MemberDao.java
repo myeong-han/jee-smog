@@ -92,8 +92,12 @@ public class MemberDao {
 			String[] interesteds = memberVO.getInterested();
 			String str = "";
 			if (interesteds != null) {
+				int i = 0;
 				for (String interested : interesteds) {
-					str += interested + "/";
+					i++;
+					str += interested;
+					if (interesteds.length == i) break;
+					str += "/";
 				}
 			}
 			pstmt.setString(12, str);
