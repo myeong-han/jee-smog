@@ -40,6 +40,8 @@
 		// set : age (param: null, VO: age)	
 		int age = MemberDao.getAgeFromBirthday(memberVO.getBirth());
 		memberVO.setAge(age);
+	} else {
+		memberVO.setAge(0);
 	}
 	// set : reg_date (param: null, VO: regDate)
 	memberVO.setRegDate(new Timestamp(System.currentTimeMillis()));

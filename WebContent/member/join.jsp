@@ -19,7 +19,7 @@
 			<fieldset class="f2">
 				<br />
 				Profile Image<br />
-				<input type="file" name="f_name" /><br /><br />
+				<input type="file" name="f_name" id="input-file" class="input-width" /><br /><br />
 				<span class="notnull">*&nbsp;&nbsp;</span>
 				ID<br />
 				<input type="text" name="id" id="input-id" placeholder="Insert ID here" maxlength="12" /><br />
@@ -34,7 +34,7 @@
 				<input type="text" name="name" id="input-name" placeholder="What's your Nickname?" maxlength="10" /><br />
 				<p id="name-check" class="input-check">&nbsp;</p><br />
 				Birth<br />
-				<input type="date" name="birth_" id="birth" /><br /><br />
+				<input type="date" name="birth_" id="birth" class="input-width" /><br /><br />
 				Gender<br /> <input type="radio" name="gender" value="male" checked /><span>Male</span>
 				<input type="radio" name="gender" value="female" /><span>Female</span>
 				<input type="radio" name="gender" value="other" /><span>Other</span><br /><br />
