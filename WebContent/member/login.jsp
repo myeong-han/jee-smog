@@ -17,8 +17,8 @@
 		<p class="login-text">Password</p>
 		<input type="password" name="passwd" placeholder="Insert Password" /><br />
 		<div class="frm_b">
-			<button type="reset" class="login-button" onclick="frm.id.focus()" >Reset</button>
-			<button type="button" class="login-button" id="sumt" onclick="login();">Submit</button>
+			<button type="button" class="login-button" onclick="window.close()" >Cancel</button>
+			<button type="button" class="login-button" id="sumt" onclick="login()">Submit</button>
 		</div>
 	</form>
 	</fieldset>

@@ -94,7 +94,7 @@ fieldset.f0 {
 	padding-left: 0px; padding-right: 0px;
 }
 fieldset.f1 {
-	width: 500px;
+	width: 900px;
 	text-align: right;
 	margin-bottom: 30px;
 }
@@ -150,6 +150,20 @@ button {
 }
 .frm_b {
 	text-align: right;
+	margin-top: 10px;
+}
+table {
+	border-collapse: collapse;
+	border-color: #DDDDDD;
+}
+table#information {
+	width: 600px;
+	text-align: center;
+	margin-left: auto; margin-right: auto;
+	margin-bottom: 40px;
+}
+img#inf-profile {
+	width: 600px;
 }
 
 /* login */

@@ -28,17 +28,19 @@
 	<jsp:include page="../include/nav.jsp" />
 	<fieldset class="f0">
 		<article>
-			<table border="1">
-			<caption>회원정보</caption>
+		<fieldset class="f1">
+		<legend><h1>Your Information</h1></legend>
+			<table id="information" border="1">
+			<caption><img id="inf-profile" src="../upload/profile/<%=memberVO.getfName()==null?"default.jpg":memberVO.getfName() %>" alt="profileImage" /></caption>
 			<tr><th>Name</th><td><%=memberVO.getName() %></td></tr>
-			<tr><th>Regi-Date</th><td><%=memberVO.getRegDate() %></td></tr>
+			<tr><th>Registered Date</th><td><%=memberVO.getRegDate().toString().split(" ")[0] %></td></tr>
 			<tr><th>Age</th><td><%=memberVO.getAge()!=0?memberVO.getAge():"-" %></td></tr>
 			<tr><th>Gender</th><td><%=memberVO.getGender()!=null?memberVO.getGender():"-" %></td></tr>
 			<tr><th>Address</th><td><%=memberVO.getAddress()!=null?memberVO.getAddress():"-" %></td></tr>
 			<tr><th>TEL</th><td><%=memberVO.getTel()!=null?memberVO.getTel():"-" %></td></tr>
 			<tr><th>Phone Number</th><td><%=memberVO.getMtel()!=null?memberVO.getMtel():"-" %></td></tr>
-			<tr><th>Birth Day</th><td><%=memberVO.getBirth()!=null?memberVO.getBirth():"-" %></td></tr>
-			<tr><th>Interesteds</th><td>
+			<tr><th>Birth Day</th><td><%=memberVO.getBirth()!=null?memberVO.getBirth().toString().split(" ")[0]:"-" %></td></tr>
+			<tr><th>Interested</th><td>
 <% 			
 		if (interesteds.length != 0) {
 			int i = 0;
@@ -56,6 +58,9 @@
 %>
 			</td></tr>
 			</table>
+			<button type="button" onclick="popupLogin('reLogin.jsp?where=update',350,165)">Modify Information</button>
+			<button type="button" onclick="popupLogin('reLogin.jsp?where=delete',350,165)">Drop out</button>
+		</fieldset>
 		</article>
 	</fieldset>
 	<jsp:include page="../include/footer.jsp" />
