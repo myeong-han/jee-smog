@@ -87,6 +87,20 @@ function joinCheck() {
 	}
 }
 
+//UpdateMember: onsubmit 이벤트
+function updateCheck() {
+	if (!isPasswdAvailabled) {
+		alert('Check your Password.');
+		frm.passwd.focus();
+		return false;
+	}
+	if (!isNameAvailabled) {
+		alert('Check your Name.');
+		frm.name.focus();
+		return false;
+	}
+}
+
 // nav>a:"login" 클릭시 호출되는 함수
 function popupLogin(url, sizeX, sizeY) {
 	

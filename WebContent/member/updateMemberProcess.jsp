@@ -20,7 +20,6 @@
 		request, REAL_PATH, MAX_SIZE, "utf-8", new DefaultFileRenamePolicy()
 	);
 	
-	// set : id, passwd, name, gender, email, address, tel, mtel, interested = 총 9개 자료 -->
 	memberVO.setId(multi.getParameter("id"));
 	memberVO.setPasswd(multi.getParameter("passwd"));
 	memberVO.setName(multi.getParameter("name"));
@@ -44,8 +43,6 @@
 	} else {
 		memberVO.setAge(0);
 	}
-	// set : reg_date (param: null, VO: regDate)
-	memberVO.setRegDate(new Timestamp(System.currentTimeMillis()));
 	
 	// set : f_name, f_path, f_uuid (param: f_name, null, null, VO: fName, fPath, fUuid)
 	Enumeration<String> enu = multi.getFileNames();
@@ -61,12 +58,13 @@
 				memberVO.setfUuid(uuid.toString());
 //	 			memberVO.setfPath(fPath);
 				memberVO.setfName(realFileName);
+				// 기존 프로필 이미지 삭제 메소드 필요
 			} else {
 			%><script>
 				alert('It\'s not image format');
 				history.back();
 			</script><%
-				// 여기에 파일삭제 메소드 필요함
+				// 방금 올린 파일 삭제 메소드 필요함
 				return;
 			}
 		}
@@ -74,10 +72,10 @@
 	
 	// memberDao의 insertMember 실행
 	MemberDao memberDao = MemberDao.getInstance();
-	memberDao.insertMember(memberVO);
+	memberDao.updateMember(memberVO);
 %>
 
 <script type="text/javascript">
-	alert('Welcome to SMOG,\nEnjoy!');
+	alert('Member information has been modified.');
 	location.href='../index.jsp';
 </script>

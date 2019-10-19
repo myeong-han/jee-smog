@@ -64,6 +64,45 @@ public class MemberDao {
 		return isDuplicated;
 	}
 	
+	public int userCheck(String id, String passwd) {
+		int userCheck = -1;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT passwd ");
+		sb.append("FROM member ");
+		sb.append("WHERE id = ? ");
+		
+		try {
+			con = DBManager.getConnection();
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				if (passwd.equals(rs.getString(1))) {
+					userCheck = 1; // 비밀번호 일치
+				} else {
+					userCheck = 0; // 비밀번호 불일치
+				}
+			} else {
+				userCheck = -1; // 아이디 없음
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt, rs);
+		}
+		
+		return userCheck;
+	}
+
 	public void insertMember(MemberVO memberVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -162,42 +201,116 @@ public class MemberDao {
 		return memberVO;
 	}
 	
-	public int userCheck(String id, String passwd) {
-		int userCheck = -1;
-		
+	public void updateMember(MemberVO memberVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		
+		StringBuilder sb = new StringBuilder();
+		try {
+			con = DBManager.getConnection();
+			
+			sb.append("UPDATE 	member ");
+			sb.append("SET 		passwd=?,name=?,birth_=?,age=?,gender=?,email=?,address=?, ");
+			sb.append("			tel=?,mtel=?,interested=?,f_uuid=?,f_path=?,f_name=? ");
+			sb.append("WHERE 	id=? ");
+			
+			pstmt = con.prepareStatement(sb.toString());
+			
+			pstmt.setString(1, memberVO.getPasswd());
+			pstmt.setString(2, memberVO.getName());
+			pstmt.setTimestamp(3, memberVO.getBirth());
+			pstmt.setInt(4, memberVO.getAge());
+			pstmt.setString(5, memberVO.getGender());
+			pstmt.setString(6, memberVO.getEmail());
+			pstmt.setString(7, memberVO.getAddress());
+			pstmt.setString(8, memberVO.getTel());
+			pstmt.setString(9, memberVO.getMtel());
+			String[] interesteds = memberVO.getInterested();
+			String str = "";
+			if (interesteds != null) {
+				int i = 0;
+				for (String interested : interesteds) {
+					i++;
+					str += interested;
+					if (interesteds.length == i) break;
+					str += "/";
+				}
+			}
+			pstmt.setString(10, str);
+			pstmt.setString(11, memberVO.getfUuid());
+			pstmt.setString(12, memberVO.getfPath());
+			pstmt.setString(13, memberVO.getfName());
+			
+			pstmt.setString(14, memberVO.getId());
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt);
+		}
+	}
+
+	public void deleteMember(String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "DELETE FROM member WHERE id = ? ";
+		try {
+			con = DBManager.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt);
+		}
+	}
+	
+	public List<MemberVO> getAllMembers() {
+		List<MemberVO> memberList = new ArrayList<>();
+		Connection con = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT passwd ");
+		sb.append("SELECT * ");
 		sb.append("FROM member ");
-		sb.append("WHERE id = ? ");
 		
 		try {
 			con = DBManager.getConnection();
-			pstmt = con.prepareStatement(sb.toString());
-			pstmt.setString(1, id);
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sb.toString());
 			
-			rs = pstmt.executeQuery();
-			
-			if (rs.next()) {
-				if (passwd.equals(rs.getString(1))) {
-					userCheck = 1; // 비밀번호 일치
-				} else {
-					userCheck = 0; // 비밀번호 불일치
+			while(rs.next()) {
+				MemberVO memberVO = new MemberVO();
+				
+				memberVO.setfName(rs.getString("f_name"));
+				memberVO.setId(rs.getString("id"));
+				memberVO.setRegDate(rs.getTimestamp("reg_date"));
+				memberVO.setName(rs.getString("name"));
+				memberVO.setBirth(rs.getTimestamp("birth_"));
+				memberVO.setGender(rs.getString("gender"));
+				memberVO.setEmail(rs.getString("email"));
+				if (rs.getString("interested")!=null) {
+					String[] interesteds = rs.getString("interested").split("/");
+					memberVO.setInterested(interesteds);
 				}
-			} else {
-				userCheck = -1; // 아이디 없음
+				memberVO.setWrites(0);
+				
+				memberList.add(memberVO);
 			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			DBManager.close(con, pstmt, rs);
+			DBManager.close(con, stmt, rs);
 		}
 		
-		return userCheck;
+		return memberList;
 	}
 }

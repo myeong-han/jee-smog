@@ -17,6 +17,7 @@
 		<p class="login-text">Password</p>
 		<input type="password" name="passwd" placeholder="Insert Password" /><br />
 		<div class="frm_b">
+			<p id="rmm" class="login-text"><input type="checkbox" name="rememberMe" value="true" />Remember Me</p>
 			<button type="button" class="login-button" onclick="window.close()" >Cancel</button>
 			<button type="button" class="login-button" id="sumt" onclick="login()">Submit</button>
 		</div>

@@ -165,6 +165,12 @@ table#information {
 img#inf-profile {
 	width: 600px;
 }
+table#m_information {
+	width: 900px;
+	text-align: center;
+	margin-left: auto; margin-right: auto;
+	margin-bottom: 40px;
+}
 
 /* login */
 #login-title {
@@ -173,4 +179,8 @@ img#inf-profile {
 .login-text {
 	font-size: small;
 	margin: 0px;
+}
+#rmm {
+	float: left;
+    margin-top: 6px;
 }

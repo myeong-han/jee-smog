@@ -20,6 +20,7 @@ public class MemberVO {
 	private String fUuid;
 	private String fPath;
 	private String fName;
+	private int writes;
 	
 	public String getId() {
 		return id;
@@ -112,12 +113,48 @@ public class MemberVO {
 	public void setfName(String fName) {
 		this.fName = fName;
 	}
+	public int getWrites() {
+		return writes;
+	}
+	public void setWrites(int writes) {
+		this.writes = writes;
+	}
 	@Override
 	public String toString() {
-		return "MemberVO [id=" + id + ", passwd=" + passwd + ", name=" + name + ", regDate=" + regDate + ", age=" + age
-				+ ", gender=" + gender + ", email=" + email + ", address=" + address + ", tel=" + tel + ", mtel=" + mtel
-				+ ", birth=" + birth + ", interested=" + Arrays.toString(interested) + ", fUuid=" + fUuid + ", fPath="
-				+ fPath + ", fName=" + fName + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("MemberVO [id=");
+		builder.append(id);
+		builder.append(", passwd=");
+		builder.append(passwd);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", regDate=");
+		builder.append(regDate);
+		builder.append(", age=");
+		builder.append(age);
+		builder.append(", gender=");
+		builder.append(gender);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", address=");
+		builder.append(address);
+		builder.append(", tel=");
+		builder.append(tel);
+		builder.append(", mtel=");
+		builder.append(mtel);
+		builder.append(", birth=");
+		builder.append(birth);
+		builder.append(", interested=");
+		builder.append(Arrays.toString(interested));
+		builder.append(", fUuid=");
+		builder.append(fUuid);
+		builder.append(", fPath=");
+		builder.append(fPath);
+		builder.append(", fName=");
+		builder.append(fName);
+		builder.append(", writes=");
+		builder.append(writes);
+		builder.append("]");
+		return builder.toString();
 	}
-
 }

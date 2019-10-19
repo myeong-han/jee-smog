@@ -30,7 +30,7 @@
 				<input type="password" name="confilm" id="confilm-passwd" class="cp" placeholder="Confilm it" maxlength="15" /><br />
 				<p id="passwd-check" class="input-check">&nbsp;</p><br />
 				<span class="notnull">*&nbsp;&nbsp;</span>
-				Nickname<br />
+				Nick Name<br />
 				<input type="text" name="name" id="input-name" placeholder="What's your Nickname?" maxlength="10" /><br />
 				<p id="name-check" class="input-check">&nbsp;</p><br />
 				Birth<br />
@@ -40,13 +40,13 @@
 				<input type="radio" name="gender" value="other" /><span>Other</span><br /><br />
 				E-Mail<br />
 				<input type="email" name="email" placeholder="example@examail.com" /><br /><br />
-				Address <br />
+				Address<br />
 				<input type="text" name="address" placeholder="Insert your home address" /><br /><br />
-				Tel <br />
+				Tel<br />
 				<input type="tel" name="tel" placeholder="Telephone number" /><br /><br />
-				Mobile <br />
+				Phone Number<br />
 				<input type="tel" name="mtel" placeholder="Mobilephone number" /><br /><br />
-				Choose Interested <br />
+				Choose Interested<br />
 				<input type="checkbox" name="interested" value="vape" checked /><span>Vape</span>
 				<input type="checkbox" name="interested" value="motocycle" /><span>Motocycle</span>
 				<input type="checkbox" name="interested" value="cycle" /><span>Cycle</span><br />

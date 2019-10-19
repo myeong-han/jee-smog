@@ -32,9 +32,9 @@
 		<legend><h1>Your Information</h1></legend>
 			<table id="information" border="1">
 			<caption><img id="inf-profile" src="../upload/profile/<%=memberVO.getfName()==null?"default.jpg":memberVO.getfName() %>" alt="profileImage" /></caption>
-			<tr><th>Name</th><td><%=memberVO.getName() %></td></tr>
 			<tr><th>Registered Date</th><td><%=memberVO.getRegDate().toString().split(" ")[0] %></td></tr>
-			<tr><th>Age</th><td><%=memberVO.getAge()!=0?memberVO.getAge():"-" %></td></tr>
+			<tr><th>Nick Name</th><td><%=memberVO.getName() %></td></tr>
+			<tr><th>Age</th><td>만 <%=memberVO.getAge()!=0?memberVO.getAge():"-" %>세</td></tr>
 			<tr><th>Gender</th><td><%=memberVO.getGender()!=null?memberVO.getGender():"-" %></td></tr>
 			<tr><th>Address</th><td><%=memberVO.getAddress()!=null?memberVO.getAddress():"-" %></td></tr>
 			<tr><th>TEL</th><td><%=memberVO.getTel()!=null?memberVO.getTel():"-" %></td></tr>
