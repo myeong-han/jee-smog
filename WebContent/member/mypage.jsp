@@ -20,7 +20,6 @@
 	MemberVO memberVO = new MemberVO();
 	MemberDao memberDao = MemberDao.getInstance();
 	memberVO = memberDao.getMember(id);
-	String[] interesteds = memberVO.getInterested();
 %>
 <body>
 	<div id="all">
@@ -32,17 +31,18 @@
 		<legend><h1>Your Information</h1></legend>
 			<table id="information" border="1">
 			<caption><img id="inf-profile" src="../upload/profile/<%=memberVO.getfName()==null?"default.jpg":memberVO.getfName() %>" alt="profileImage" /></caption>
-			<tr><th>Registered Date</th><td><%=memberVO.getRegDate().toString().split(" ")[0] %></td></tr>
-			<tr><th>Nick Name</th><td><%=memberVO.getName() %></td></tr>
-			<tr><th>Age</th><td>만 <%=memberVO.getAge()!=0?memberVO.getAge():"-" %>세</td></tr>
-			<tr><th>Gender</th><td><%=memberVO.getGender()!=null?memberVO.getGender():"-" %></td></tr>
-			<tr><th>Address</th><td><%=memberVO.getAddress()!=null?memberVO.getAddress():"-" %></td></tr>
-			<tr><th>TEL</th><td><%=memberVO.getTel()!=null?memberVO.getTel():"-" %></td></tr>
-			<tr><th>Phone Number</th><td><%=memberVO.getMtel()!=null?memberVO.getMtel():"-" %></td></tr>
-			<tr><th>Birth Day</th><td><%=memberVO.getBirth()!=null?memberVO.getBirth().toString().split(" ")[0]:"-" %></td></tr>
-			<tr><th>Interested</th><td>
+			<tr><th class="board-th2">Registered Date</th><td><%=memberVO.getRegDate().toString().split(" ")[0] %></td></tr>
+			<tr><th class="board-th2">Nick Name</th><td><%=memberVO.getName() %></td></tr>
+			<tr><th class="board-th2">Age</th><td>만 <%=memberVO.getAge()!=0?memberVO.getAge():"-" %>세</td></tr>
+			<tr><th class="board-th2">Gender</th><td><%=memberVO.getGender()!=null?memberVO.getGender():"-" %></td></tr>
+			<tr><th class="board-th2">Address</th><td><%=memberVO.getAddress()!=null?memberVO.getAddress():"-" %></td></tr>
+			<tr><th class="board-th2">TEL</th><td><%=memberVO.getTel()!=null?memberVO.getTel():"-" %></td></tr>
+			<tr><th class="board-th2">Phone Number</th><td><%=memberVO.getMtel()!=null?memberVO.getMtel():"-" %></td></tr>
+			<tr><th class="board-th2">Birth Day</th><td><%=memberVO.getBirth()!=null?memberVO.getBirth().toString().split(" ")[0]:"-" %></td></tr>
+			<tr><th class="board-th2">Interested</th><td>
 <% 			
-		if (interesteds.length != 0) {
+		String[] interesteds = null;
+		if ((interesteds = memberVO.getInterested()) != null) {
 			int i = 0;
 			for(String interest : interesteds) {
 				i++;

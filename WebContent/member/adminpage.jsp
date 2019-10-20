@@ -13,7 +13,7 @@
 <%
 	String id = (String)session.getAttribute("id");
 	
-	if (id == null) {
+	if (id == null || !id.equals("admin")) {
 		response.sendRedirect("../index.jsp");
 		return;
 	}
@@ -30,7 +30,7 @@
 		<fieldset class="f1">
 		<legend><h1>List of Members</h1></legend>
 			<table id="m_information" border="1">
-			<tr>
+			<tr class="board-th">
 				<th>Profile</th><th>Reg_date</th><th>ID</th><th>Name</th><th>Birth</th><th>Gender</th><th>Email</th><th>Writes</th>
 			</tr>
 <%

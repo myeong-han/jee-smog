@@ -5,7 +5,7 @@
 	String id = (String)session.getAttribute("id");
 	MemberDao memberDao = MemberDao.getInstance();
 	memberDao.deleteMember(id);
-	
+	// 파일삭제 메소드 필요
 	session.invalidate();
 %>
 <script>

@@ -15,16 +15,18 @@
 	MemberDao memberDao = MemberDao.getInstance();
 	memberVO = memberDao.getMember(id);
 	
-	String[] inters = memberVO.getInterested();
+	String[] inters = null;
 	String[] checker = {"","","","",""};
-	int i = 0;
-	for (String inter : inters) {
-		switch(inter) {
-			case "vape" : checker[0] = "checked"; break;
-			case "motocycle" : checker[1] = "checked"; break;
-			case "cycle" : checker[2] = "checked"; break;
-			case "camera" : checker[3] = "checked"; break;
-			case "fishing_gear" : checker[4] = "checked"; break;
+	if ((inters = memberVO.getInterested()) != null) {
+		int i = 0;
+		for (String inter : inters) {
+			switch(inter) {
+				case "vape" : 		checker[0] = "checked"; break;
+				case "motocycle" : 	checker[1] = "checked"; break;
+				case "cycle" : 		checker[2] = "checked"; break;
+				case "camera" : 	checker[3] = "checked"; break;
+				case "fishing_gear" : checker[4] = "checked"; break;
+			}
 		}
 	}
 %>
@@ -43,16 +45,16 @@
 				<input type="file" name="f_name" id="input-file" class="input-width" /><br /><br />
 				<span class="notnull">*&nbsp;&nbsp;</span>
 				ID<br />
-				<input type="text" name="id" id="input-id" placeholder="Insert ID here" maxlength="12" value="<%=memberVO.getId() %>" readonly /><br />
+				<input type="text" name="id" id="input-id" maxlength="12" value="<%=memberVO.getId() %>" readonly /><br />
 				<p id="id-check" class="input-check">&nbsp;</p><br />
 				<span class="notnull">*&nbsp;&nbsp;</span>
 				Password<br />
-				<input type="password" name="passwd" id="input-passwd" class="cp" placeholder="Insert Password" maxlength="15" /><br />
+				<input type="password" name="passwd" id="input-passwd" class="cp" placeholder="Insert new Password" maxlength="15" /><br />
 				<input type="password" name="confilm" id="confilm-passwd" class="cp" placeholder="Confilm it" maxlength="15" /><br />
 				<p id="passwd-check" class="input-check">&nbsp;</p><br />
 				<span class="notnull">*&nbsp;&nbsp;</span>
 				Nick Name<br />
-				<input type="text" name="name" id="input-name" placeholder="What's your Nickname?" maxlength="10" value="<%=memberVO.getName() %>" /><br />
+				<input type="text" name="name" id="input-name" placeholder="Insert new name" maxlength="10" value="<%=memberVO.getName() %>" /><br />
 				<p id="name-check" class="input-check">&nbsp;</p><br />
 				Birth<br />
 				<input type="date" name="birth_" id="birth" class="input-width" value="<%=memberVO.getBirth()!=null?memberVO.getBirth().toString().split(" ")[0]:"" %>" /><br /><br />

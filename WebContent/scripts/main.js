@@ -2,6 +2,7 @@
 var isIdAvailabled = false;
 var isPasswdAvailabled = false;
 var isNameAvailabled = false;
+var isNotChanged = true;
 
 // Join: id 중복체크
 $('#input-id').keyup(function () {
@@ -66,6 +67,7 @@ function nameCheck() {
 		$('#name-check').html('Available').css('color', 'green');
 		isNameAvailabled = true;
 	}
+	isNotChanged = false;
 }
 
 // Join: onsubmit 이벤트
@@ -94,7 +96,7 @@ function updateCheck() {
 		frm.passwd.focus();
 		return false;
 	}
-	if (!isNameAvailabled) {
+	if (!isNameAvailabled && !isNotChanged) {
 		alert('Check your Name.');
 		frm.name.focus();
 		return false;

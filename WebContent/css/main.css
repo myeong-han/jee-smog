@@ -184,3 +184,15 @@ table#m_information {
 	float: left;
     margin-top: 6px;
 }
+
+/* Content */
+.board-th {
+	background-color: #333333;
+}
+.board-th2 {
+	background-color: #333333;
+	width: 150px;
+}
+#subject {
+	width: 500px;
+}
