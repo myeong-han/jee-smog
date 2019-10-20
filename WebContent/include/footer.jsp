@@ -2,6 +2,6 @@
     pageEncoding="UTF-8"%>
 <footer>
 	<fieldset class="f0">
-		<h1>footer</h1>
+		<div id="footer-email"><p>codfact@naver.com</p></div>
 	</fieldset>
 </footer>

@@ -106,6 +106,11 @@ fieldset.f2 {
 	color: red;
 	font-size: large;
 }
+select {
+	font-size: medium;
+	border-radius: 30px;
+	background-color: #EEEEEE;
+}
 input {
 	font-size: medium;
 	border-radius: 30px;
@@ -169,7 +174,7 @@ table#m_information {
 	width: 900px;
 	text-align: center;
 	margin-left: auto; margin-right: auto;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 }
 
 /* login */
@@ -193,6 +198,54 @@ table#m_information {
 	background-color: #333333;
 	width: 150px;
 }
-#subject {
+.subject {
 	width: 500px;
+}
+.small-size {
+	width: 50px;
+}
+.middle-size {
+	width: 80px;
+}
+td.subject {
+	text-align: left;
+	padding-left: 10px;
+}
+.content-tr:hover {
+	background-color: #666666;
+	color: #111111;
+}
+div#page_control {
+	text-align: center;
+}
+#page_control>a {
+	text-decoration: none;
+	color: #999999;
+}
+#page_control>b>a {
+	text-decoration: none;
+	color: #DDDDDD;
+}
+#search-form {
+	text-align: center;
+	padding-left: 50px;
+}
+#search-form>div {
+	float: right;
+}
+
+tr#content-page {
+	height: 900px;
+	background-color: #444444;
+}
+
+
+/*footer*/
+#footer-email {
+	text-align: right;
+	padding-right: 30px;
+}
+#footer-email>p {
+	margin-bottom: 0px;
+	font-size: 13px;
 }

@@ -103,7 +103,7 @@ function updateCheck() {
 	}
 }
 
-// nav>a:"login" 클릭시 호출되는 함수
+// nav>a:"login" 클릭시 등 팝업창 호출되는 함수
 function popupLogin(url, sizeX, sizeY) {
 	
 	var name = 'login';
@@ -116,4 +116,12 @@ function popupLogin(url, sizeX, sizeY) {
 	option += 'width='+sizeX+', height='+sizeY+', left='+positionX+', top='+positionY;
 	
 	window.open(url, name, option); 
+}
+
+// board Search시 submit 이벤트로 호출되는 함수
+function checkSearch() {
+	if (sfrm.what_s.value == 'un') {
+		alert('Choose title or writer');
+		return false;
+	}
 }

@@ -11,10 +11,29 @@
 <link rel="stylesheet" href="../css/main.css" />
 </head>
 <%
-	String id = (String)session.getAttribute("id");
+	request.setCharacterEncoding("utf-8");
+	
+	String search = request.getParameter("search");
+	String whatS = request.getParameter("what_s");
+	if (search == null || search.equals("")) {
+		search = "";
+		whatS = "";
+	}
+	
+	String strPageNum = request.getParameter("pageNum");
+	if (strPageNum == null) {
+		strPageNum = "1";
+	}
+	int pageNum = Integer.parseInt(strPageNum);
 	
 	BoardDao boardDao = BoardDao.getInstance();
-	List<BoardVO> boardList = boardDao.getBoards(1);
+	
+	int pageSize = 20;
+	int startRow = (pageNum-1) * pageSize + 1;
+	int count = boardDao.getBoardCount(whatS, search);
+	int boardnum = 1;
+	
+	List<BoardVO> boardList = boardDao.getBoards(boardnum, startRow, pageSize, whatS, search);
 %>
 <body>
 	<div id="all">
@@ -26,23 +45,100 @@
 		<legend><h1>Community</h1></legend>
 			<table id="m_information" border="1">
 			<tr class="board-th">
-				<th>Num</th><th id="subject">Subject</th><th>Name</th><th>Date</th><th>Reads</th>
+				<th>No</th><th class="subject">Title</th><th>Writer</th><th>Date</th><th>Reads</th>
 			</tr>
 <%
+	if (count > 0) {
 		for (BoardVO boardVO : boardList) {
 %>
-			<tr>
-				<th><%=boardVO.getNum() %></th>
-				<th><%=boardVO.getSubject() %></th>
-				<th><%=boardVO.getUsername() %></th>
-				<th><%=boardVO.getRegDate().toString().split(" ")[0] %></th>
-				<th><%=boardVO.getReadcount() %></th>
+			<tr class="content-tr" onclick="location.href='../main/content.jsp?boardnum=<%=boardnum %>&num=<%=boardVO.getNum()%>&pageNum=<%=pageNum%>'">
+				<td><%=boardVO.getNum() %></td>
+				<td class="subject"><%=boardVO.getSubject() %></td>
+				<td><%=boardVO.getUsername() %></td>
+				<td><%=boardVO.getRegDate().toString().split(" ")[0] %></td>
+				<td><%=boardVO.getReadcount() %></td>
 			</tr>
 <%
 		}
+	} else {
+%>
+			<tr>
+				<td colspan="5">No Articles</td>
+			</tr>
+<%
+	}
 %>
 			</table>
-			<button type="button" onclick="popupLogin('reLogin.jsp?where=delete',350,165)">Drop out</button>
+			
+			<div id="page_control">
+<%
+	if (count > 0) {
+		int pageCount = count/pageSize + (count%pageSize==0 ? 0:1);
+		
+		// 페이지블록 크기 설정
+		int pageBlock = 5;
+		
+		int startPage = (pageNum-1)/pageBlock * pageBlock + 1;
+		
+		// 끝페이지 번호 구하기
+		int endPage = startPage + pageBlock-1;
+		endPage = endPage > pageCount ? pageCount : endPage;
+		
+		// 이전은 스타트페이지가 다음 화면일 때 부터 나타남
+		if (startPage != 1){
+			%><a href="community.jsp?pageNum=1&search=<%=search%>">[First]</a>
+			<a href="community.jsp?pageNum=<%=startPage-pageBlock %>&search=<%=search%>">[Back]</a><%
+		}
+		
+		// 블록의 크기만큼 계산된 스타트페이지와 엔드페이지만큼 반복됨
+		for (int i = startPage; i<=endPage; i++){
+			if (i == pageNum) {
+%>
+			<b>
+				<a href="community.jsp?pageNum=<%=i%>&search=<%=search%>">[<%=i %>]</a>
+			</b>
+<%
+			} else {
+%>
+			<a href="community.jsp?pageNum=<%=i%>&search=<%=search%>"><%=i %></a>
+<%
+			}
+		}
+		
+		// 다음은 엔드페이지가 페이지카운트와 같을때 나타나지 않음
+		if (endPage != pageCount){
+%>
+			<a href="community.jsp?pageNum=<%=endPage+1 %>&search=<%=search%>">[Next]</a>
+			<a href="community.jsp?pageNum=<%=pageCount %>&search=<%=search%>">[Last]</a>
+<%
+		}
+	}
+%>
+			</div>
+			<form name="sfrm" id="search-form" action="community.jsp" method="get" onsubmit="return checkSearch()">
+				<select name="what_s" id="input-what">
+<%
+				if (whatS == null || whatS.equals("")) {
+%>
+					<option value="un" disabled selected>Search to</option>
+					<option value="subject">Title</option>
+					<option value="username">Writer</option>
+<%
+				} else {
+%>
+					<option value="un" disabled>Search to</option>
+					<option value="subject" <%=whatS.equals("subject")?"selected":"" %>>Title</option>
+					<option value="username" <%=whatS.equals("username")?"selected":"" %>>Writer</option>
+<%
+				}
+%>
+				</select>
+				<input type="text" name="search" value="<%=search==null?"":search %>" class="input_box" />
+				<button type="submit">Search</button>
+				<div>
+				<button type="button" onclick="location.href='../main/write.jsp'">Write</button>
+				</div>
+			</form>
 		</fieldset>
 		</article>
 	</fieldset>

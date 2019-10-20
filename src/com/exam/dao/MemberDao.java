@@ -155,7 +155,7 @@ public class MemberDao {
 	}
 	
 	public MemberVO getMember(String id) {
-		MemberVO memberVO = null;
+		MemberVO memberVO = new MemberVO();
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -172,7 +172,6 @@ public class MemberDao {
 			
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				memberVO = new MemberVO();
 				memberVO.setId(rs.getString("id"));
 				memberVO.setPasswd(rs.getString("passwd"));
 				memberVO.setName(rs.getString("name"));
@@ -194,7 +193,7 @@ public class MemberDao {
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			memberVO.setfName(null);
 		} finally {
 			DBManager.close(con, pstmt, rs);
 		}
@@ -270,20 +269,46 @@ public class MemberDao {
 		}
 	}
 	
-	public List<MemberVO> getAllMembers() {
+	public List<MemberVO> getAllMembers(int startRow, int pageSize, String search) {
 		List<MemberVO> memberList = new ArrayList<>();
+		int endRow = startRow + pageSize - 1;
+		
 		Connection con = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT * ");
-		sb.append("FROM member ");
 		
 		try {
 			con = DBManager.getConnection();
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(sb.toString());
+			
+			sb.append("SELECT aa.* ");
+			sb.append("FROM ( ");
+			sb.append("    SELECT ROWNUM AS rnum, a.* ");
+			sb.append("    FROM ( ");
+			sb.append("        SELECT * ");
+			sb.append("        FROM member ");
+		// 검색어 search가 있을때는 검색조건절 where를 추가함
+		if (!(search == null || search.equals(""))) {
+			sb.append("        WHERE id LIKE ? ");
+		}
+			sb.append("        ORDER BY reg_date DESC");
+			sb.append("    ) a ");
+			sb.append("    WHERE ROWNUM <= ? ");
+			sb.append(") aa ");
+			sb.append("WHERE rnum >= ?");
+			
+			pstmt = con.prepareStatement(sb.toString());
+		if (!(search==null || search.equals(""))) {
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setInt(2, endRow);
+			pstmt.setInt(3, startRow);
+		} else {
+			pstmt.setInt(1, endRow);
+			pstmt.setInt(2, startRow);
+		}
+			rs = pstmt.executeQuery();
+			
 			
 			while(rs.next()) {
 				MemberVO memberVO = new MemberVO();
@@ -299,7 +324,7 @@ public class MemberDao {
 					String[] interesteds = rs.getString("interested").split("/");
 					memberVO.setInterested(interesteds);
 				}
-				memberVO.setWrites(0);
+				memberVO.setWrites(0); // 수정필요
 				
 				memberList.add(memberVO);
 			}
@@ -308,9 +333,46 @@ public class MemberDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			DBManager.close(con, stmt, rs);
+			DBManager.close(con, pstmt, rs);
 		}
 		
 		return memberList;
+	}
+	
+	public int getMemberCount(String search) {
+		int count = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		
+		try {
+			con = DBManager.getConnection();
+			
+			sql = "SELECT count(*) FROM member ";
+			
+		if (!(search == null || search.equals(""))) {
+			sql += "WHERE id LIKE ? ";
+		}
+			
+			pstmt = con.prepareStatement(sql);
+			
+		if (!(search == null || search.equals(""))) {
+			pstmt.setString(1, "%"+search+"%");
+		}
+			
+			rs = pstmt.executeQuery();
+			rs.next();
+			
+			count = rs.getInt(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt, rs);
+		}
+		
+		return count;
 	}
 }
