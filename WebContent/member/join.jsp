@@ -27,7 +27,7 @@
 				<span class="notnull">*&nbsp;&nbsp;</span>
 				Password<br />
 				<input type="password" name="passwd" id="input-passwd" class="cp" placeholder="Insert Password" maxlength="15" /><br />
-				<input type="password" name="confilm" id="confilm-passwd" class="cp" placeholder="Confilm it" maxlength="15" /><br />
+				<input type="password" name="confilm" id="confilm-passwd" class="cp" placeholder="Confirm it" maxlength="15" /><br />
 				<p id="passwd-check" class="input-check">&nbsp;</p><br />
 				<span class="notnull">*&nbsp;&nbsp;</span>
 				Nick Name<br />
