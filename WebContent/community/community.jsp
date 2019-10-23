@@ -86,8 +86,10 @@
 		
 		// 이전은 스타트페이지가 다음 화면일 때 부터 나타남
 		if (startPage != 1){
-			%><a href="community.jsp?pageNum=1&search=<%=search%>">[First]</a>
-			<a href="community.jsp?pageNum=<%=startPage-pageBlock %>&search=<%=search%>">[Back]</a><%
+%>
+			<a href="community.jsp?pageNum=1&search=<%=search%>">[First]</a>
+			<a href="community.jsp?pageNum=<%=startPage-pageBlock %>&search=<%=search%>">[Back]</a>
+<%
 		}
 		
 		// 블록의 크기만큼 계산된 스타트페이지와 엔드페이지만큼 반복됨
