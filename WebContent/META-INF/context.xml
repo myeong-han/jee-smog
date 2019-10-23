@@ -2,23 +2,13 @@
 <Context>
 	<!-- auth : 권한 : 컨테이너(톰캣) -->
 	<Resource
-		name="jdbc/oracledb"
-		type="javax.sql.DataSource"
-		
-		auth="Container"
-		driverClassName="oracle.jdbc.OracleDriver"
-		url="jdbc:oracle:thin:@localhost:1521:xe"
-		username="scott"
-		password="tiger"
-	/>
-	<Resource
 		name="jdbc/mysqldb"
 		type="javax.sql.DataSource"
 		auth="Container"
 		
 		driverClassName="com.mysql.cj.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/jspdb?useUnicode=true&amp;characterEncoding=utf8&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=Asia/Seoul"
-		username="jspid"
-		password="jsppass"
+		url="jdbc:mysql://localhost:3306/smog?useUnicode=true&amp;characterEncoding=utf8&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=Asia/Seoul"
+		username="jsp_admin"
+		password="jsp_admin"
 	/>
 </Context>

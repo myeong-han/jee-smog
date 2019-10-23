@@ -28,7 +28,7 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sql = "SELECT MAX(num) FROM board ";
+			sql = "SELECT MAX(num) FROM boards ";
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
 			
@@ -54,7 +54,7 @@ public class BoardDao {
 		
 		try {
 			con = DBManager.getConnection();
-			sb.append("INSERT INTO board ");
+			sb.append("INSERT INTO boards ");
 			sb.append("(num, boardnum, username, passwd, subject, content, ");
 			sb.append(" readcount, ip, reg_date, re_ref, re_lev, re_seq) ");
 			sb.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?) ");
@@ -96,7 +96,7 @@ public class BoardDao {
 			con = DBManager.getConnection();
 			
 			sb.append("SELECT * ");
-			sb.append("FROM board ");
+			sb.append("FROM boards ");
 			sb.append("WHERE num = ?");
 			
 			pstmt = con.prepareStatement(sb.toString());
@@ -130,7 +130,6 @@ public class BoardDao {
 	
 	public List<BoardVO> getBoards(int boardnum, int startRow, int pageSize, String whatS, String search) {
 		List<BoardVO> boardList = new ArrayList<>();
-		int endRow = startRow + pageSize - 1;
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -141,34 +140,26 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sb.append("SELECT aa.* ");
-			sb.append("FROM ( ");
-			sb.append("    SELECT ROWNUM AS rnum, a.* ");
-			sb.append("    FROM ( ");
-			sb.append("        SELECT * ");
-			sb.append("        FROM board ");
-			sb.append("		   WHERE boardnum = ? ");
-		// 검색어 search가 있을때는 검색조건절 where를 추가함
+			sb.append("SELECT * ");
+			sb.append("FROM boards ");
+			sb.append("WHERE boardnum = ? ");
 		if (!(search == null || search.equals(""))) {
-			sb.append("        AND ");
-			sb.append(whatS.equals("subject")?"subject":"username");
-			sb.append(" 	   LIKE ? ");
+			sb.append("AND ");
+			sb.append(whatS.equals("subject")?"subject ":"username ");
+			sb.append("LIKE ? ");
 		}
-			sb.append("        ORDER BY re_ref DESC, re_seq ");
-			sb.append("    ) a ");
-			sb.append("    WHERE ROWNUM <= ? ");
-			sb.append(") aa ");
-			sb.append("WHERE rnum >= ?");
+			sb.append("ORDER BY re_ref DESC, re_seq ");
+			sb.append("LIMIT ? OFFSET ? ");
 			
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, boardnum);
 		if (!(search==null || search.equals(""))) {
 			pstmt.setString(2, "%"+search+"%");
-			pstmt.setInt(3, endRow);
-			pstmt.setInt(4, startRow);
+			pstmt.setInt(3, pageSize);
+			pstmt.setInt(4, startRow-1);
 		} else {
-			pstmt.setInt(2, endRow);
-			pstmt.setInt(3, startRow);
+			pstmt.setInt(2, pageSize);
+			pstmt.setInt(3, startRow-1);
 		}
 			rs = pstmt.executeQuery();
 			
@@ -210,20 +201,17 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sql = "SELECT count(*) FROM board ";
-			
+			sql = "SELECT count(*) FROM boards ";	
 		if (!(search == null || search.equals(""))) {
 			sql += "WHERE ";
-			sql += whatS=="subject"?"subject":"username"; 
-			sql += " LIKE ? ";
+			sql += whatS.equals("subject")?"subject ":"username "; 
+			sql += "LIKE ? ";
 		}
 			
 			pstmt = con.prepareStatement(sql);
-			
 		if (!(search == null || search.equals(""))) {
 			pstmt.setString(1, "%"+search+"%");
 		}
-			
 			rs = pstmt.executeQuery();
 			rs.next();
 			
