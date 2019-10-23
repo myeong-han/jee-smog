@@ -1,6 +1,7 @@
 package com.exam.dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,12 +12,23 @@ import javax.sql.DataSource;
 
 class DBManager {
 
+//	public static Connection getConnection() throws Exception {
+//		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//		String user = "scott";
+//		String password = "tiger";
+//		Connection con = null;
+//		
+//		Class.forName("oracle.jdbc.OracleDriver");
+//		con =  DriverManager.getConnection(url, user, password);
+//		return con;
+//	}
+	
 	public static Connection getConnection() throws Exception {
 		Connection con = null;
 		
 		Context context = new InitialContext();
 		// ds : 커넥션을 미리 일정갯수 보유함
-		DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/mysqldb");
+		DataSource ds = (DataSource)context.lookup("java:/comp/env/jdbc/oracledb");
 		con = ds.getConnection(); // 커넥션 한개 빌려오기
 		
 		return con;

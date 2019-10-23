@@ -45,7 +45,7 @@ public class MemberDao {
 		try {
 			con = DBManager.getConnection();
 			sql += "SELECT * ";
-			sql += "FROM members ";
+			sql += "FROM member ";
 			sql += "WHERE id=? ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -73,7 +73,7 @@ public class MemberDao {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT passwd ");
-		sb.append("FROM members ");
+		sb.append("FROM member ");
 		sb.append("WHERE id = ? ");
 		
 		try {
@@ -110,7 +110,7 @@ public class MemberDao {
 		
 		try {
 			con = DBManager.getConnection();
-			sql += "INSERT INTO members ";
+			sql += "INSERT INTO member ";
 			sql += "(id, passwd, name, reg_date, age, gender, email, address, ";
 			sql	+= " tel, mtel, birth_, interested, f_uuid, f_path, f_name) ";
 			sql += "VALUES ";
@@ -165,7 +165,7 @@ public class MemberDao {
 		try {
 			con = DBManager.getConnection();
 			sql += "SELECT * ";
-			sql += "FROM members ";
+			sql += "FROM member ";
 			sql += "WHERE id = ? ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -208,7 +208,7 @@ public class MemberDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sb.append("UPDATE 	members ");
+			sb.append("UPDATE 	member ");
 			sb.append("SET 		passwd=?,name=?,birth_=?,age=?,gender=?,email=?,address=?, ");
 			sb.append("			tel=?,mtel=?,interested=?,f_uuid=?,f_path=?,f_name=? ");
 			sb.append("WHERE 	id=? ");
@@ -254,7 +254,7 @@ public class MemberDao {
 	public void deleteMember(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String sql = "DELETE FROM members WHERE id = ? ";
+		String sql = "DELETE FROM member WHERE id = ? ";
 		try {
 			con = DBManager.getConnection();
 			pstmt = con.prepareStatement(sql);
@@ -271,6 +271,7 @@ public class MemberDao {
 	
 	public List<MemberVO> getAllMembers(int startRow, int pageSize, String search) {
 		List<MemberVO> memberList = new ArrayList<>();
+		int endRow = startRow + pageSize - 1;
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -281,23 +282,30 @@ public class MemberDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sb.append("SELECT * ");
-			sb.append("FROM members ");
+			sb.append("SELECT aa.* ");
+			sb.append("FROM ( ");
+			sb.append("    SELECT ROWNUM AS rnum, a.* ");
+			sb.append("    FROM ( ");
+			sb.append("        SELECT * ");
+			sb.append("        FROM member ");
 		// 검색어 search가 있을때는 검색조건절 where를 추가함
 		if (!(search == null || search.equals(""))) {
-			sb.append("WHERE id LIKE ? ");
+			sb.append("        WHERE id LIKE ? ");
 		}
-			sb.append("ORDER BY reg_date DESC ");
-			sb.append("LIMIT ? OFFSET ? ");
+			sb.append("        ORDER BY reg_date DESC");
+			sb.append("    ) a ");
+			sb.append("    WHERE ROWNUM <= ? ");
+			sb.append(") aa ");
+			sb.append("WHERE rnum >= ?");
 			
 			pstmt = con.prepareStatement(sb.toString());
 		if (!(search==null || search.equals(""))) {
 			pstmt.setString(1, "%"+search+"%");
-			pstmt.setInt(2, pageSize);
-			pstmt.setInt(3, startRow-1);
+			pstmt.setInt(2, endRow);
+			pstmt.setInt(3, startRow);
 		} else {
-			pstmt.setInt(1, pageSize);
-			pstmt.setInt(2, startRow-1);
+			pstmt.setInt(1, endRow);
+			pstmt.setInt(2, startRow);
 		}
 			rs = pstmt.executeQuery();
 			
@@ -342,7 +350,7 @@ public class MemberDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sql = "SELECT count(*) FROM members ";
+			sql = "SELECT count(*) FROM member ";
 			
 		if (!(search == null || search.equals(""))) {
 			sql += "WHERE id LIKE ? ";
