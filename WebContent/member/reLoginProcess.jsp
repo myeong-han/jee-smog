@@ -17,29 +17,37 @@
 	int userCheck = memberDao.userCheck(id, passwd);
 	
 	if (userCheck == 1) { 	// 아이디와 비밀번호가 일치하는 경우
-		%> <script>
-		var go = true;		// delete confirm용 js변수 선언
-		</script><%
+%>
+		<script>
+		var result = true;		// delete confirm용 js변수 선언
+		</script>
+<%
 		if (where.equals("update")) {	// update의 경우 주소 입력
 			addr = "../member/updateMember.jsp";
 		}
 		if (where.equals("delete")) {	// delete의 경우
-			%> <script>					// js confirm으로 재차 확인
-			go = confirm('Are you sure you want to drop out?');
-			</script><% 				// 주소 입력
+%>
+			<script>					// js confirm으로 재차 확인
+			result = confirm('Are you sure you want to drop out?');
+			</script>
+<% 				// 주소 입력
 			addr = "../member/deleteMember.jsp";
 		}
-		%> <script>
-		if (go) {						// 결정된 주소로 이동
+%>
+		<script>
+		if (result) {						// 결정된 주소로 이동
 			location.href='<%=addr%>'; 
 		} else {						// confirm에서 취소버튼을 누른 경우 이전페이지로 이동
 			location.href='../member/mypage.jsp';
 		}
-		</script><%
+		</script>
+<%
 	} else {							// passwd가 세션id와 일치하지 않는 경우 이전페이지로
-		%> <script>
+%>
+		<script>
 		alert('Password does not match');
 		location.href='../member/mypage.jsp';
-		</script><%
+		</script>
+<%
 	}
 %>

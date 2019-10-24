@@ -43,7 +43,7 @@
 		<article>
 		<fieldset class="f1">
 		<legend><h1>Community</h1></legend>
-			<table id="m_information" border="1">
+		<table id="m_information" border="1">
 			<tr class="board-th">
 				<th>No</th><th class="subject">Title</th><th>Writer</th><th>Date</th><th>Reads</th>
 			</tr>
@@ -68,9 +68,9 @@
 <%
 	}
 %>
-			</table>
+		</table>
 			
-			<div id="page_control">
+		<div id="page_control">
 <%
 	if (count > 0) {
 		int pageCount = count/pageSize + (count%pageSize==0 ? 0:1);
@@ -116,31 +116,31 @@
 		}
 	}
 %>
-			</div>
-			<form name="sfrm" id="search-form" action="community.jsp" method="get" onsubmit="return checkSearch()">
-				<select name="what_s" id="input-what">
+		</div>
+		<form name="sfrm" id="search-form" action="community.jsp" method="get" onsubmit="return checkSearch()">
+			<select name="what_s" id="input-what">
 <%
-				if (whatS == null || whatS.equals("")) {
+			if (whatS == null || whatS.equals("")) {
 %>
-					<option value="un" disabled selected>Search to</option>
-					<option value="subject">Title</option>
-					<option value="username">Writer</option>
+				<option value="un" disabled selected>Search to</option>
+				<option value="subject">Title</option>
+				<option value="username">Writer</option>
 <%
 				} else {
 %>
-					<option value="un" disabled>Search to</option>
-					<option value="subject" <%=whatS.equals("subject")?"selected":"" %>>Title</option>
-					<option value="username" <%=whatS.equals("username")?"selected":"" %>>Writer</option>
+				<option value="un" disabled>Search to</option>
+				<option value="subject" <%=whatS.equals("subject")?"selected":"" %>>Title</option>
+				<option value="username" <%=whatS.equals("username")?"selected":"" %>>Writer</option>
 <%
 				}
 %>
-				</select>
-				<input type="text" name="search" value="<%=search==null?"":search %>" class="input_box" />
-				<button type="submit">Search</button>
-				<div>
+			</select>
+			<input type="text" name="search" value="<%=search==null?"":search %>" class="input_box" />
+			<button type="submit">Search</button>
+			<div>
 				<button type="button" onclick="location.href='../main/write.jsp'">Write</button>
-				</div>
-			</form>
+			</div>
+		</form>
 		</fieldset>
 		</article>
 	</fieldset>

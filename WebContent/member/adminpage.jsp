@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="com.exam.dao.MemberDao"%>
 <%@page import="com.exam.vo.MemberVO"%>
@@ -38,6 +39,8 @@
 	int count = memberDao.getMemberCount(search);
 	
 	List<MemberVO> memberList = memberDao.getAllMembers(startRow, pageSize, search);
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
 %>
 <body>
 	<div id="all">
@@ -47,22 +50,24 @@
 		<article>
 		<fieldset class="f1">
 		<legend><h1>List of Members</h1></legend>
+		<form action="dropOutProcess.jsp" name="frm" method="post" >
 			<table id="m_information" border="1">
 			<tr class="board-th">
-				<th>Profile</th><th>Reg_date</th><th>ID</th><th>Name</th><th>Birth</th><th>Gender</th><th>Email</th><th>Writes</th>
+				<th>\</th><th>C</th><th>ID</th><th>Name</th><th>Birth</th><th>Gender</th><th>Email</th><th>Reg_date</th><th>Writes</th>
 			</tr>
 <%
 	if (count > 0) {
 		for (MemberVO memberVO : memberList) {
 %>
-			<tr class="content-tr" onclick="popupLogin('memberpage.jsp?id=<%=memberVO.getId()%>',1000,1100);">
-				<td><img src="../upload/profile/<%=memberVO.getfName()!=null?memberVO.getfName():"default.jpg"%>" height="20"/></td>
-				<td><%=memberVO.getRegDate()!=null?memberVO.getRegDate().toString().split(" ")[0]:"-" %></td>
-				<td><%=memberVO.getId() %></td>
+			<tr class="content-tr" id="mp" >
+				<td class="board-th" id="dtr-i"><img src="../upload/profile/<%=memberVO.getfName()!=null?memberVO.getfName():"default.jpg"%>" height="20"/></td>
+				<td class="dtr"><input type="checkbox" name="dropout" value="<%=memberVO.getId() %>" /></td>
+				<td class="dtr"><a href="javascript:popupLogin('memberpage.jsp?id=<%=memberVO.getId()%>',1000,1060);"><%=memberVO.getId() %></a></td>
 				<td><%=memberVO.getName() %></td>
 				<td><%=memberVO.getBirth()!=null?memberVO.getBirth().toString().split(" ")[0]:"-" %></td>
 				<td><%=memberVO.getGender()!=null?memberVO.getGender():"-" %></td>
 				<td><%=memberVO.getEmail()!=null?memberVO.getEmail():"-" %></td>
+				<td><%=memberVO.getRegDate()!=null?sdf.format(memberVO.getRegDate()):"-" %></td>
 				<td><%=memberVO.getWrites() %></td>
 			</tr>
 <%
@@ -70,13 +75,13 @@
 	} else {
 %>
 			<tr>
-				<td colspan="5">No Members</td>
+				<td colspan="9">No Members</td>
 			</tr>
 <%
 	}
 %>
 			</table>
-			
+		</form>
 			<div id="page_control">
 <%
 	if (count > 0) {
@@ -122,11 +127,11 @@
 	}
 %>
 			</div>
-			<form name="sfrm" id="search-form" action="adminpage.jsp" method="get" onsubmit="return checkSearch()">
-				<input type="text" name="search" value="<%=search==null?"":search %>" class="input_box" />
+			<form name="sfrm" id="search-form" action="adminpage.jsp" method="get">
+				<input type="text" name="search" class="selector" value="<%=search==null?"":search %>" class="input_box" />
 				<button type="submit">Search</button>
 				<div>
-				<button type="button" onclick="popupLogin('reLogin.jsp?where=delete',350,165)">Drop out</button>
+				<button type="button" onclick="dropOutSubmit()">Drop out selected</button>
 				</div>
 			</form>
 		</fieldset>
@@ -136,5 +141,14 @@
 	</div>
 <script src="../scripts/jquery-3.4.1.js"></script>
 <script src="../scripts/main.js"></script>
+<script>
+	function dropOutSubmit() {
+		var result = true;
+		result = confirm('Are you sure you want to withdraw the selected members?');
+		if (result) {
+			frm.submit();
+		}
+	}
+</script>
 </body>
 </html>

@@ -61,10 +61,6 @@ nav>fieldset>ul>li {
 .welcome {
 	font-size: small;
 }
-.hyp>a {
-	color: #DDDDDD;
-	text-decoration: none;
-}
 #crop {
 	position: relative;
 	right: 190px;
@@ -176,6 +172,24 @@ table#m_information {
 	margin-left: auto; margin-right: auto;
 	margin-bottom: 20px;
 }
+	/* a TAG */
+	#page_control>a,
+	.hyp>a {
+		text-decoration: none;
+		color: #BBBBBB;
+	}
+	#page_control>b>a,
+	#mp a {
+		text-decoration: none;
+		color: #DDDDDD;
+	}
+	#page_control>a:hover,
+	#page_control>b>a:hover,
+	.hyp>a:hover,
+	#mp a:hover {
+		text-decoration: underline;
+		color: #EFEFEF;
+	}
 
 /* login */
 #login-title {
@@ -211,20 +225,34 @@ td.subject {
 	text-align: left;
 	padding-left: 10px;
 }
-.content-tr:hover {
-	background-color: #666666;
+.content-tr {
+	background-color: #777777;
 	color: #111111;
 }
+.content-tr:hover {
+	background-color: #555555;
+	color: #DDDDDD;
+}
+	/*admin*/
+	.content-tr input {
+		margin: 4px;
+	}
+	information img {
+		border-radius-top: 20px;
+	}
+	.dtr {
+		background-color: #666666;
+	}
+	.dtr:hover {
+		background-color: #444444;
+	}
+	#dtr-i {
+		padding-bottom: 0px;
+    	padding-top: 6px;
+	}
+
 div#page_control {
 	text-align: center;
-}
-#page_control>a {
-	text-decoration: none;
-	color: #999999;
-}
-#page_control>b>a {
-	text-decoration: none;
-	color: #DDDDDD;
 }
 #search-form {
 	text-align: center;
@@ -236,9 +264,8 @@ div#page_control {
 
 tr#content-page {
 	height: 900px;
-	background-color: #444444;
+	background-color: #777777;
 }
-
 
 /*footer*/
 #footer-email {

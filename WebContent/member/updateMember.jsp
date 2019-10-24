@@ -58,9 +58,9 @@
 				<p id="name-check" class="input-check">&nbsp;</p><br />
 				Birth<br />
 				<input type="date" name="birth_" id="birth" class="input-width" value="<%=memberVO.getBirth()!=null?memberVO.getBirth().toString().split(" ")[0]:"" %>" /><br /><br />
-				Gender<br /> <input type="radio" name="gender" value="male" <%=memberVO.getGender().equals("male")?"checked":""%>/><span>Male</span>
-				<input type="radio" name="gender" value="female" <%=memberVO.getGender().equals("female")?"checked":""%>/><span>Female</span>
-				<input type="radio" name="gender" value="other" <%=memberVO.getGender().equals("other")?"checked":""%>/><span>Other</span><br /><br />
+				Gender<br /> <input type="radio" name="gender" value="male" <%=memberVO.getGender()!=null&&memberVO.getGender().equals("male")?"checked":""%>/><span>Male</span>
+				<input type="radio" name="gender" value="female" <%=memberVO.getGender()!=null&&memberVO.getGender().equals("female")?"checked":""%>/><span>Female</span>
+				<input type="radio" name="gender" value="other" <%=memberVO.getGender()!=null&&memberVO.getGender().equals("other")?"checked":""%>/><span>Other</span><br /><br />
 				E-Mail<br />
 				<input type="email" name="email" placeholder="example@examail.com" value="<%=memberVO.getEmail()!=null?memberVO.getEmail():"" %>" /><br /><br />
 				Address<br />
