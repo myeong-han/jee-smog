@@ -103,6 +103,60 @@ function updateCheck() {
 	}
 }
 
+
+// import : getParameterByName()
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+// nav의 이미지 마우스 오버&아웃 이벤트
+var loc = location.pathname.split('/')[2]; // 현재 주소
+var imgloc = '../images/include/';
+var boardNum = getParameterByName('boardnum'); // 기본값 : 0
+// 홈 : 홈주소에서도 홈버튼은 하이라이트되지 않으므로 조건이 필요없음
+$('#home-btn').mouseover(function () {
+	$('#home-btn').attr('src', imgloc+'home_hover.png');
+}).mouseout(function () {
+	$('#home-btn').attr('src', imgloc+'home_button.png');
+});
+// 뉴스
+// loc가 'news'와 같지 않으면서, boardNum이 0이 아닌 경우 버튼이벤트
+// !(loc=='news' || getParameterByName('boardNum')==0)
+if (loc != 'news' && boardNum != 1) {
+	$('#news-btn').mouseover(function () {
+		$('#news-btn').attr('src', imgloc+'news_hover.png');
+	}).mouseout(function () {
+		$('#news-btn').attr('src', imgloc+'news_button.png');
+	});
+}
+// 커뮤니티
+if (loc != 'community' && boardNum != 2) {
+	$('#comm-btn').mouseover(function () {
+		$('#comm-btn').attr('src', imgloc+'community_hover.png');
+	}).mouseout(function () {
+		$('#comm-btn').attr('src', imgloc+'community_button.png');
+	});
+}
+// 갤러리
+if (loc != 'gallery' && boardNum != 3) {
+	$('#gall-btn').mouseover(function () {
+		$('#gall-btn').attr('src', imgloc+'gallery_hover.png');
+	}).mouseout(function () {
+		$('#gall-btn').attr('src', imgloc+'gallery_button.png');
+	});
+}
+// 후원자
+if (loc != 'supporter') {
+	$('#supp-btn').mouseover(function () {
+		$('#supp-btn').attr('src', imgloc+'supporter_hover.png');
+	}).mouseout(function () {
+		$('#supp-btn').attr('src', imgloc+'supporter_button.png');
+	});
+}
+
 // nav>a:"login" 클릭시 등 팝업창 호출되는 함수
 function popupLogin(url, sizeX, sizeY) {
 	

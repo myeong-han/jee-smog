@@ -18,9 +18,9 @@
 	String boardAddr = "";
 	if (boardnum != null) {
 		switch (boardnum) {
-			case "0" : boardAddr = "news"; break;
-			case "1" : boardAddr = "community"; break;
-			case "2" : boardAddr = "gallery"; break;
+			case "1" : boardAddr = "news"; break;
+			case "2" : boardAddr = "community"; break;
+			case "3" : boardAddr = "gallery"; break;
 			default : boardAddr = "main";
 		}
 	} else {
@@ -51,16 +51,38 @@
 		<article>
 		<fieldset class="f1">
 		<legend><h1><%=boardAddr.substring(0, 1).toUpperCase()+boardAddr.substring(1) %></h1></legend>
-		<table border="1" id="m_information">
+		<table border="1" id="m_content">
 			<tr class="board-th">
-				<th class="small-size"><%=boardVO.getNum() %></th><th><h1><%=boardVO.getSubject() %></h1></th><th class="middle-size"><%=sdf.format(boardVO.getRegDate())%></th>
+				<th rowspan="2" width="60"><%=boardVO.getNum() %></th>
+				<th rowspan="2" width="110">
+					<img src="../upload/profile/<%=memberVO.getfName()!=null?memberVO.getfName():"default.jpg" %>"
+					alt="profileImage" height="100" style="padding-top: 5px;"/>
+				</th>
+				<th id="pfs">
+					<h1 style="margin: 0px; font-size: -webkit-xxx-large;"><%=boardVO.getSubject() %></h1>
+				</th>
+				<th rowspan="2" width="100"><%=sdf.format(boardVO.getRegDate())%></th>
+			</tr>
+			<tr class="board-th">
+			<th id="pfn">
+				<a href="#"><%=boardVO.getUsername() %></a>님의 글
+			</th>
 			</tr>
 			<tr id="content-page">
-				<td colspan="3"><pre id="pre-content" ><%=boardVO.getContent() %></pre></td>
+				<td colspan="4" id="pre-content">
+					<pre><%=boardVO.getContent() %></pre>
+				</td>
 			</tr>
-		</table><table border="1" id="m_information">
-			<tr class="board-th">
-				<th>aaaa</th><th><img src="../upload/profile/<%=memberVO.getfName()!=null?memberVO.getfName():"default.jpg" %>" alt="profileImage" height="100"/></th><th><%=boardVO.getUsername() %></th>
+		</table><table border="1" id="m_content">
+			<tr class="content-tr2">
+				<th width="80">이전글</th>
+				<th>bbbbbbbbbbbb</th>
+				<th width="30">▲</th>
+			</tr>
+			<tr class="content-tr2">
+				<th>다음글</th>
+				<th>cccccccccccc</th>
+				<th>▼</th>
 			</tr>
 		</table>
 		</fieldset>

@@ -172,9 +172,16 @@ table#m_information {
 	margin-left: auto; margin-right: auto;
 	margin-bottom: 20px;
 }
+table#m_content {
+	width: 900px;
+	text-align: center;
+	margin-left: auto; margin-right: auto;
+}
+
 	/* a TAG */
 	#page_control>a,
-	.hyp>a {
+	.hyp>a,
+	#pfn a {
 		text-decoration: none;
 		color: #BBBBBB;
 	}
@@ -186,7 +193,8 @@ table#m_information {
 	#page_control>a:hover,
 	#page_control>b>a:hover,
 	.hyp>a:hover,
-	#mp a:hover {
+	#mp a:hover,
+	#pfn a:hover {
 		text-decoration: underline;
 		color: #EFEFEF;
 	}
@@ -215,12 +223,6 @@ table#m_information {
 .subject {
 	width: 500px;
 }
-.small-size {
-	width: 50px;
-}
-.middle-size {
-	width: 80px;
-}
 td.subject {
 	text-align: left;
 	padding-left: 10px;
@@ -229,24 +231,43 @@ td.subject {
 	background-color: #777777;
 	color: #111111;
 }
-.content-tr:hover {
+.content-tr2 {
+	background-color: #333333;
+}
+.content-tr:hover,
+.content-tr2:hover {
 	background-color: #555555;
 	color: #DDDDDD;
 }
 #pre-content {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+#pre-content>pre {
 	margin: auto;
     padding: 50px;
-    height: 750px;
     width: 750px;
     text-align: left;
     border: 1px double;
+}
+#pfs {
+	border: none;
+	text-align: left;
+	padding-left: 20px;
+}
+#pfn {
+	border: none;
+	text-align: left;
+	padding-left: 20px;
+	font-size: small;
+	padding-bottom: 10px;
 }
 	/*admin*/
 	.content-tr input {
 		margin: 4px;
 	}
-	information img {
-		border-radius-top: 20px;
+	#information img {
+		border-radius: 10%;
 	}
 	.dtr {
 		background-color: #666666;
@@ -271,7 +292,6 @@ div#page_control {
 }
 
 tr#content-page {
-	height: 900px;
 	background-color: #777777;
 }
 

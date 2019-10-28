@@ -31,7 +31,7 @@
 	int pageSize = 20;
 	int startRow = (pageNum-1) * pageSize + 1;
 	int count = boardDao.getBoardCount(whatS, search);
-	int boardnum = 1;
+	int boardnum = 2;
 	
 	List<BoardVO> boardList = boardDao.getBoards(boardnum, startRow, pageSize, whatS, search);
 %>
@@ -51,7 +51,7 @@
 	if (count > 0) {
 		for (BoardVO boardVO : boardList) {
 %>
-			<tr class="content-tr" onclick="location.href='../main/content.jsp?boardnum=<%=boardnum %>&num=<%=boardVO.getNum()%>&pageNum=<%=pageNum%>'">
+			<tr class="content-tr" onclick="location.href='../main/content.jsp?boardnum=<%=boardnum%>&num=<%=boardVO.getNum()%>&pageNum=<%=pageNum%>'">
 				<td><%=boardVO.getNum() %></td>
 				<td class="subject"><%=boardVO.getSubject() %></td>
 				<td><%=boardVO.getUsername() %></td>
