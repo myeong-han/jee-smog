@@ -233,6 +233,14 @@ td.subject {
 	background-color: #555555;
 	color: #DDDDDD;
 }
+#pre-content {
+	margin: auto;
+    padding: 50px;
+    height: 750px;
+    width: 750px;
+    text-align: left;
+    border: 1px double;
+}
 	/*admin*/
 	.content-tr input {
 		margin: 4px;

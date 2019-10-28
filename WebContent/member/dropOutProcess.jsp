@@ -22,6 +22,6 @@
 %>
 
 <script>
-	alert('<%=dropOutIds.length %>개의 아이디가 삭제되었습니다.');
+	alert('<%=dropOutIds.length %> IDs deleted');
 	location.href='adminpage.jsp';
 </script>

@@ -56,7 +56,7 @@
 				<th class="small-size"><%=boardVO.getNum() %></th><th><h1><%=boardVO.getSubject() %></h1></th><th class="middle-size"><%=sdf.format(boardVO.getRegDate())%></th>
 			</tr>
 			<tr id="content-page">
-				<td colspan="3"><%=boardVO.getContent() %></td>
+				<td colspan="3"><pre id="pre-content" ><%=boardVO.getContent() %></pre></td>
 			</tr>
 		</table><table border="1" id="m_information">
 			<tr class="board-th">
