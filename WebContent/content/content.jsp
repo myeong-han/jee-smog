@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="com.exam.vo.MemberVO"%>
 <%@page import="com.exam.dao.MemberDao"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -28,20 +30,50 @@
 	}
 	String pageNum = request.getParameter("pageNum");
 	if (pageNum == null) {
-		pageNum = "";
+		pageNum = "1";
 	}
 	String strNum = request.getParameter("num");
+	
+	// 보드넘 기준 주소의 페이지넘 화면
+	String loc = "../"+boardAddr+"/"+boardAddr+".jsp?pageNum="+pageNum;
+	
 	if(strNum == null || strNum.equals("")) {
-		response.sendRedirect("../"+boardAddr+"/"+boardAddr+".jsp?pageNum="+pageNum);
+		response.sendRedirect(loc);
 		return;
 	}
 	int num = Integer.parseInt(strNum);
 	
 	BoardDao boardDao = BoardDao.getInstance();
+	
 	BoardVO boardVO = boardDao.getBoard(num);
+	List<BoardVO> rownumBoards = (ArrayList<BoardVO>)session.getAttribute(boardAddr+"Rownums");
+	
+	String afSubj = "No article";
+	String bfSubj = "No article";
+	int afNum = -1;
+	int bfNum = -1;
+	
+	int rownum = 0;
+	for (BoardVO vo : rownumBoards) {
+		if (vo.getNum() == num) {
+			rownum = vo.getRownum();
+			break;
+		}
+	}
+	for (BoardVO vo : rownumBoards) {
+		if (vo.getRownum() == rownum+1) {
+			bfSubj = vo.getSubject();
+			bfNum = vo.getNum();
+		}
+		if (vo.getRownum() == rownum-1) {
+			afSubj = vo.getSubject();
+			afNum = vo.getNum();
+		}
+	}
+	
 	MemberDao memberDao = MemberDao.getInstance();
 	MemberVO memberVO = memberDao.getMember(boardVO.getUsername());
-	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd\nhh:mm:ss");
 %>
 <body>
 	<div id="all">
@@ -65,7 +97,7 @@
 			</tr>
 			<tr class="board-th">
 			<th id="pfn">
-				<a href="#"><%=boardVO.getUsername() %></a>님의 글
+				<a href="#"><%=boardVO.getUsername() %></a>'s writing
 			</th>
 			</tr>
 			<tr id="content-page">
@@ -73,18 +105,23 @@
 					<pre><%=boardVO.getContent() %></pre>
 				</td>
 			</tr>
-		</table><table border="1" id="m_content">
-			<tr class="content-tr2">
-				<th width="80">이전글</th>
-				<th>bbbbbbbbbbbb</th>
+		</table>
+		<table border="1" id="m_content" class="ctnt">
+			<tr class="content-tr2" onclick="<%=afNum==-1?"alert('No Article')":"location.href='content.jsp?boardnum="+boardnum+"&num="+afNum+"&pageNum="+pageNum+"'"%>">
+				<th width="100">After</th>
+				<th><%=afSubj%></th>
 				<th width="30">▲</th>
 			</tr>
-			<tr class="content-tr2">
-				<th>다음글</th>
-				<th>cccccccccccc</th>
+			<tr class="content-tr2" onclick="<%=bfNum==-1?"alert('No Article')":"location.href='content.jsp?boardnum="+boardnum+"&num="+bfNum+"&pageNum="+pageNum+"'"%>">
+				<th>Before</th>
+				<th><%=bfSubj%></th>
 				<th>▼</th>
 			</tr>
 		</table>
+		<button type="button" onclick="location.href='#'">Edit</button>
+		<button type="button" onclick="popupLogin('reLogin.jsp?where=delBoard&num=<%=num%>',350,165)">Del</button>
+		<button type="button" onclick="location.href='#'">Reply</button>
+		<button type="button" onclick="location.href='<%=loc%>'">List</button>
 		</fieldset>
 		</article>
 	</fieldset>

@@ -262,6 +262,9 @@ td.subject {
 	font-size: small;
 	padding-bottom: 10px;
 }
+.ctnt {
+	margin-bottom: 30px;
+}
 	/*admin*/
 	.content-tr input {
 		margin: 4px;
@@ -291,7 +294,10 @@ div#page_control {
 	float: right;
 }
 
-tr#content-page {
+#content-page {
+	background-color: #777777;
+}
+#f-cont {
 	background-color: #777777;
 }
 

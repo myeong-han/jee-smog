@@ -55,23 +55,22 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			sb.append("INSERT INTO boards ");
-			sb.append("(num, boardnum, username, passwd, subject, content, ");
+			sb.append("(num, boardnum, username, subject, content, ");
 			sb.append(" readcount, ip, reg_date, re_ref, re_lev, re_seq) ");
-			sb.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?) ");
+			sb.append("VALUES (?,?,?,?,?,?,?,?,?,?,?) ");
 			pstmt = con.prepareStatement(sb.toString());
 			
 			pstmt.setInt(1, boardVO.getNum());
 			pstmt.setInt(2, boardVO.getBoardnum());
 			pstmt.setString(3, boardVO.getUsername());
-			pstmt.setString(4, boardVO.getPasswd());
-			pstmt.setString(5, boardVO.getSubject());
-			pstmt.setString(6, boardVO.getContent());
-			pstmt.setInt(7, boardVO.getReadcount());
-			pstmt.setString(8, boardVO.getIp());
-			pstmt.setTimestamp(9, boardVO.getRegDate());
-			pstmt.setInt(10, boardVO.getReRef());
-			pstmt.setInt(11, boardVO.getReLev());
-			pstmt.setInt(12, boardVO.getReSeq());
+			pstmt.setString(4, boardVO.getSubject());
+			pstmt.setString(5, boardVO.getContent());
+			pstmt.setInt(6, boardVO.getReadcount());
+			pstmt.setString(7, boardVO.getIp());
+			pstmt.setTimestamp(8, boardVO.getRegDate());
+			pstmt.setInt(9, boardVO.getReRef());
+			pstmt.setInt(10, boardVO.getReLev());
+			pstmt.setInt(11, boardVO.getReSeq());
 			
 			pstmt.executeUpdate();
 			
@@ -108,7 +107,6 @@ public class BoardDao {
 				boardVO.setNum(rs.getInt("num"));
 				boardVO.setBoardnum(rs.getInt("boardnum"));
 				boardVO.setUsername(rs.getString("username"));
-				boardVO.setPasswd(rs.getString("passwd"));
 				boardVO.setSubject(rs.getString("subject"));
 				boardVO.setContent(rs.getString("content"));
 				boardVO.setReadcount(rs.getInt("readcount"));
@@ -127,7 +125,7 @@ public class BoardDao {
 		
 		return boardVO;
 	}
-	
+	// 게시판 목록 구현용
 	public List<BoardVO> getBoards(int boardnum, int startRow, int pageSize, String whatS, String search) {
 		List<BoardVO> boardList = new ArrayList<>();
 		
@@ -140,7 +138,13 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sb.append("SELECT * ");
+			String sql = "SET @rownum:=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow-1);
+			pstmt.executeUpdate(); 	// rownum값 세팅
+			pstmt.close();
+			
+			sb.append("SELECT *, @rownum:=@rownum+1 AS \"rownum\" ");
 			sb.append("FROM boards ");
 			sb.append("WHERE boardnum = ? ");
 		if (!(search == null || search.equals(""))) {
@@ -168,7 +172,6 @@ public class BoardDao {
 				boardVO.setNum(rs.getInt("num"));
 				boardVO.setBoardnum(rs.getInt("boardnum"));
 				boardVO.setUsername(rs.getString("username"));
-				boardVO.setPasswd(rs.getString("passwd"));
 				boardVO.setSubject(rs.getString("subject"));
 				boardVO.setContent(rs.getString("content"));
 				boardVO.setReadcount(rs.getInt("readcount"));
@@ -177,7 +180,52 @@ public class BoardDao {
 				boardVO.setReRef(rs.getInt("re_ref"));
 				boardVO.setReLev(rs.getInt("re_lev"));
 				boardVO.setReSeq(rs.getInt("re_seq"));
-				
+				boardVO.setRownum(rs.getInt("rownum"));
+				boardList.add(boardVO);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt, rs);
+		}
+		
+		return boardList;
+	}
+	// rownum 불러오기용
+	public List<BoardVO> getRownums(int boardnum) {
+		List<BoardVO> boardList = new ArrayList<>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			con = DBManager.getConnection();
+			
+			String sql = "SET @rownum:=0";
+			pstmt = con.prepareStatement(sql);
+			pstmt.executeUpdate(); 	// rownum값 세팅
+			pstmt.close();
+			
+			sb.append("SELECT num, boardnum, username, subject, @rownum:=@rownum+1 AS \"rownum\" ");
+			sb.append("FROM boards ");
+			sb.append("WHERE boardnum = ? ");
+			sb.append("ORDER BY re_ref DESC, re_seq ");
+			
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, boardnum);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				BoardVO boardVO = new BoardVO();
+				boardVO.setNum(rs.getInt("num"));
+				boardVO.setBoardnum(rs.getInt("boardnum"));
+				boardVO.setUsername(rs.getString("username"));
+				boardVO.setSubject(rs.getString("subject"));
+				boardVO.setRownum(rs.getInt("rownum"));
 				boardList.add(boardVO);
 			}
 		} catch (Exception e) {

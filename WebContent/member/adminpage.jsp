@@ -64,10 +64,10 @@
 				<td class="dtr"><input type="checkbox" name="dropout" value="<%=memberVO.getId() %>" /></td>
 				<td class="dtr"><a href="javascript:popupLogin('memberpage.jsp?id=<%=memberVO.getId()%>',1000,1060);"><%=memberVO.getId() %></a></td>
 				<td><%=memberVO.getName() %></td>
-				<td><%=memberVO.getBirth()!=null?memberVO.getBirth().toString().split(" ")[0]:"-" %></td>
-				<td><%=memberVO.getGender()!=null?memberVO.getGender():"-" %></td>
-				<td><%=memberVO.getEmail()!=null?memberVO.getEmail():"-" %></td>
-				<td><%=memberVO.getRegDate()!=null?sdf.format(memberVO.getRegDate()):"-" %></td>
+				<td><%=memberVO.getBirth()!=null?memberVO.getBirth().toString().split(" ")[0]:"" %></td>
+				<td><%=memberVO.getGender()!=null&&!memberVO.getGender().equals("")?memberVO.getGender():"" %></td>
+				<td><%=memberVO.getEmail()!=null&&!memberVO.getGender().equals("")?memberVO.getEmail():"" %></td>
+				<td><%=memberVO.getRegDate()!=null?sdf.format(memberVO.getRegDate()):"" %></td>
 				<td><%=memberVO.getWrites() %></td>
 			</tr>
 <%

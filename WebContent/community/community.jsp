@@ -21,7 +21,7 @@
 	}
 	
 	String strPageNum = request.getParameter("pageNum");
-	if (strPageNum == null) {
+	if (strPageNum == null || strPageNum.equals("")) {
 		strPageNum = "1";
 	}
 	int pageNum = Integer.parseInt(strPageNum);
@@ -34,6 +34,8 @@
 	int boardnum = 2;
 	
 	List<BoardVO> boardList = boardDao.getBoards(boardnum, startRow, pageSize, whatS, search);
+	// List 타입 어트리뷰트 전송
+	session.setAttribute("communityRownums", boardDao.getRownums(boardnum));
 %>
 <body>
 	<div id="all">
@@ -51,12 +53,12 @@
 	if (count > 0) {
 		for (BoardVO boardVO : boardList) {
 %>
-			<tr class="content-tr" onclick="location.href='../main/content.jsp?boardnum=<%=boardnum%>&num=<%=boardVO.getNum()%>&pageNum=<%=pageNum%>'">
+			<tr class="content-tr" onclick="location.href='../content/content.jsp?boardnum=<%=boardnum%>&num=<%=boardVO.getNum()%>&pageNum=<%=pageNum%>'">
 				<td><%=boardVO.getNum() %></td>
 				<td class="subject"><%=boardVO.getSubject() %></td>
 				<td><%=boardVO.getUsername() %></td>
 				<td><%=boardVO.getRegDate().toString().split(" ")[0] %></td>
-				<td><%=boardVO.getReadcount() %></td>
+				<td><%=boardVO.getReadcount()%></td>
 			</tr>
 <%
 		}
@@ -138,7 +140,7 @@
 			<input type="text" name="search" value="<%=search==null?"":search %>" class="input_box" />
 			<button type="submit">Search</button>
 			<div>
-				<button type="button" onclick="location.href='../main/write.jsp'">Write</button>
+				<button type="button" onclick="location.href='../content/write.jsp?boardnum=2'">Write</button>
 			</div>
 		</form>
 		</fieldset>
