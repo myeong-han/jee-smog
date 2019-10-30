@@ -1,3 +1,5 @@
+<%@page import="com.exam.dao.AttachDao"%>
+<%@page import="com.exam.vo.AttachVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.exam.vo.MemberVO"%>
@@ -46,7 +48,12 @@
 	BoardDao boardDao = BoardDao.getInstance();
 	
 	BoardVO boardVO = boardDao.getBoard(num);
-	List<BoardVO> rownumBoards = (ArrayList<BoardVO>)session.getAttribute(boardAddr+"Rownums");
+	
+	// 세션에서 로우넘 가져오기 : 그냥 아래에서 바로 찾는걸로 변경
+// 	List<BoardVO> rownumBoards = (ArrayList<BoardVO>)session.getAttribute(boardAddr+"Rownums");
+	int intBoardNum = Integer.parseInt(boardnum);
+	// rownum을 포함한 게시판 전체목록을 가져옴
+	List<BoardVO> rownumBoards = boardDao.getRownums(intBoardNum);
 	
 	String afSubj = "No article";
 	String bfSubj = "No article";
@@ -54,26 +61,31 @@
 	int bfNum = -1;
 	
 	int rownum = 0;
-	for (BoardVO vo : rownumBoards) {
-		if (vo.getNum() == num) {
-			rownum = vo.getRownum();
-			break;
+	if (rownumBoards != null) {
+		for (BoardVO vo : rownumBoards) { // rowNum을 포함한 해당 게시판 전체목록 중에서
+			if (vo.getNum() == num) {	  // 현재 글과 같은 num을 가지는 게시글의
+				rownum = vo.getRownum();  // rownum을 rownum 변수에 담기  
+				break;					  // 시간절약을 위해 종료
+			}
+		}
+		
+		for (BoardVO vo : rownumBoards) {		// 전체 목록에서
+			if (vo.getRownum() == rownum+1) {	// 로우넘 변수보다 1 큰값을 로우넘으로가지는 게시글의
+				bfSubj = vo.getSubject();		// 글제목을 변수에 담음
+				bfNum = vo.getNum();			// 글번호를 변수에 담음
+			}
+			if (vo.getRownum() == rownum-1) {	// 로우넘 변수보다 1 작은 값 ....
+				afSubj = vo.getSubject();
+				afNum = vo.getNum();
+			}
 		}
 	}
-	for (BoardVO vo : rownumBoards) {
-		if (vo.getRownum() == rownum+1) {
-			bfSubj = vo.getSubject();
-			bfNum = vo.getNum();
-		}
-		if (vo.getRownum() == rownum-1) {
-			afSubj = vo.getSubject();
-			afNum = vo.getNum();
-		}
-	}
-	
 	MemberDao memberDao = MemberDao.getInstance();
 	MemberVO memberVO = memberDao.getMember(boardVO.getUsername());
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd\nhh:mm:ss");
+	
+	AttachDao attachDao = AttachDao.getInstance();
+	List<AttachVO> attachList = attachDao.getFileInfosFromBno(num);
 %>
 <body>
 	<div id="all">
@@ -102,6 +114,23 @@
 			</tr>
 			<tr id="content-page">
 				<td colspan="4" id="pre-content">
+					
+<%
+		String filename = "";
+		if (attachList != null) {
+			for (AttachVO attachVO : attachList) {
+				if (attachVO.getFiletype().equals("I")) {
+%>
+					<a href="../upload/<%=boardAddr%>/<%=attachVO.getFilename()%>"><img src="../upload/<%=boardAddr%>/<%=attachVO.getFilename()%>" alt="ContentImage" width="420"/></a>
+<%
+				} else {
+%>
+					<pre style="padding-top: 10px; padding-bottom: 10px;">▶&nbsp;&nbsp;<a href="#" id="a-w"><%=attachVO.getFilename()%></a></pre>
+<%
+				}
+			}
+		}
+%>
 					<pre><%=boardVO.getContent() %></pre>
 				</td>
 			</tr>

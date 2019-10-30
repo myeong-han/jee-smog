@@ -1,3 +1,8 @@
+<%@page import="com.exam.dao.AttachDao"%>
+<%@page import="java.nio.file.Files"%>
+<%@page import="java.io.File"%>
+<%@page import="java.util.UUID"%>
+<%@page import="com.exam.vo.AttachVO"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="com.exam.dao.BoardDao"%>
 <%@page import="java.sql.Timestamp"%>
@@ -9,21 +14,33 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	
-	final String REAL_PATH = application.getRealPath("/upload/profile");
-	final int MAX_SIZE = 1024*1024*10; // 10mb
-	
-	MultipartRequest multi = new MultipartRequest(
-		request, REAL_PATH, MAX_SIZE, "utf-8", new DefaultFileRenamePolicy()
-	);
-	
 	String id = (String)session.getAttribute("id");
 	
 	if (id == null) {
-		%>
-		<script>alert('You must log in');</script>
-		<%
+		response.sendRedirect("write.jsp");
 		return;
 	}
+	
+	String boardnum = (String) session.getAttribute("boardnum");
+	String boardAddr = "";
+	if (boardnum != null) {
+		switch (boardnum) {
+			case "1" : boardAddr = "news"; break;
+			case "2" : boardAddr = "community"; break;
+			case "3" : boardAddr = "gallery"; break;
+			default : boardAddr = "main";
+		}
+	} else {
+		boardAddr = "main";
+	}
+	
+	String realPath = application.getRealPath("/upload/"+boardAddr);
+	
+	final int MAX_SIZE = 1024*1024*10; // 10mb
+	
+	MultipartRequest multi = new MultipartRequest(
+		request, realPath, MAX_SIZE, "utf-8", new DefaultFileRenamePolicy()
+	);
 	
 	BoardVO boardVO = new BoardVO();
 	
@@ -49,13 +66,12 @@
 	boardDao.insertBoard(boardVO);// board 테이블에 인서트
 	
 	
-	
+	//====================파일업로드=================================
 	
 	Enumeration<String> enu = multi.getFileNames();
 	
 	while (enu.hasMoreElements()) { // 다음요소가 있으면
 		String str = enu.nextElement();
-		System.out.println(str);
 		
 		// 파라미터이름으로 실제로 업로드된 파일이름 구하기
 		// 해당 파라미터 이름을 업로드에 사용 안했으면 null이 리턴
@@ -72,7 +88,7 @@
 			attachVO.setBno(num);				// 게시글 번호
 			
 			// 이미지 파일여부 확인하기
-			File file = new File(REAL_PATH, realFileName);
+			File file = new File(realPath, realFileName);
 			String contentType = Files.probeContentType(file.toPath());
 			boolean isImage = contentType.startsWith("image");
 			
@@ -91,5 +107,5 @@
 	
 	// ================== 첨부파일 등록 처리 종료 ==========================
 	
-	response.sendRedirect("fnotice.jsp");
+	response.sendRedirect("content.jsp?boardnum="+boardnum+"&num="+num+"&pageNum=1");
 %>

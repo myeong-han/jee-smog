@@ -16,7 +16,18 @@
 </head>
 <%
 	request.setCharacterEncoding("utf-8");
+	
+	String id = (String)session.getAttribute("id");
+	if (id == null) {
+		%> <script>
+		alert('If you want to write,\nyou have to log in.');
+		location.href='../index.jsp';
+		</script><%
+		return;
+	}
+	
 	String boardnum = request.getParameter("boardnum");
+	session.setAttribute("boardnum", boardnum);
 	String boardAddr = "";
 	if (boardnum != null) {
 		switch (boardnum) {
@@ -73,7 +84,7 @@
 var num = 2;
 function addFileElement() {
 	if (num > 5) {
-		alert('Up to five uploads are possible.');
+		alert('Up to 5 uploads are possible.');
 		return;
 	}
 	// id속성값이 file_container인 div요소의 참조 구하기

@@ -34,8 +34,9 @@
 	int boardnum = 2;
 	
 	List<BoardVO> boardList = boardDao.getBoards(boardnum, startRow, pageSize, whatS, search);
-	// List 타입 어트리뷰트 전송
-	session.setAttribute("communityRownums", boardDao.getRownums(boardnum));
+	
+	// List 타입 어트리뷰트 전송 : 그냥 content에서 바로 확인하는걸로 변경
+// 	session.setAttribute("communityRownums", boardDao.getRownums(boardnum));
 %>
 <body>
 	<div id="all">

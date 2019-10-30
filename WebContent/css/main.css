@@ -186,7 +186,8 @@ table#m_content {
 		color: #BBBBBB;
 	}
 	#page_control>b>a,
-	#mp a {
+	#mp a,
+	#a-w {
 		text-decoration: none;
 		color: #DDDDDD;
 	}
@@ -194,7 +195,8 @@ table#m_content {
 	#page_control>b>a:hover,
 	.hyp>a:hover,
 	#mp a:hover,
-	#pfn a:hover {
+	#pfn a:hover,
+	#a-w:hover {
 		text-decoration: underline;
 		color: #EFEFEF;
 	}
