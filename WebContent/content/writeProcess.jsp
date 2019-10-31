@@ -1,3 +1,4 @@
+<%@page import="com.exam.Tools"%>
 <%@page import="com.exam.dao.AttachDao"%>
 <%@page import="java.nio.file.Files"%>
 <%@page import="java.io.File"%>
@@ -22,19 +23,9 @@
 	}
 	
 	String boardnum = (String) session.getAttribute("boardnum");
-	String boardAddr = "";
-	if (boardnum != null) {
-		switch (boardnum) {
-			case "1" : boardAddr = "news"; break;
-			case "2" : boardAddr = "community"; break;
-			case "3" : boardAddr = "gallery"; break;
-			default : boardAddr = "main";
-		}
-	} else {
-		boardAddr = "main";
-	}
+	String boardName = Tools.getBoardName(boardnum);
 	
-	String realPath = application.getRealPath("/upload/"+boardAddr);
+	String realPath = application.getRealPath("/upload/"+boardName);
 	
 	final int MAX_SIZE = 1024*1024*10; // 10mb
 	

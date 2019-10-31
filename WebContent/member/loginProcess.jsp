@@ -1,3 +1,4 @@
+<%@page import="com.exam.Tools"%>
 <%@page import="com.exam.dao.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -11,26 +12,13 @@
 	
 	MemberDao memberDao = MemberDao.getInstance();
 	
+	String boardnum = Tools.getBoardnum(session, request);
+	String boardName = Tools.getBoardName(boardnum);
 	
-	String boardnum = request.getParameter("boardnum");
-	String boardAddr = "";
-	if (boardnum != null) {
-		switch (boardnum) {
-			case "1" : boardAddr = "news"; break;
-			case "2" : boardAddr = "community"; break;
-			case "3" : boardAddr = "gallery"; break;
-			default : boardAddr = "main";
-		}
-	} else {
-		boardAddr = "main";
-	}
 	String pageNum = request.getParameter("pageNum");
-	if (pageNum == null) {
-		pageNum = "1";
-	}
+
 	// 보드넘 기준 주소의 페이지넘 화면
-	String loc = "../"+boardAddr+"/"+boardAddr+".jsp?pageNum="+pageNum;
-	
+	String loc = Tools.getBoardLocation(boardName, pageNum);
 	
 	int userCheck = memberDao.userCheck(id, passwd);
 	

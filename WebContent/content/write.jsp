@@ -1,3 +1,4 @@
+<%@page import="com.exam.Tools"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.exam.vo.MemberVO"%>
@@ -19,24 +20,12 @@
 	
 	String boardnum = request.getParameter("boardnum");
 	session.setAttribute("boardnum", boardnum);
-	String boardAddr = "";
-	if (boardnum != null) {
-		switch (boardnum) {
-			case "1" : boardAddr = "news"; break;
-			case "2" : boardAddr = "community"; break;
-			case "3" : boardAddr = "gallery"; break;
-			default : boardAddr = "main";
-		}
-	} else {
-		boardAddr = "main";
-	}
+	String boardName = Tools.getBoardName(boardnum);
 	
 	String pageNum = request.getParameter("pageNum");
-	if (pageNum == null) {
-		pageNum = "1";
-	}
+	
 	// 보드넘 기준 주소의 페이지넘 화면
-	String loc = "../"+boardAddr+"/"+boardAddr+".jsp?pageNum="+pageNum;
+	String loc = Tools.getBoardLocation(boardName, pageNum);
 	
 	String id = (String)session.getAttribute("id");
 	if (id == null) {
@@ -54,7 +43,7 @@
 	<fieldset class="f0">
 		<article>
 		<fieldset class="f1">
-		<legend><h1><%=boardAddr.substring(0, 1).toUpperCase()+boardAddr.substring(1) %></h1></legend>
+		<legend><h1><%=boardName.substring(0, 1).toUpperCase()+boardName.substring(1) %></h1></legend>
 			<form action="writeProcess.jsp" name="wfrm" method="post" onsubmit="return checkInsBoard()" enctype="multipart/form-data">
 			<input type="hidden" name="boardnum" value="<%=boardnum%>" />
 			<table border="1" id="m_content" style="margin-bottom: 25px">

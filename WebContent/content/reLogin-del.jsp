@@ -10,14 +10,18 @@
 <%
 	String where = request.getParameter("where");
 	String num = request.getParameter("num");
+	String boardnum = request.getParameter("boardnum");
+	String pageNum = request.getParameter("pageNum");
 %>
-<body>
+<body class="popup">
 <div class="all">
 	<fieldset class="f2">
 	<legend><h2 id="login-title">Warning!</h2></legend>
-	<form action="reLogin-delProcess.jsp" name="frm" method="post">
+	<form action="" name="frm" method="post">
 		<input type="hidden" name="where" value="<%=where%>" />
 		<input type="hidden" name="num" value="<%=num%>" />
+		<input type="hidden" name="boardnum" value="<%=boardnum%>" />
+		<input type="hidden" name="pageNum" value="<%=pageNum%>" />
 		<p class="login-text">Password</p>
 		<input type="password" name="passwd" placeholder="Insert Password" /><br />
 		<div class="frm_b">
@@ -32,7 +36,7 @@
 	function reLogin() {
 		window.opener.name = "parent";
 		frm.target = "parent";
-		frm.action = "../content/reLoginProcess.jsp";
+		frm.action = "../content/reLogin-delProcess.jsp";
 		frm.submit();
 		window.close();
 	}

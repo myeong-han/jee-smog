@@ -4,8 +4,11 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	
-	// update 혹은 delete를 판단하기 위한 파라미터값 가져오기 
-	String addr = "../member/mypage.jsp";
+	String boardnum = request.getParameter("boardnum");
+	String num = request.getParameter("num");
+	String pageNum = request.getParameter("pageNum");
+	
+	// delete를 판단하기 위한 파라미터값 가져오기 
 	String where = request.getParameter("where");
 	
 	// 세션의 아이디와 재입력받은 비밀번호 가져오기
@@ -15,35 +18,38 @@
 	MemberDao memberDao = MemberDao.getInstance();
 	
 	int userCheck = memberDao.userCheck(id, passwd);
-	
+%>
+	<script>
+	var addr = '../content/content.jsp?boardnum='+<%=boardnum%>+'&num='+<%=num%>+'&pageNum='+<%=pageNum%>;
+	</script>
+<%
 	if (userCheck == 1) { 	// 아이디와 비밀번호가 일치하는 경우
 %>
 		<script>
-		var result = true;		// delete confirm용 js변수 선언
+		var result = false;		// delete confirm용 js변수 선언
 		</script>
 <%
-		if (where.equals("delBoard")) {	// delete의 경우
+		if (where.equals("delBoard")) {	// update의 경우 주소 입력
 %>
-			<script>					// js confirm으로 재차 확인
-			result = confirm('Are you sure you want to drop out?');
+			<script>
+			result = confirm('Are you sure you want to delete this content?');
+			
+			if (result) {
+				addr = '../content/deleteContent.jsp?num='+<%=num%>; // 주소 입력
+			}
 			</script>
-<% 				// 주소 입력
-			addr = "../member/deleteMember.jsp";
+<%
 		}
 %>
 		<script>
-		if (result) {						// 결정된 주소로 이동
-			location.href='<%=addr%>'; 
-		} else {						// confirm에서 취소버튼을 누른 경우 이전페이지로 이동
-			location.href='../member/mypage.jsp';
-		}
+		location.href = addr;
 		</script>
 <%
 	} else {							// passwd가 세션id와 일치하지 않는 경우 이전페이지로
 %>
 		<script>
 		alert('Password does not match');
-		location.href='../member/mypage.jsp';
+		location.href = addr;
 		</script>
 <%
 	}

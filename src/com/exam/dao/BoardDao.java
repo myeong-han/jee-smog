@@ -273,4 +273,58 @@ public class BoardDao {
 		
 		return count;
 	}
+	
+	public void deleteBoard(int num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		StringBuilder sb = new StringBuilder();
+		try {
+			con = DBManager.getConnection();
+			sb.append("DELETE ");
+			sb.append("FROM boards ");
+			sb.append("WHERE num = ? ");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, num);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt);
+		}
+		
+	}
+	
+	public int getBoardnum(int num) {
+		int boardnum = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		StringBuilder sb = new StringBuilder();
+		try {
+			con = DBManager.getConnection();
+			sb.append("SELECT boardnum ");
+			sb.append("FROM boards ");
+			sb.append("WHERE num = ? ");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, num);
+			
+			rs = pstmt.executeQuery();
+			rs.next();
+			boardnum = rs.getInt("boardnum");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt, rs);
+		}
+		
+		return boardnum;
+	}
 }

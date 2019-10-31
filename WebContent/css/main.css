@@ -3,8 +3,11 @@
 body {
 	font-size: large;
 	font-family: 'Noto Sans KR';
-	background-color: #222222;
+	background-color: #171717;
 	color: #DDDDDD;
+}
+body.popup {
+	background-color: #222222;
 }
 #all {
 	width: 1280px;
@@ -88,6 +91,7 @@ fieldset#navf {
 fieldset.f0 {
 	width: 1280px;
 	padding-left: 0px; padding-right: 0px;
+	background-color: #222222;
 }
 fieldset.f1 {
 	width: 900px;

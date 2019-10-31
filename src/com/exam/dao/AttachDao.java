@@ -79,5 +79,29 @@ public class AttachDao {
 		return fileInfos;
 	}
 	
-	
+	public void deleteAttach(int bno) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			con = DBManager.getConnection();
+			
+			sb.append("DELETE ");
+			sb.append("FROM attachs ");
+			sb.append("WHERE bno = ? ");
+			
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, bno);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt);
+		}
+	}
 }

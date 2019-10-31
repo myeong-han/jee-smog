@@ -1,6 +1,14 @@
+<%@page import="com.exam.Tools"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	String boardnum = (String)session.getAttribute("boardnum");
+	
+	if (boardnum == null) {
+		boardnum = request.getParameter("boardnum");
+	}
+	String loc = Tools.getBoardLocation(Tools.getBoardName(boardnum), null);
+	
 	Cookie[] cookies = request.getCookies();
 	if (cookies != null) {
 		for (Cookie cookie : cookies) {
@@ -11,6 +19,7 @@
 			}
 		}
 	}
+	
 	session.invalidate();
-	response.sendRedirect("../index.jsp");
+	response.sendRedirect(loc);
 %>

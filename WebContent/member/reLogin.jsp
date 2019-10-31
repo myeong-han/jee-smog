@@ -10,7 +10,7 @@
 <%
 	String where = request.getParameter("where");
 %>
-<body>
+<body class="popup">
 <div class="all">
 	<fieldset class="f2">
 	<legend><h2 id="login-title">Warning!</h2></legend>

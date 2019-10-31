@@ -10,7 +10,7 @@
 <%
 	String boardnum = (String)session.getAttribute("boardnum");
 %>
-<body>
+<body class="popup">
 <div class="all">
 	<fieldset class="f2">
 	<legend><h2 id="login-title">Log In</h2></legend>

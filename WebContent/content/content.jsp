@@ -1,3 +1,4 @@
+<%@page import="com.exam.Tools"%>
 <%@page import="com.exam.dao.AttachDao"%>
 <%@page import="com.exam.vo.AttachVO"%>
 <%@page import="java.util.ArrayList"%>
@@ -18,26 +19,24 @@
 </head>
 <%
 	request.setCharacterEncoding("utf-8");
+	
+	String id = (String)session.getAttribute("id");
+	if (id == null) {
+		id = "";
+	}
+	
 	String boardnum = request.getParameter("boardnum");
-	String boardAddr = "";
-	if (boardnum != null) {
-		switch (boardnum) {
-			case "1" : boardAddr = "news"; break;
-			case "2" : boardAddr = "community"; break;
-			case "3" : boardAddr = "gallery"; break;
-			default : boardAddr = "main";
-		}
-	} else {
-		boardAddr = "main";
-	}
+	
+	String boardName = Tools.getBoardName(boardnum);
+	
 	String pageNum = request.getParameter("pageNum");
-	if (pageNum == null) {
-		pageNum = "1";
-	}
+// 	if (pageNum == null) {
+// 		pageNum = "1";
+// 	}
 	String strNum = request.getParameter("num");
 	
 	// 보드넘 기준 주소의 페이지넘 화면
-	String loc = "../"+boardAddr+"/"+boardAddr+".jsp?pageNum="+pageNum;
+	String loc = Tools.getBoardLocation(boardName, pageNum);
 	
 	if(strNum == null || strNum.equals("")) {
 		response.sendRedirect(loc);
@@ -50,7 +49,7 @@
 	BoardVO boardVO = boardDao.getBoard(num);
 	
 	// 세션에서 로우넘 가져오기 : 그냥 아래에서 바로 찾는걸로 변경
-// 	List<BoardVO> rownumBoards = (ArrayList<BoardVO>)session.getAttribute(boardAddr+"Rownums");
+// 	List<BoardVO> rownumBoards = (ArrayList<BoardVO>)session.getAttribute(boardName+"Rownums");
 	int intBoardNum = Integer.parseInt(boardnum);
 	// rownum을 포함한 게시판 전체목록을 가져옴
 	List<BoardVO> rownumBoards = boardDao.getRownums(intBoardNum);
@@ -94,7 +93,7 @@
 	<fieldset class="f0">
 		<article>
 		<fieldset class="f1">
-		<legend><h1><%=boardAddr.substring(0, 1).toUpperCase()+boardAddr.substring(1) %></h1></legend>
+		<legend><h1><%=boardName.substring(0, 1).toUpperCase()+boardName.substring(1) %></h1></legend>
 		<table border="1" id="m_content">
 			<tr class="board-th">
 				<th rowspan="2" width="60"><%=boardVO.getNum() %></th>
@@ -109,7 +108,7 @@
 			</tr>
 			<tr class="board-th">
 			<th id="pfn">
-				<a href="#" ><%=boardVO.getUsername() %></a>'s writing
+				<a href="#" ><%=memberVO.getName()%></a>'s writing
 			</th>
 			</tr>
 			<tr id="content-page">
@@ -121,11 +120,11 @@
 			for (AttachVO attachVO : attachList) {
 				if (attachVO.getFiletype().equals("I")) {
 %>
-					<a href="../upload/<%=boardAddr%>/<%=attachVO.getFilename()%>"><img src="../upload/<%=boardAddr%>/<%=attachVO.getFilename()%>" alt="ContentImage" width="420"/></a>
+					<a href="../upload/<%=boardName%>/<%=attachVO.getFilename()%>"><img src="../upload/<%=boardName%>/<%=attachVO.getFilename()%>" alt="ContentImage" width="420"/></a>
 <%
 				} else {
 %>
-					<pre style="padding-top: 10px; padding-bottom: 10px;"><span style="color: #DDDDDD">▶</span>&nbsp;&nbsp;<a href="../upload/<%=boardAddr%>/<%=attachVO.getFilename()%>" id="a-w" download><%=attachVO.getFilename()%></a></pre>
+					<pre style="padding-top: 10px; padding-bottom: 10px;"><span style="color: #DDDDDD">▶</span>&nbsp;&nbsp;<a href="../upload/<%=boardName%>/<%=attachVO.getFilename()%>" id="a-w" download><%=attachVO.getFilename()%></a></pre>
 <%
 				}
 			}
@@ -148,7 +147,7 @@
 			</tr>
 		</table>
 		<button type="button" onclick="location.href='#'">Edit</button>
-		<button type="button" onclick="popupLogin('reLogin-del.jsp?where=delBoard&num=<%=num%>',350,165)">Del</button>
+		<button type="button" onclick="checkDelContent()">Del</button>
 		<button type="button" onclick="location.href='#'">Reply</button>
 		<button type="button" onclick="location.href='<%=loc%>'">List</button>
 		</fieldset>
@@ -158,5 +157,17 @@
 	</div>
 <script src="../scripts/jquery-3.4.1.js"></script>
 <script src="../scripts/main.js"></script>
+<script>
+//content에서 del버튼 클릭시 호출되는 함수
+function checkDelContent() {
+	if ('<%=id%>' == '<%=boardVO.getUsername()%>') {
+		popupLogin('reLogin-del.jsp?where=delBoard&boardnum=<%=boardnum%>&num=<%=num%>&pageNum=<%=pageNum%>',350,165);
+	} else if ('<%=id%>' == '') {
+		alert('Please sign in');
+	} else {
+		alert("It's not your writing.");
+	}
+}
+</script>
 </body>
 </html>

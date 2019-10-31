@@ -1,3 +1,5 @@
+<%@page import="com.exam.dao.MemberDao"%>
+<%@page import="com.exam.vo.MemberVO"%>
 <%@page import="com.exam.vo.BoardVO"%>
 <%@page import="com.exam.dao.BoardDao"%>
 <%@page import="java.util.List"%>
@@ -12,6 +14,9 @@
 </head>
 <%
 	request.setCharacterEncoding("utf-8");
+	
+	String boardnum = "2";
+	session.setAttribute("boardnum", boardnum);
 	
 	String search = request.getParameter("search");
 	String whatS = request.getParameter("what_s");
@@ -31,10 +36,9 @@
 	int pageSize = 20;
 	int startRow = (pageNum-1) * pageSize + 1;
 	int count = boardDao.getBoardCount(whatS, search);
-	String boardnum = "2";
 	int intBoardnum = Integer.parseInt(boardnum);
-	session.setAttribute("boardnum", boardnum);
 	
+	MemberDao memberDao = MemberDao.getInstance();
 	List<BoardVO> boardList = boardDao.getBoards(intBoardnum, startRow, pageSize, whatS, search);
 	
 	// List 타입 어트리뷰트 전송 : 그냥 content에서 바로 확인하는걸로 변경
@@ -55,11 +59,12 @@
 <%
 	if (count > 0) {
 		for (BoardVO boardVO : boardList) {
+			MemberVO memberVO = memberDao.getMember(boardVO.getUsername());
 %>
 			<tr class="content-tr" onclick="location.href='../content/content.jsp?boardnum=<%=boardnum%>&num=<%=boardVO.getNum()%>&pageNum=<%=pageNum%>'">
 				<td><%=boardVO.getNum() %></td>
 				<td class="subject"><%=boardVO.getSubject() %></td>
-				<td><%=boardVO.getUsername() %></td>
+				<td><%=memberVO.getName() %></td>
 				<td><%=boardVO.getRegDate().toString().split(" ")[0] %></td>
 				<td><%=boardVO.getReadcount()%></td>
 			</tr>
@@ -143,7 +148,7 @@
 			<input type="text" name="search" value="<%=search==null?"":search %>" class="input_box" />
 			<button type="submit">Search</button>
 			<div>
-				<button type="button" onclick="location.href='../content/write.jsp?boardnum=2'">Write</button>
+				<button type="button" onclick="location.href='../content/write.jsp?boardnum='+<%=boardnum%>">Write</button>
 			</div>
 		</form>
 		</fieldset>
