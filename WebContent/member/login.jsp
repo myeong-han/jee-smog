@@ -7,11 +7,15 @@
 	<title>Smog</title>
 <link rel="stylesheet" href="../css/main.css" />
 </head>
+<%
+	String boardnum = (String)session.getAttribute("boardnum");
+%>
 <body>
 <div class="all">
 	<fieldset class="f2">
 	<legend><h2 id="login-title">Log In</h2></legend>
 	<form action="" name="frm" method="post">
+		<input type="hidden" name="boardnum" value="<%=boardnum %>" />
 		<p class="login-text">ID</p>
 		<input type="text" name="id" placeholder="Insert ID here" /><br />
 		<p class="login-text">Password</p>

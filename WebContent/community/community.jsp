@@ -31,9 +31,11 @@
 	int pageSize = 20;
 	int startRow = (pageNum-1) * pageSize + 1;
 	int count = boardDao.getBoardCount(whatS, search);
-	int boardnum = 2;
+	String boardnum = "2";
+	int intBoardnum = Integer.parseInt(boardnum);
+	session.setAttribute("boardnum", boardnum);
 	
-	List<BoardVO> boardList = boardDao.getBoards(boardnum, startRow, pageSize, whatS, search);
+	List<BoardVO> boardList = boardDao.getBoards(intBoardnum, startRow, pageSize, whatS, search);
 	
 	// List 타입 어트리뷰트 전송 : 그냥 content에서 바로 확인하는걸로 변경
 // 	session.setAttribute("communityRownums", boardDao.getRownums(boardnum));
@@ -129,13 +131,13 @@
 				<option value="subject">Title</option>
 				<option value="username">Writer</option>
 <%
-				} else {
+			} else {
 %>
 				<option value="un" disabled>Search to</option>
 				<option value="subject" <%=whatS.equals("subject")?"selected":"" %>>Title</option>
 				<option value="username" <%=whatS.equals("username")?"selected":"" %>>Writer</option>
 <%
-				}
+			}
 %>
 			</select>
 			<input type="text" name="search" value="<%=search==null?"":search %>" class="input_box" />

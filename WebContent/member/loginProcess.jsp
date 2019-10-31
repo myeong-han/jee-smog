@@ -11,6 +11,27 @@
 	
 	MemberDao memberDao = MemberDao.getInstance();
 	
+	
+	String boardnum = request.getParameter("boardnum");
+	String boardAddr = "";
+	if (boardnum != null) {
+		switch (boardnum) {
+			case "1" : boardAddr = "news"; break;
+			case "2" : boardAddr = "community"; break;
+			case "3" : boardAddr = "gallery"; break;
+			default : boardAddr = "main";
+		}
+	} else {
+		boardAddr = "main";
+	}
+	String pageNum = request.getParameter("pageNum");
+	if (pageNum == null) {
+		pageNum = "1";
+	}
+	// 보드넘 기준 주소의 페이지넘 화면
+	String loc = "../"+boardAddr+"/"+boardAddr+".jsp?pageNum="+pageNum;
+	
+	
 	int userCheck = memberDao.userCheck(id, passwd);
 	
 	if (userCheck == 1) { // 로그인 가능
@@ -24,17 +45,17 @@
 		}
 	
 		// index.jsp로 이동
-		response.sendRedirect("../index.jsp");
+		response.sendRedirect(loc);
 		
 	} else if (userCheck==0){ // 패스워드 틀림
 		%> <script>
 		alert('Password does not match');
-		location.href='../index.jsp';
+		location.href='<%=loc%>';
 		</script><%
 	} else { // userCheck == -1 (아이디 존재하지않음)
 		%> <script>
 		alert('ID is missing');
-		location.href='../index.jsp';
+		location.href='<%=loc%>';
 		</script><%
 	}
 %>

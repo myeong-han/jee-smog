@@ -17,15 +17,6 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	
-	String id = (String)session.getAttribute("id");
-	if (id == null) {
-		%> <script>
-		alert('If you want to write,\nyou have to log in.');
-		location.href='../index.jsp';
-		</script><%
-		return;
-	}
-	
 	String boardnum = request.getParameter("boardnum");
 	session.setAttribute("boardnum", boardnum);
 	String boardAddr = "";
@@ -39,13 +30,22 @@
 	} else {
 		boardAddr = "main";
 	}
+	
 	String pageNum = request.getParameter("pageNum");
 	if (pageNum == null) {
 		pageNum = "1";
 	}
 	// 보드넘 기준 주소의 페이지넘 화면
 	String loc = "../"+boardAddr+"/"+boardAddr+".jsp?pageNum="+pageNum;
-
+	
+	String id = (String)session.getAttribute("id");
+	if (id == null) {
+		%> <script>
+		alert('If you want to write,\nyou have to log in.');
+		location.href= '<%=loc%>';
+		</script><%
+		return;
+	}
 %>
 <body>
 	<div id="all">

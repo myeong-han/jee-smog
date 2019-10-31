@@ -54,19 +54,32 @@
 		if (realFileName != null) { // 파일 널여부 검증
 			File file = new File(REAL_PATH, realFileName);
 			String contentType = Files.probeContentType(file.toPath());
-			boolean isImage = contentType.startsWith("image");
-			
-			if (isImage) { // 이미지파일 여부 검증
-				UUID uuid = UUID.randomUUID();
-				memberVO.setfUuid(uuid.toString());
-//	 			memberVO.setfPath(fPath);
-				memberVO.setfName(realFileName);
+			if (contentType != null) {
+				boolean isImage = contentType.startsWith("image");
+				
+				if (isImage) { // 이미지파일 여부 검증
+					UUID uuid = UUID.randomUUID();
+					memberVO.setfUuid(uuid.toString());
+//	 				memberVO.setfPath(fPath);
+					memberVO.setfName(realFileName);
+				} else {
+%>
+				<script>
+					alert('It\'s not image format');
+					history.back();
+				</script>
+<%
+					// 여기에 파일삭제 메소드 필요함
+					return;
+				}
 			} else {
-			%><script>
+%>
+			<script>
 				alert('It\'s not image format');
 				history.back();
-			</script><%
-				// 여기에 파일삭제 메소드 필요함
+			</script>
+<%
+				//여기에 파일삭제 메소드 필요함
 				return;
 			}
 		}

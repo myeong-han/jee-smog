@@ -90,12 +90,15 @@
 			// 이미지 파일여부 확인하기
 			File file = new File(realPath, realFileName);
 			String contentType = Files.probeContentType(file.toPath());
-			boolean isImage = contentType.startsWith("image");
-			
-			if (isImage) {
-				attachVO.setFiletype("I"); // image
+			if (contentType != null) {
+				boolean isImage = contentType.startsWith("image");
+				if (isImage) {
+					attachVO.setFiletype("I"); // image
+				} else {
+					attachVO.setFiletype("O"); // order type
+				}
 			} else {
-				attachVO.setFiletype("O"); // order type
+				attachVO.setFiletype("O");
 			}
 			
 			// AttachDao 준비

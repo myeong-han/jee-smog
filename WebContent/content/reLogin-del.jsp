@@ -15,7 +15,7 @@
 <div class="all">
 	<fieldset class="f2">
 	<legend><h2 id="login-title">Warning!</h2></legend>
-	<form action="" name="frm" method="post">
+	<form action="reLogin-delProcess.jsp" name="frm" method="post">
 		<input type="hidden" name="where" value="<%=where%>" />
 		<input type="hidden" name="num" value="<%=num%>" />
 		<p class="login-text">Password</p>

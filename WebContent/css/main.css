@@ -246,11 +246,13 @@ td.subject {
 	padding-bottom: 20px;
 }
 #pre-content>pre {
+	color: black;
+    font-family: 'Noto Sans KR';
 	margin: auto;
     padding: 50px;
     width: 750px;
     text-align: left;
-    border: 1px double;
+    border: 1px double #DDDDDD;
 }
 #pfs {
 	border: none;

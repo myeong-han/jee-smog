@@ -109,7 +109,7 @@
 			</tr>
 			<tr class="board-th">
 			<th id="pfn">
-				<a href="#"><%=boardVO.getUsername() %></a>'s writing
+				<a href="#" ><%=boardVO.getUsername() %></a>'s writing
 			</th>
 			</tr>
 			<tr id="content-page">
@@ -125,7 +125,7 @@
 <%
 				} else {
 %>
-					<pre style="padding-top: 10px; padding-bottom: 10px;">▶&nbsp;&nbsp;<a href="#" id="a-w"><%=attachVO.getFilename()%></a></pre>
+					<pre style="padding-top: 10px; padding-bottom: 10px;"><span style="color: #DDDDDD">▶</span>&nbsp;&nbsp;<a href="../upload/<%=boardAddr%>/<%=attachVO.getFilename()%>" id="a-w" download><%=attachVO.getFilename()%></a></pre>
 <%
 				}
 			}
@@ -148,7 +148,7 @@
 			</tr>
 		</table>
 		<button type="button" onclick="location.href='#'">Edit</button>
-		<button type="button" onclick="popupLogin('reLogin.jsp?where=delBoard&num=<%=num%>',350,165)">Del</button>
+		<button type="button" onclick="popupLogin('reLogin-del.jsp?where=delBoard&num=<%=num%>',350,165)">Del</button>
 		<button type="button" onclick="location.href='#'">Reply</button>
 		<button type="button" onclick="location.href='<%=loc%>'">List</button>
 		</fieldset>
