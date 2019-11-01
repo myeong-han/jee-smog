@@ -1,3 +1,4 @@
+<%@page import="com.exam.Tools"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.nio.file.Files"%>
 <%@page import="java.io.File"%>
@@ -44,6 +45,8 @@
 		memberVO.setAge(0);
 	}
 	
+	MemberDao memberDao = MemberDao.getInstance();
+	
 	// set : f_name, f_path, f_uuid (param: f_name, null, null, VO: fName, fPath, fUuid)
 	Enumeration<String> enu = multi.getFileNames();
 	while (enu.hasMoreElements()) {
@@ -54,24 +57,25 @@
 			boolean isImage = contentType.startsWith("image");
 			
 			if (isImage) { // 이미지파일 여부 검증
+				String oldFileName = memberDao.getMember(memberVO.getId()).getfName();
+				Tools.delFileToProfile(application, oldFileName); // 기존 파일이미지 삭제
+				
 				UUID uuid = UUID.randomUUID();
 				memberVO.setfUuid(uuid.toString());
 //	 			memberVO.setfPath(fPath);
 				memberVO.setfName(realFileName);
-				// 기존 프로필 이미지 삭제 메소드 필요
 			} else {
 			%><script>
 				alert('It\'s not image format');
 				history.back();
 			</script><%
-				// 방금 올린 파일 삭제 메소드 필요함
+				Tools.delFileToProfile(application, realFileName);
 				return;
 			}
 		}
 	}
 	
 	// memberDao의 insertMember 실행
-	MemberDao memberDao = MemberDao.getInstance();
 	memberDao.updateMember(memberVO);
 %>
 

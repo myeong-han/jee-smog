@@ -8,7 +8,7 @@
 	MemberDao memberDao = MemberDao.getInstance();
 	MemberVO memberVO = memberDao.getMember(id);
 	
-	String boardName = request.getServletPath().toString().split("/")[1];		// nav 이미지버튼 검증용 
+	String boardName = request.getServletPath().toString().split("/")[1];		// nav 이미지버튼 검증용
 	String pageName = request.getServletPath().toString().split("/")[2];	// nav 하이퍼링크 검증용
 	String h = "hover";
 	String b = "button";
@@ -58,7 +58,7 @@
 <%
 		} else {		  // 로그인 한 경우
 %>
-			<span id="crop"><img src="../upload/profile/<%=memberVO.getfName()==null?"default.jpg":memberVO.getfName() %>" alt="profileImage" /></span>
+			<div id="crop"><img src="../upload/profile/<%=memberVO.getfName()==null?"default.jpg":memberVO.getfName() %>" alt="profileImage" /></div>
 			<div id="hyp2" class="hyp">
 			<span id="welcome">
 			<%=memberVO.getName() %>(<%=id %>)님,<br />어서오세요<br />

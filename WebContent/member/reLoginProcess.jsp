@@ -42,17 +42,14 @@
 			</script>
 <%
 		}
-%>
-		<script>
-		location.href = addr;
-		</script>
-<%
 	} else {							// passwd가 세션id와 일치하지 않는 경우 이전페이지로
 %>
 		<script>
 		alert('Password does not match');
-		location.href = addr;
 		</script>
 <%
 	}
 %>
+<script>
+	location.href = addr;
+</script>

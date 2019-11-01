@@ -82,6 +82,52 @@ public class BoardDao {
 		}
 	}
 	
+	public void insertReply(BoardVO boardVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuilder sb = new StringBuilder();
+		try {
+			con = DBManager.getConnection();
+			sb.append("UPDATE boards ");
+			sb.append("SET re_seq = re_seq+1 ");
+			sb.append("WHERE re_ref = ? ");
+			sb.append("AND re_seq > ? ");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, boardVO.getReRef());
+			pstmt.setInt(2, boardVO.getReSeq());
+			
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			sb.setLength(0);
+			sb.append("INSERT INTO boards ");
+			sb.append("(num, boardnum, username, subject, content, ");
+			sb.append(" readcount, ip, reg_date, re_ref, re_lev, re_seq) ");
+			sb.append("VALUES (?,?,?,?,?,?,?,?,?,?,?) ");
+			pstmt = con.prepareStatement(sb.toString());
+			
+			pstmt.setInt(1, boardVO.getNum());
+			pstmt.setInt(2, boardVO.getBoardnum());
+			pstmt.setString(3, boardVO.getUsername());
+			pstmt.setString(4, boardVO.getSubject());
+			pstmt.setString(5, boardVO.getContent());
+			pstmt.setInt(6, boardVO.getReadcount());
+			pstmt.setString(7, boardVO.getIp());
+			pstmt.setTimestamp(8, boardVO.getRegDate());
+			pstmt.setInt(9, boardVO.getReRef());
+			pstmt.setInt(10, boardVO.getReLev()+1);
+			pstmt.setInt(11, boardVO.getReSeq()+1);
+			
+			pstmt.executeUpdate();	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt, rs);
+		}
+	}
+
 	public BoardVO getBoard(int num) {
 		BoardVO boardVO = new BoardVO();
 		
@@ -326,5 +372,27 @@ public class BoardDao {
 		}
 		
 		return boardnum;
+	}
+	
+	public void updateReadCount(int num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		StringBuilder sb = new StringBuilder();
+		try {
+			con = DBManager.getConnection();
+			sb.append("UPDATE boards ");
+			sb.append("SET readcount = readcount+1 ");
+			sb.append("WHERE num = ? ");
+			
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt);
+		}
 	}
 }

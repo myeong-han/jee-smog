@@ -1,3 +1,4 @@
+<%@page import="com.exam.Tools"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.nio.file.Files"%>
 <%@page import="java.io.File"%>
@@ -69,7 +70,7 @@
 					history.back();
 				</script>
 <%
-					// 여기에 파일삭제 메소드 필요함
+					Tools.delFileToProfile(application, realFileName);
 					return;
 				}
 			} else {
@@ -79,7 +80,7 @@
 				history.back();
 			</script>
 <%
-				//여기에 파일삭제 메소드 필요함
+				Tools.delFileToProfile(application, realFileName);
 				return;
 			}
 		}

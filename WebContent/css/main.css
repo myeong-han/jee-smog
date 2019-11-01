@@ -64,17 +64,86 @@ nav>fieldset>ul>li {
 .welcome {
 	font-size: small;
 }
-#crop {
-	position: relative;
-	right: 190px;
+	/*Crop*/
+	#crop {
+		position: relative;
+		right: 150px;
+		border-radius: 200px;
+		position: relative;
+		width: 100px;
+		height: 100px;
+		overflow: hidden;
+		border: 2px solid #BBBBBB;
+	}
+	#crop>img { 
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		height: 100%;
+		width: auto;
+		-webkit-transform: translate(-50%,-50%);
+		-ms-transform: translate(-50%,-50%);
+		transform: translate(-50%,-50%); 
+	}
+	
+	#crop-con {
+		position: relative;
+		width: 100px;
+		height: 100px;
+		overflow: hidden;
+		border: 2px solid #BBBBBB;
+	}
+	#crop-con>img { 
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		height: 100%;
+		width: auto;
+		-webkit-transform: translate(-50%,-50%);
+		-ms-transform: translate(-50%,-50%);
+		transform: translate(-50%,-50%); 
+	}
+	
+	#crop-admin {
+		position: relative;
+		width: 20px;
+		height: 20px;
+		overflow: hidden;
+	}
+	#crop-admin>img { 
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		height: 100%;
+		width: auto;
+		-webkit-transform: translate(-50%,-50%);
+		-ms-transform: translate(-50%,-50%);
+		transform: translate(-50%,-50%); 
+	}
+	
+	#crop-content {
+		float: left;
+		position: relative;
+		width: 170px;
+		height: 200px;
+		overflow: hidden;
+	}
+	#crop-content>img { 
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		height: 100%;
+		width: auto;
+		-webkit-transform: translate(-50%,-50%);
+		-ms-transform: translate(-50%,-50%);
+		transform: translate(-50%,-50%); 
+	}
+#content-box {
+	clear: both;
 }
-#crop>img {
-	width: 100px; height: 100px;
-	overflow: hidden;
-	border-radius: 200px;
-	border: 2px solid #BBBBBB;
+#file-box {
+    margin-left: 23px;
 }
-
 
 /* All */
 legend {
@@ -249,7 +318,17 @@ td.subject {
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
-#pre-content>pre {
+#file-box>pre {
+    font-family: 'Noto Sans KR';
+    font-size: small;
+	margin: auto;
+    padding: 50px;
+    width: 750px;
+    text-align: left;
+    border: 1px double #DDDDDD;
+    margin-left: -2px;
+}
+#content-box>pre {
 	color: black;
     font-family: 'Noto Sans KR';
 	margin: auto;
@@ -270,6 +349,9 @@ td.subject {
 	font-size: small;
 	padding-bottom: 10px;
 }
+#pfn2 span {
+	font-size: small;
+}
 .ctnt {
 	margin-bottom: 30px;
 }
@@ -287,8 +369,10 @@ td.subject {
 		background-color: #444444;
 	}
 	#dtr-i {
-		padding-bottom: 0px;
-    	padding-top: 6px;
+		padding-top: 2px;
+    	padding-left: 4px;
+    	padding-right: 0px;
+    	width: 24px;
 	}
 
 div#page_control {

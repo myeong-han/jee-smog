@@ -104,4 +104,69 @@ public class AttachDao {
 			DBManager.close(con, pstmt);
 		}
 	}
+	
+	public List<AttachVO> getAttachsByBno(int bno) {
+		List<AttachVO> attachList = new ArrayList<AttachVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			con = DBManager.getConnection();
+			sb.append("SELECT * ");
+			sb.append("FROM attachs ");
+			sb.append("WHERE bno = ? ");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, bno);
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				AttachVO attachVO = new AttachVO();
+				attachVO.setUuid(rs.getString("uuid"));
+				attachVO.setUploadpath(rs.getString("uploadpath"));
+				attachVO.setFiletype(rs.getString("filetype"));
+				attachVO.setFilename(rs.getString("filename"));
+				attachVO.setBno(bno);
+				
+				attachList.add(attachVO);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt, rs);
+		}
+		
+		return attachList;
+	}
+	
+	public int getAttachCount(int bno) {
+		int count = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		StringBuilder sb = new StringBuilder();
+		try {
+			con = DBManager.getConnection();
+			sb.append("SELECT count(*) ");
+			sb.append("FROM attachs ");
+			sb.append("WHERE bno = ? ");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, bno);
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt, rs);
+		}
+		return count;
+	}
 }

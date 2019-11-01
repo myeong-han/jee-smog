@@ -46,6 +46,8 @@
 	
 	BoardDao boardDao = BoardDao.getInstance();
 	
+	boardDao.updateReadCount(num);
+	
 	BoardVO boardVO = boardDao.getBoard(num);
 	
 	// 세션에서 로우넘 가져오기 : 그냥 아래에서 바로 찾는걸로 변경
@@ -81,7 +83,7 @@
 	}
 	MemberDao memberDao = MemberDao.getInstance();
 	MemberVO memberVO = memberDao.getMember(boardVO.getUsername());
-	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd\nhh:mm:ss");
+	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
 	
 	AttachDao attachDao = AttachDao.getInstance();
 	List<AttachVO> attachList = attachDao.getFileInfosFromBno(num);
@@ -97,40 +99,46 @@
 		<table border="1" id="m_content">
 			<tr class="board-th">
 				<th rowspan="2" width="60"><%=boardVO.getNum() %></th>
-				<th rowspan="2" width="110">
+				<th rowspan="2" width="100">
+					<div id="crop-con">
 					<img src="../upload/profile/<%=memberVO.getfName()!=null?memberVO.getfName():"default.jpg" %>"
-					alt="profileImage" height="100" style="padding-top: 5px;"/>
+					alt="profileImage" />
+					</div>
 				</th>
 				<th id="pfs">
 					<h1 style="margin: 0px; font-size: -webkit-xxx-large;"><%=boardVO.getSubject() %></h1>
 				</th>
-				<th rowspan="2" width="100"><%=sdf.format(boardVO.getRegDate())%></th>
+				<th width="100"><%=sdf.format(boardVO.getRegDate())%></th>
 			</tr>
 			<tr class="board-th">
 			<th id="pfn">
 				<a href="#" ><%=memberVO.getName()%></a>'s writing
 			</th>
+			<th id="pfn2"><%=boardVO.getReadcount()%><span>reads</span></th>
 			</tr>
 			<tr id="content-page">
 				<td colspan="4" id="pre-content">
-					
+					<div id="file-box">
 <%
 		String filename = "";
 		if (attachList != null) {
 			for (AttachVO attachVO : attachList) {
 				if (attachVO.getFiletype().equals("I")) {
 %>
-					<a href="../upload/<%=boardName%>/<%=attachVO.getFilename()%>"><img src="../upload/<%=boardName%>/<%=attachVO.getFilename()%>" alt="ContentImage" width="420"/></a>
+					<div>
+					<a href="../upload/<%=boardName%>/<%=attachVO.getFilename()%>"><div id="crop-content"><img src="../upload/<%=boardName%>/<%=attachVO.getFilename()%>" alt="ContentImage"/></div></a>
+					</div>
 <%
 				} else {
 %>
-					<pre style="padding-top: 10px; padding-bottom: 10px;"><span style="color: #DDDDDD">▶</span>&nbsp;&nbsp;<a href="../upload/<%=boardName%>/<%=attachVO.getFilename()%>" id="a-w" download><%=attachVO.getFilename()%></a></pre>
+					<pre style="padding-top: 10px; padding-bottom: 10px;"><span style="color: #DDDDDD">Link ▶ </span>&nbsp;&nbsp;<a href="../upload/<%=boardName%>/<%=attachVO.getFilename()%>" id="a-w" download><%=attachVO.getFilename()%></a></pre>
 <%
 				}
 			}
 		}
 %>
-					<pre><%=boardVO.getContent() %></pre>
+					</div>
+					<div id="content-box"><pre><%=boardVO.getContent() %></pre></div>
 				</td>
 			</tr>
 		</table>
@@ -146,9 +154,9 @@
 				<th>▼</th>
 			</tr>
 		</table>
-		<button type="button" onclick="location.href='#'">Edit</button>
-		<button type="button" onclick="checkDelContent()">Del</button>
-		<button type="button" onclick="location.href='#'">Reply</button>
+		<button type="button" onclick="checkControlContent('editBoard')">Edit</button>
+		<button type="button" onclick="checkControlContent('delBoard')">Del</button>
+		<button type="button" onclick="location.href='writeReply.jsp?boardnum='+<%=boardnum%>+'&reRef='+<%=boardVO.getReRef()%>+'&reLev='+<%=boardVO.getReLev()%>+'&reSeq='+<%=boardVO.getReSeq()%>">Reply</button>
 		<button type="button" onclick="location.href='<%=loc%>'">List</button>
 		</fieldset>
 		</article>
@@ -159,9 +167,9 @@
 <script src="../scripts/main.js"></script>
 <script>
 //content에서 del버튼 클릭시 호출되는 함수
-function checkDelContent() {
+function checkControlContent(where) {
 	if ('<%=id%>' == '<%=boardVO.getUsername()%>') {
-		popupLogin('reLogin-del.jsp?where=delBoard&boardnum=<%=boardnum%>&num=<%=num%>&pageNum=<%=pageNum%>',350,165);
+		popupLogin('reLogin-board.jsp?where='+where+'&boardnum=<%=boardnum%>&num=<%=num%>&pageNum=<%=pageNum%>',350,165);
 	} else if ('<%=id%>' == '') {
 		alert('Please sign in');
 	} else {

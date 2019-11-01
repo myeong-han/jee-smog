@@ -1,3 +1,5 @@
+<%@page import="com.exam.vo.AttachVO"%>
+<%@page import="com.exam.dao.AttachDao"%>
 <%@page import="java.io.File"%>
 <%@page import="com.exam.Tools"%>
 <%@page import="java.util.ArrayList"%>
@@ -35,7 +37,16 @@
 		location.href= '<%=loc%>';
 		</script><%
 		return;
-	}
+	}	
+	
+	
+	int num = Integer.parseInt(request.getParameter("num"));
+	BoardDao boardDao = BoardDao.getInstance();
+	BoardVO boardVO = boardDao.getBoard(num);
+	
+	AttachDao attachDao = AttachDao.getInstance();
+	int fileCount = attachDao.getAttachCount(num);
+	List<AttachVO> attachList = attachDao.getAttachsByBno(num);
 %>
 <body>
 	<div id="all">
@@ -49,10 +60,28 @@
 			<input type="hidden" name="boardnum" value="<%=boardnum%>" />
 			<table border="1" id="m_content" style="margin-bottom: 25px">
 				<tr>
-					<th width="200" class="board-th">Subject</th><td id="content-page" colspan="2"><input type="text" name="subject" style="font-size: 30px; padding: 10px; padding-left: 30px; padding-right: 30px; margin: 10px; width: 640px;" /></td>
+					<th width="200" class="board-th">Subject</th>
+					<td id="content-page" colspan="2">
+					<input type="text" name="subject" value="<%=boardVO.getSubject()%>" style="font-size: 30px; padding: 10px; padding-left: 30px; padding-right: 30px; margin: 10px; width: 640px;" />
+					</td>
 				</tr>
 				<tr>
-					<th class="board-th">Content</th><td id="content-page" colspan="2"><textarea rows="22" cols="64" name="content" style="background-color: #DDDDDD; font-size: 20px; padding: 20px; margin-top: 10px; margin-bottom: 4px;"></textarea></td>
+					<th class="board-th">Content</th>
+					<td id="content-page" colspan="2">
+					<textarea rows="22" cols="64" name="content" style="background-color: #DDDDDD; font-size: 20px; padding: 20px; margin-top: 10px; margin-bottom: 4px;"><%=boardVO.getContent()%></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th class="board-th">Old file</th>
+					<td id="f-cont" colspan="2">
+<%
+				for (AttachVO attachVO : attachList) {
+%>
+					<img src="../upload/<%"/"%>" alt="" />
+<%
+				}
+%>
+					</td>
 				</tr>
 				<tr>
 					<th class="board-th">File</th><td id="f-cont"><input type="file" name="filename1" class="inputF" id="input-file" style="font-size: 20px; margin-top: 7px; width: 540px;"/></td>

@@ -29,7 +29,13 @@
 		var result = false;		// delete confirm용 js변수 선언
 		</script>
 <%
-		if (where.equals("delBoard")) {	// update의 경우 주소 입력
+		if (where.equals("editBoard")) {
+%>
+ 			<script>
+ 			addr = '../content/updateContent.jsp?num='+<%=num%>;
+ 			</script>
+<%
+		} else if (where.equals("delBoard")) {	// update의 경우 주소 입력
 %>
 			<script>
 			result = confirm('Are you sure you want to delete this content?');
@@ -40,17 +46,14 @@
 			</script>
 <%
 		}
-%>
-		<script>
-		location.href = addr;
-		</script>
-<%
 	} else {							// passwd가 세션id와 일치하지 않는 경우 이전페이지로
 %>
 		<script>
 		alert('Password does not match');
-		location.href = addr;
 		</script>
 <%
 	}
 %>
+<script>
+	location.href = addr;
+</script>

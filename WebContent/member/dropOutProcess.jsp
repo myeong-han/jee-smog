@@ -1,3 +1,5 @@
+<%@page import="com.exam.Tools"%>
+<%@page import="com.exam.vo.MemberVO"%>
 <%@page import="com.exam.dao.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -17,6 +19,10 @@
 	
 	MemberDao memberDao = MemberDao.getInstance();
 	for (String dropId : dropOutIds) {
+		MemberVO memberVO = memberDao.getMember(dropId);
+		
+		Tools.delFileToProfile(application, memberVO);
+		
 		memberDao.deleteMember(dropId);
 	}
 %>

@@ -36,6 +36,10 @@
 		</script><%
 		return;
 	}
+	
+	String reRef = request.getParameter("reRef");
+	String reLev = request.getParameter("reLev");
+	String reSeq = request.getParameter("reSeq");
 %>
 <body>
 	<div id="all">
@@ -45,11 +49,14 @@
 		<article>
 		<fieldset class="f1">
 		<legend><h1><%=boardName.substring(0, 1).toUpperCase()+boardName.substring(1) %></h1></legend>
-			<form action="writeProcess.jsp" name="wfrm" method="post" onsubmit="return checkInsBoard()" enctype="multipart/form-data">
+			<form action="writeReplyProcess.jsp" name="wfrm" method="post" onsubmit="return checkInsBoard()" enctype="multipart/form-data">
+			<input type="hidden" name="reRef" value="<%=reRef%>" />
+			<input type="hidden" name="reLev" value="<%=reLev%>" />
+			<input type="hidden" name="reSeq" value="<%=reSeq%>" />
 			<input type="hidden" name="boardnum" value="<%=boardnum%>" />
 			<table border="1" id="m_content" style="margin-bottom: 25px">
 				<tr>
-					<th width="200" class="board-th">Subject</th><td id="content-page" colspan="2"><input type="text" name="subject" style="font-size: 30px; padding: 10px; padding-left: 30px; padding-right: 30px; margin: 10px; width: 640px;" /></td>
+					<th width="200" class="board-th">Subject</th><td id="content-page" colspan="2"><input type="text" name="subject" placeholder="Reply ▶" style="font-size: 30px; padding: 10px; padding-left: 30px; padding-right: 30px; margin: 10px; width: 640px;" /></td>
 				</tr>
 				<tr>
 					<th class="board-th">Content</th><td id="content-page" colspan="2"><textarea rows="22" cols="64" name="content" style="background-color: #DDDDDD; font-size: 20px; padding: 20px; margin-top: 10px; margin-bottom: 4px;"></textarea></td>

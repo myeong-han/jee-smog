@@ -36,7 +36,7 @@
 	function reLogin() {
 		window.opener.name = "parent";
 		frm.target = "parent";
-		frm.action = "../content/reLogin-delProcess.jsp";
+		frm.action = "../content/reLogin-boardProcess.jsp";
 		frm.submit();
 		window.close();
 	}

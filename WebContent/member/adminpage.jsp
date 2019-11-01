@@ -60,7 +60,7 @@
 		for (MemberVO memberVO : memberList) {
 %>
 			<tr class="content-tr" id="mp" >
-				<td class="board-th" id="dtr-i"><img src="../upload/profile/<%=memberVO.getfName()!=null?memberVO.getfName():"default.jpg"%>" height="20"/></td>
+				<td class="board-th" id="dtr-i"><div id="crop-admin"><img src="../upload/profile/<%=memberVO.getfName()!=null?memberVO.getfName():"default.jpg"%>"/></div></td>
 				<td class="dtr"><input type="checkbox" name="dropout" value="<%=memberVO.getId() %>" /></td>
 				<td class="dtr"><a href="javascript:popupLogin('memberpage.jsp?id=<%=memberVO.getId()%>',1000,1060);"><%=memberVO.getId() %></a></td>
 				<td><%=memberVO.getName() %></td>

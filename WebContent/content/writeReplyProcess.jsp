@@ -19,7 +19,7 @@
 	String id = (String)session.getAttribute("id");
 	
 	if (id == null) {
-		response.sendRedirect("write.jsp");
+		response.sendRedirect("writeReply.jsp");
 		return;
 	}
 	
@@ -59,11 +59,11 @@
 	
 	boardVO.setNum(num);
 	boardVO.setReadcount(0);
-	boardVO.setReRef(num);
-	boardVO.setReLev(0);
-	boardVO.setReSeq(0);
+	boardVO.setReRef(Integer.parseInt(multi.getParameter("reRef")));
+	boardVO.setReLev(Integer.parseInt(multi.getParameter("reLev")));
+	boardVO.setReSeq(Integer.parseInt(multi.getParameter("reSeq")));
 	
-	boardDao.insertBoard(boardVO);// board 테이블에 인서트
+	boardDao.insertReply(boardVO);// board 테이블에 인서트
 	
 	
 	//====================파일업로드=================================
