@@ -429,4 +429,33 @@ public class BoardDao {
 		
 		return count;
 	}
+	
+	public void updateBoard(BoardVO boardVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			con = DBManager.getConnection();
+			
+			sb.append("UPDATE boards ");
+			sb.append("SET subject=?, content=? ");
+			sb.append("WHERE num=? ");
+			
+			pstmt = con.prepareStatement(sb.toString());
+			
+			pstmt.setString(1, boardVO.getSubject());
+			pstmt.setString(2, boardVO.getContent());
+			pstmt.setInt(3, boardVO.getNum());
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt);
+		}
+	}
 }

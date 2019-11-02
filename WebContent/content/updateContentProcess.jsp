@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="java.io.IOException"%>
 <%@page import="com.exam.Tools"%>
 <%@page import="com.exam.dao.AttachDao"%>
@@ -22,7 +23,7 @@
 		response.sendRedirect("write.jsp");
 		return;
 	}
-	
+	int num = Integer.parseInt(request.getParameter("num"));
 	String boardnum = (String) session.getAttribute("boardnum");
 	String boardName = Tools.getBoardName(boardnum);
 	
@@ -44,29 +45,29 @@
 	}
 	BoardVO boardVO = new BoardVO();
 	
-	boardVO.setUsername(id);
 	boardVO.setSubject(multi.getParameter("subject"));
 	boardVO.setContent(multi.getParameter("content"));
-	boardVO.setBoardnum(Integer.parseInt(multi.getParameter("boardnum")));
-	
-	// 글 등록날짜, ip주소값 저장
-	boardVO.setRegDate(new Timestamp(System.currentTimeMillis()));
-	boardVO.setIp(request.getRemoteAddr());
+	boardVO.setNum(num);
 	
 	// dao객체 준비
 	BoardDao boardDao = BoardDao.getInstance();
-	int num = boardDao.nextBoardNum();
-	
-	boardVO.setNum(num);
-	boardVO.setReadcount(0);
-	boardVO.setReRef(num);
-	boardVO.setReLev(0);
-	boardVO.setReSeq(0);
-	
-	boardDao.insertBoard(boardVO);// board 테이블에 인서트
+	boardDao.updateBoard(boardVO);// board 테이블에 업데이트
 	
 	
-	//====================파일업로드=================================
+	// -----------------파일삭제-------------------------
+	
+	// AttachDao 준비
+	AttachDao attachDao = AttachDao.getInstance();
+	
+	List<AttachVO> attachList = attachDao.getAttachsByBno(num);
+	
+	// 실제경로 파일 삭제
+	Tools.delFilesForBoard(application, attachList, boardName);
+	
+	// DB에서 삭제
+	attachDao.deleteAttach(num);
+	
+	//====================파일업로드=================================	
 	
 	Enumeration<String> enu = multi.getFileNames();
 	
@@ -102,8 +103,7 @@
 				attachVO.setFiletype("O");
 			}
 			
-			// AttachDao 준비
-			AttachDao attachDao = AttachDao.getInstance();
+			
 			// 첨부파일 정보 한개 등록하는 메소드 호출
 			attachDao.insertAttach(attachVO);
 		}

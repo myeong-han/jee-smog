@@ -36,8 +36,7 @@
 		location.href= '<%=loc%>';
 		</script><%
 		return;
-	}	
-	
+	}
 	
 	int num = Integer.parseInt(request.getParameter("num"));
 	BoardDao boardDao = BoardDao.getInstance();
@@ -75,15 +74,15 @@
 			List<AttachVO> fileList = new ArrayList<>();
 %>
 				<tr>
-					<th class="board-th">Old file</th>
-					<td id="f-cont" colspan="2">
+					<th class="board-th">Old file<br /><span>*해당기능 미구현으로<br />모든 파일이 삭제됩니다.</span></th>
+					<td id="" colspan="2">
 <%
 				for (AttachVO attachVO : attachList) {
 					if (attachVO.getFiletype().equals("I")) {
 %>
 						<div id="crop-con" class="crop-float" style="z-index: 0;">
 						<img src="../upload/<%=boardName+"/"+attachVO.getFilename()%>" style="z-index: -1;"/>
-						<a href="#" id="a-w" style="padding-left: 72px;">X</a>
+						<a href="javascript:delSelectedFile()" id="a-w" style="padding-left: 72px;">X</a>
 						</div>
 <%
 					} else {
@@ -92,7 +91,7 @@
 				}
 				for (AttachVO attachVO : fileList) {
 %>
-					<p style="text-align: right; margin: 0px; margin-right: 10px"><%=attachVO.getFilename() %> <a href="#" id="a-w">X</a></p>
+					<p style="text-align: right; margin: 0px; margin-right: 10px; color: #777777;"><%=attachVO.getFilename() %> <a href="javascript:delSelectedFile()" id="a-w">X</a></p>
 <%
 				}
 %>
@@ -120,6 +119,13 @@
 <script src="../scripts/jquery-3.4.1.js"></script>
 <script src="../scripts/main.js"></script>
 <script>
+// x버튼 클릭시 ajax통신으로 파일을 삭제하고 DB에서 튜플을 삭제하기위한 함수
+// 미구현 : 여기서 바로 삭제시키는게 아니라 삭제할 파일의 정보를 저장한 후에 submit 시키고, 그 정보가 있을때에 삭제를 실행해야 함
+// 현재 미구현으로 모든 파일은 삭제되고 새로 업로드한 파일만 업로드됨
+function delSelectedFile() {
+	alert('현재 해당 기능 미구현입니다.');
+}
+
 //board Write시 파일 추가 함수
 var num = 2;
 function addFileElement() {
