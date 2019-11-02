@@ -103,7 +103,9 @@ nav>fieldset>ul>li {
 		-ms-transform: translate(-50%,-50%);
 		transform: translate(-50%,-50%); 
 	}
-	
+	.crop-float {
+		float: left;
+	}
 	#crop-admin {
 		position: relative;
 		width: 20px;
@@ -124,8 +126,8 @@ nav>fieldset>ul>li {
 	#crop-content {
 		float: left;
 		position: relative;
-		width: 170px;
-		height: 200px;
+		width: 426px;
+		height: 426px;
 		overflow: hidden;
 	}
 	#crop-content>img { 
@@ -166,6 +168,10 @@ fieldset.f1 {
 	width: 900px;
 	text-align: right;
 	margin-bottom: 30px;
+}
+fieldset.f1-1 {
+	width: 400px;
+	text-align: right;
 }
 fieldset.f2 {
 	width: 300px;
@@ -236,8 +242,23 @@ table#information {
 	margin-left: auto; margin-right: auto;
 	margin-bottom: 40px;
 }
+table#information-1 {
+	width: 400px;
+	text-align: center;
+	margin-left: auto; margin-right: auto;
+	margin-bottom: 20px;
+}
 img#inf-profile {
 	width: 600px;
+}
+img#inf-profile-1 {
+	width: 400px;
+}
+#information img {
+	border-radius: 10%;
+}
+#information-1 img {
+	border-radius: 10%;
 }
 table#m_information {
 	width: 900px;
@@ -318,20 +339,22 @@ td.subject {
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
-#file-box>pre {
+#file-box>#files {
+	clear: both;
     font-family: 'Noto Sans KR';
     font-size: small;
 	margin: auto;
-    padding: 50px;
+    padding-left: 50px; padding-top: 10px; padding-bottom: 10px; padding-right: 50px;
     width: 750px;
     text-align: left;
     border: 1px double #DDDDDD;
-    margin-left: -2px;
+    margin-left: 0px;
 }
 #content-box>pre {
 	color: black;
     font-family: 'Noto Sans KR';
 	margin: auto;
+	margin-left: 23px;
     padding: 50px;
     width: 750px;
     text-align: left;
@@ -358,9 +381,6 @@ td.subject {
 	/*admin*/
 	.content-tr input {
 		margin: 4px;
-	}
-	#information img {
-		border-radius: 10%;
 	}
 	.dtr {
 		background-color: #666666;

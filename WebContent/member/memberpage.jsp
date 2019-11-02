@@ -1,3 +1,4 @@
+<%@page import="com.exam.dao.BoardDao"%>
 <%@page import="com.exam.dao.MemberDao"%>
 <%@page import="com.exam.vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,26 +11,20 @@
 <link rel="stylesheet" href="../css/main.css" />
 </head>
 <%
-	String id = (String)session.getAttribute("id");
 	String memberId = request.getParameter("id");
-	
-	if (id == null || !id.equals("admin")) {
-		%> <script>
-		window.close();
-		</script><%
-		return;
-	}
 	
 	MemberVO memberVO = new MemberVO();
 	MemberDao memberDao = MemberDao.getInstance();
 	memberVO = memberDao.getMember(memberId);
+	
+	BoardDao boardDao = BoardDao.getInstance();
 %>
-<body>
+<body class="popup">
 		<article>
-		<fieldset class="f1">
+		<fieldset class="f1-1">
 		<legend><h1>Member's Information</h1></legend>
-			<table id="information" border="1">
-			<caption><img id="inf-profile" src="../upload/profile/<%=memberVO.getfName()==null?"default.jpg":memberVO.getfName() %>" alt="profileImage" /></caption>
+			<table id="information-1" border="1">
+			<caption><img id="inf-profile-1" src="../upload/profile/<%=memberVO.getfName()==null?"default.jpg":memberVO.getfName() %>" alt="profileImage" /></caption>
 			<tr><th class="board-th2">Registered Date</th><td><%=memberVO.getRegDate().toString().split(" ")[0] %></td></tr>
 			<tr><th class="board-th2">Nick Name</th><td><%=memberVO.getName() %></td></tr>
 			<tr><th class="board-th2">Age</th><td><%=memberVO.getAge()!=0?"<span>만</span> "+memberVO.getAge()+"<span>세</span>":"" %></td></tr>
@@ -56,7 +51,9 @@
 		}
 %>
 			</td></tr>
+			<tr><th class="board-th2">Writes</th><td><%=boardDao.getWriteCount(memberId)%></td></tr>
 			</table>
+			<button type="button" onclick="window.close()">close</button>
 		</fieldset>
 		</article>
 <script src="../scripts/jquery-3.4.1.js"></script>

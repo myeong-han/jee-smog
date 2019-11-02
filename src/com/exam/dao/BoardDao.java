@@ -395,4 +395,38 @@ public class BoardDao {
 			DBManager.close(con, pstmt);
 		}
 	}
+	
+	public int getWriteCount(String username) {
+		int count = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			con = DBManager.getConnection();
+			
+			sb.append("SELECT COUNT(*) ");
+			sb.append("FROM boards ");
+			sb.append("WHERE username = ? ");
+			
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, username);
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			count = rs.getInt(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt, rs);
+		}
+		
+		return count;
+	}
 }

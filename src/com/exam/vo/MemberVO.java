@@ -20,7 +20,6 @@ public class MemberVO {
 	private String fUuid;
 	private String fPath;
 	private String fName;
-	private int writes;
 	
 	public String getId() {
 		return id;
@@ -113,12 +112,6 @@ public class MemberVO {
 	public void setfName(String fName) {
 		this.fName = fName;
 	}
-	public int getWrites() {
-		return writes;
-	}
-	public void setWrites(int writes) {
-		this.writes = writes;
-	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -152,8 +145,6 @@ public class MemberVO {
 		builder.append(fPath);
 		builder.append(", fName=");
 		builder.append(fName);
-		builder.append(", writes=");
-		builder.append(writes);
 		builder.append("]");
 		return builder.toString();
 	}

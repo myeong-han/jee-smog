@@ -63,7 +63,17 @@
 %>
 			<tr class="content-tr" onclick="location.href='../content/content.jsp?boardnum=<%=boardnum%>&num=<%=boardVO.getNum()%>&pageNum=<%=pageNum%>'">
 				<td><%=boardVO.getNum() %></td>
-				<td class="subject"><%=boardVO.getSubject() %></td>
+				<td class="subject">
+<%
+				if (boardVO.getReLev() > 0) {
+%>
+					<img src="../images/content/gap.png" width="<%=(boardVO.getReLev()-1)*10%>" />
+					<img src="../images/content/re3.png"/>
+<%
+				}
+%>
+					<%=boardVO.getSubject() %>
+				</td>
 				<td><%=memberVO.getName() %></td>
 				<td><%=boardVO.getRegDate().toString().split(" ")[0] %></td>
 				<td><%=boardVO.getReadcount()%></td>

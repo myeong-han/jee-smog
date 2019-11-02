@@ -112,7 +112,7 @@
 			</tr>
 			<tr class="board-th">
 			<th id="pfn">
-				<a href="#" ><%=memberVO.getName()%></a>'s writing
+				<a href="javascript:popupLogin('../member/memberpage.jsp?id=<%=boardVO.getUsername()%>',450,880);"><%=memberVO.getName()%></a>'s writing
 			</th>
 			<th id="pfn2"><%=boardVO.getReadcount()%><span>reads</span></th>
 			</tr>
@@ -120,24 +120,44 @@
 				<td colspan="4" id="pre-content">
 					<div id="file-box">
 <%
-		String filename = "";
-		if (attachList != null) {
-			for (AttachVO attachVO : attachList) {
-				if (attachVO.getFiletype().equals("I")) {
+				String filename = "";
+			if (attachList != null && attachList.size() > 0) {
+				List<AttachVO> fileList = new ArrayList<>(); // 파일만 따로 저장할 리스트 준비
 %>
 					<div>
-					<a href="../upload/<%=boardName%>/<%=attachVO.getFilename()%>"><div id="crop-content"><img src="../upload/<%=boardName%>/<%=attachVO.getFilename()%>" alt="ContentImage"/></div></a>
+<%
+					for (AttachVO attachVO : attachList) {
+						if (attachVO.getFiletype().equals("I")) { // 이미지 바로 출력
+%>
+							<a href="../upload/<%=boardName%>/<%=attachVO.getFilename()%>">
+								<div id="crop-content">
+									<img src="../upload/<%=boardName%>/<%=attachVO.getFilename()%>" alt="ContentImage"/>
+								</div>
+							</a>							
+<%
+						} else {	// 아미지 아닐때 준비해둔 리스트에 저장
+							fileList.add(attachVO);
+						}
+					}
+%>
 					</div>
 <%
-				} else {
+				if (fileList.size() > 0) {
 %>
-					<pre style="padding-top: 10px; padding-bottom: 10px;"><span style="color: #DDDDDD">Link ▶ </span>&nbsp;&nbsp;<a href="../upload/<%=boardName%>/<%=attachVO.getFilename()%>" id="a-w" download><%=attachVO.getFilename()%></a></pre>
+					<div id="files">
+<%
+					for (AttachVO attachVO : fileList) { // 저장해둔 파일 리스트에서 출력
+%>
+							<span style="color: #DDDDDD">Link ▶ </span>&nbsp;&nbsp;<a href="../upload/<%=boardName%>/<%=attachVO.getFilename()%>" id="a-w" download><%=attachVO.getFilename()%></a><br />
+<%
+					}
+%>
+					</div>
 <%
 				}
 			}
-		}
 %>
-					</div>
+					</div><!-- file-box -->
 					<div id="content-box"><pre><%=boardVO.getContent() %></pre></div>
 				</td>
 			</tr>

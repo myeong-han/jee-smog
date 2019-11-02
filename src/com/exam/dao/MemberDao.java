@@ -316,8 +316,6 @@ public class MemberDao {
 					String[] interesteds = rs.getString("interested").split("/");
 					memberVO.setInterested(interesteds);
 				}
-				memberVO.setWrites(0); // 수정필요
-				
 				memberList.add(memberVO);
 			}
 			

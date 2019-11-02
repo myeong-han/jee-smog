@@ -1,3 +1,4 @@
+<%@page import="com.exam.dao.BoardDao"%>
 <%@page import="com.exam.dao.MemberDao"%>
 <%@page import="com.exam.vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -20,6 +21,8 @@
 	MemberVO memberVO = new MemberVO();
 	MemberDao memberDao = MemberDao.getInstance();
 	memberVO = memberDao.getMember(id);
+	
+	BoardDao boardDao = BoardDao.getInstance();
 %>
 <body>
 	<div id="all">
@@ -57,6 +60,7 @@
 		}
 %>
 			</td></tr>
+			<tr><th class="board-th2">Writes</th><td><%=boardDao.getWriteCount(id)%></td></tr>
 			</table>
 			<button type="button" onclick="popupLogin('reLogin.jsp?where=update',350,165)">Modify Information</button>
 			<button type="button" onclick="popupLogin('reLogin.jsp?where=delete',350,165)">Drop out</button>

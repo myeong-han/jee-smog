@@ -21,8 +21,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	
-	String boardnum = request.getParameter("boardnum");
-	session.setAttribute("boardnum", boardnum);
+	String boardnum = Tools.getBoardnum(session, request);
 	String boardName = Tools.getBoardName(boardnum);
 	
 	String pageNum = request.getParameter("pageNum");
@@ -71,18 +70,37 @@
 					<textarea rows="22" cols="64" name="content" style="background-color: #DDDDDD; font-size: 20px; padding: 20px; margin-top: 10px; margin-bottom: 4px;"><%=boardVO.getContent()%></textarea>
 					</td>
 				</tr>
+<%
+		if (attachList != null && attachList.size() > 0) {
+			List<AttachVO> fileList = new ArrayList<>();
+%>
 				<tr>
 					<th class="board-th">Old file</th>
 					<td id="f-cont" colspan="2">
 <%
 				for (AttachVO attachVO : attachList) {
+					if (attachVO.getFiletype().equals("I")) {
 %>
-					<img src="../upload/<%"/"%>" alt="" />
+						<div id="crop-con" class="crop-float" style="z-index: 0;">
+						<img src="../upload/<%=boardName+"/"+attachVO.getFilename()%>" style="z-index: -1;"/>
+						<a href="#" id="a-w" style="padding-left: 72px;">X</a>
+						</div>
+<%
+					} else {
+						fileList.add(attachVO);
+					}
+				}
+				for (AttachVO attachVO : fileList) {
+%>
+					<p style="text-align: right; margin: 0px; margin-right: 10px"><%=attachVO.getFilename() %> <a href="#" id="a-w">X</a></p>
 <%
 				}
 %>
 					</td>
 				</tr>
+<%
+		}
+%>
 				<tr>
 					<th class="board-th">File</th><td id="f-cont"><input type="file" name="filename1" class="inputF" id="input-file" style="font-size: 20px; margin-top: 7px; width: 540px;"/></td>
 					<td id="content-page" width="150">

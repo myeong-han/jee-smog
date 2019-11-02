@@ -1,3 +1,4 @@
+<%@page import="com.exam.dao.BoardDao"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="com.exam.dao.MemberDao"%>
@@ -41,6 +42,8 @@
 	List<MemberVO> memberList = memberDao.getAllMembers(startRow, pageSize, search);
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+	
+	BoardDao boardDao = BoardDao.getInstance();
 %>
 <body>
 	<div id="all">
@@ -62,13 +65,13 @@
 			<tr class="content-tr" id="mp" >
 				<td class="board-th" id="dtr-i"><div id="crop-admin"><img src="../upload/profile/<%=memberVO.getfName()!=null?memberVO.getfName():"default.jpg"%>"/></div></td>
 				<td class="dtr"><input type="checkbox" name="dropout" value="<%=memberVO.getId() %>" /></td>
-				<td class="dtr"><a href="javascript:popupLogin('memberpage.jsp?id=<%=memberVO.getId()%>',1000,1060);"><%=memberVO.getId() %></a></td>
+				<td class="dtr"><a href="javascript:popupLogin('memberpage.jsp?id=<%=memberVO.getId()%>',450,880);"><%=memberVO.getId() %></a></td>
 				<td><%=memberVO.getName() %></td>
 				<td><%=memberVO.getBirth()!=null?memberVO.getBirth().toString().split(" ")[0]:"" %></td>
 				<td><%=memberVO.getGender()!=null&&!memberVO.getGender().equals("")?memberVO.getGender():"" %></td>
 				<td><%=memberVO.getEmail()!=null&&!memberVO.getGender().equals("")?memberVO.getEmail():"" %></td>
 				<td><%=memberVO.getRegDate()!=null?sdf.format(memberVO.getRegDate()):"" %></td>
-				<td><%=memberVO.getWrites() %></td>
+				<td><%=boardDao.getWriteCount(memberVO.getId()) %></td>
 			</tr>
 <%
 		}
