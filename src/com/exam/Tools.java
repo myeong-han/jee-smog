@@ -62,6 +62,19 @@ public class Tools {
 		}
 	}
 	
+	public static void delFilesWhenException(ServletContext application, String fileName, String boardName) {
+		final String REAL_PATH = application.getRealPath("/upload/"+boardName);
+		
+		if (fileName != null) {
+			// 파일 객체에 해당 경로와 이름을 지정
+			File file = new File(REAL_PATH, fileName);
+			
+			if (file.exists()) { // 해당 경로에 파일이 있는지 확인
+				file.delete(); // 해당경로에 있는 파일 삭제 수행
+			}
+		}
+	}
+	
 	public static void delFileToProfile(ServletContext application, MemberVO memberVO) {
 		final String REAL_PATH = application.getRealPath("/upload/profile");
 		

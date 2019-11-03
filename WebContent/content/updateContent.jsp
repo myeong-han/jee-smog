@@ -54,7 +54,8 @@
 		<article>
 		<fieldset class="f1">
 		<legend><h1><%=boardName.substring(0, 1).toUpperCase()+boardName.substring(1) %></h1></legend>
-			<form action="writeProcess.jsp" name="wfrm" method="post" onsubmit="return checkInsBoard()" enctype="multipart/form-data">
+			<form action="updateContentProcess.jsp" name="wfrm" method="post" onsubmit="return checkInsBoard()" enctype="multipart/form-data">
+			<input type="hidden" name="num" value="<%=num%>" />
 			<input type="hidden" name="boardnum" value="<%=boardnum%>" />
 			<table border="1" id="m_content" style="margin-bottom: 25px">
 				<tr>
@@ -109,11 +110,12 @@
 				</tr>
 			</table>
 			<button type="reset">Reset</button>
-			<button type="submit">Write</button>
+			<button type="submit">update</button>
 			</form>
 		</fieldset>
 		</article>
 	</fieldset>
+	<jsp:include page="../include/topbar.jsp" />
 	<jsp:include page="../include/footer.jsp" />
 	</div>
 <script src="../scripts/jquery-3.4.1.js"></script>

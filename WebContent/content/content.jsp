@@ -86,7 +86,7 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
 	
 	AttachDao attachDao = AttachDao.getInstance();
-	List<AttachVO> attachList = attachDao.getFileInfosFromBno(num);
+	List<AttachVO> attachList = attachDao.getAttachsByBno(num);
 %>
 <body>
 	<div id="all">
@@ -176,11 +176,18 @@
 		</table>
 		<button type="button" onclick="checkControlContent('editBoard')">Edit</button>
 		<button type="button" onclick="checkControlContent('delBoard')">Del</button>
+<%
+	if (!boardnum.equals("3")) {
+%>
 		<button type="button" onclick="location.href='writeReply.jsp?boardnum='+<%=boardnum%>+'&reRef='+<%=boardVO.getReRef()%>+'&reLev='+<%=boardVO.getReLev()%>+'&reSeq='+<%=boardVO.getReSeq()%>">Reply</button>
+<%
+	}
+%>
 		<button type="button" onclick="location.href='<%=loc%>'">List</button>
 		</fieldset>
 		</article>
 	</fieldset>
+	<jsp:include page="../include/topbar.jsp" />
 	<jsp:include page="../include/footer.jsp" />
 	</div>
 <script src="../scripts/jquery-3.4.1.js"></script>

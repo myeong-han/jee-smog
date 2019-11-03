@@ -23,7 +23,7 @@
 		response.sendRedirect("write.jsp");
 		return;
 	}
-	int num = Integer.parseInt(request.getParameter("num"));
+	
 	String boardnum = (String) session.getAttribute("boardnum");
 	String boardName = Tools.getBoardName(boardnum);
 	
@@ -43,6 +43,8 @@
 		e.printStackTrace();
 		return;
 	}
+	
+	int num = Integer.parseInt(multi.getParameter("num"));
 	BoardVO boardVO = new BoardVO();
 	
 	boardVO.setSubject(multi.getParameter("subject"));

@@ -41,44 +41,6 @@ public class AttachDao {
 		}
 	}
 	
-	public List<AttachVO> getFileInfosFromBno(int bno) {
-		List<AttachVO> fileInfos = new ArrayList<AttachVO>();
-		
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		StringBuffer sb = new StringBuffer();
-		try {
-			con = DBManager.getConnection();
-			sb.append("SELECT * ");
-			sb.append("FROM attachs ");
-			sb.append("WHERE bno = ? ");
-			pstmt = con.prepareStatement(sb.toString());
-			pstmt.setInt(1, bno);
-			
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				AttachVO attachVO = new AttachVO();
-				attachVO.setUuid(rs.getString("uuid"));
-				attachVO.setUploadpath(rs.getString("uploadpath"));
-				attachVO.setFilename(rs.getString("filename"));
-				attachVO.setFiletype(rs.getString("filetype"));
-				attachVO.setBno(bno);
-				
-				fileInfos.add(attachVO);
-			}
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			DBManager.close(con, pstmt, rs);
-		}
-		
-		return fileInfos;
-	}
-	
 	public void deleteAttach(int bno) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -140,6 +102,38 @@ public class AttachDao {
 		}
 		
 		return attachList;
+	}
+	
+	public String getFirstImageByBno(int bno) {
+		String firstImage = "";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		StringBuilder sb = new StringBuilder();
+		
+		try {
+			con = DBManager.getConnection();
+			sb.append("SELECT * ");
+			sb.append("FROM attachs ");
+			sb.append("WHERE bno = ? ");
+			sb.append("AND filetype = 'I' ");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, bno);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				firstImage = rs.getString("filename");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBManager.close(con, pstmt, rs);
+		}
+		
+		return firstImage;
 	}
 	
 	public int getAttachCount(int bno) {

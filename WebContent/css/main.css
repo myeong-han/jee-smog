@@ -22,7 +22,11 @@ img#home_icon {
 	top: 10%;
 	width: 200px;
 }
-
+h1 {
+	font-size: 1.5em;
+	margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+}
 
 /* nav */
 nav>fieldset>ul {
@@ -41,6 +45,9 @@ nav>fieldset>ul>li {
 	margin-left: 17px; margin-right: 17px;
 	margin-top: 15px;
 	height: 70px;
+}
+.nav_btn:active {
+	opacity: 0.5;
 }
 #s-hyp {
 	float: right;
@@ -140,6 +147,37 @@ nav>fieldset>ul>li {
 		-ms-transform: translate(-50%,-50%);
 		transform: translate(-50%,-50%); 
 	}
+	
+	#crop-gall {
+		position: relative;
+		width: 270px;
+		height: 270px;
+		overflow: hidden;
+	}
+	#crop-gall>img { 
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		height: 100%;
+		width: auto;
+		-webkit-transform: translate(-50%,-50%);
+		-ms-transform: translate(-50%,-50%);
+		transform: translate(-50%,-50%); 
+	}
+		/*Animation*/
+	#crop-gall {
+		border: 1px solid #DDDDDD;
+		transition: border-radius .5s, opacity .5s;
+	}
+	#crop-gall:hover {
+		opacity: 0.7;
+		border-radius: 60px;
+/* 		background-color: rgb(182, 149, 181); */
+		position: relative;
+		animation-name: anime;
+		animation-iteration-count: infinite;
+		animation-duration: 2s;
+	}
 #content-box {
 	clear: both;
 }
@@ -175,6 +213,10 @@ fieldset.f1-1 {
 }
 fieldset.f2 {
 	width: 300px;
+	text-align: center;
+}
+fieldset.f2-1 {
+	width: 450px;
 	text-align: center;
 }
 .notnull {
@@ -275,7 +317,9 @@ table#m_content {
 	/* a TAG */
 	#page_control>a,
 	.hyp>a,
-	#pfn a {
+	#pfn a,
+	#footer-email>a,
+	.f2-1>a {
 		text-decoration: none;
 		color: #BBBBBB;
 	}
@@ -290,7 +334,9 @@ table#m_content {
 	.hyp>a:hover,
 	#mp a:hover,
 	#pfn a:hover,
-	#a-w:hover {
+	#a-w:hover,
+	#footer-email>a:hover,
+	.f2-1>a:hover {
 		text-decoration: underline;
 		color: #EFEFEF;
 	}
@@ -322,6 +368,14 @@ table#m_content {
 td.subject {
 	text-align: left;
 	padding-left: 10px;
+}
+#table-gall {
+	float: left;
+	margin: 14px
+}	
+#tr-gall {
+	text-align: center;
+	background-color: #333333;
 }
 .content-tr {
 	background-color: #777777;
@@ -412,13 +466,17 @@ div#page_control {
 #f-cont {
 	background-color: #777777;
 }
+.f2-1>p {
+	margin-bottom: 0px;
+	font-size: small;
+}
 
 /*footer*/
 #footer-email {
 	text-align: right;
 	padding-right: 30px;
 }
-#footer-email>p {
+#footer-email>a {
 	margin-bottom: 0px;
 	font-size: 13px;
 }

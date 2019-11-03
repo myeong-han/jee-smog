@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.io.IOException"%>
 <%@page import="com.exam.Tools"%>
 <%@page import="com.exam.dao.AttachDao"%>
@@ -23,7 +25,7 @@
 		return;
 	}
 	
-	String boardnum = (String) session.getAttribute("boardnum");
+	String boardnum = Tools.getBoardnum(session, request);
 	String boardName = Tools.getBoardName(boardnum);
 	
 	String realPath = application.getRealPath("/upload/"+boardName);
@@ -63,11 +65,10 @@
 	boardVO.setReLev(0);
 	boardVO.setReSeq(0);
 	
-	boardDao.insertBoard(boardVO);// board 테이블에 인서트
-	
-	
 	//====================파일업로드=================================
 	
+	List<String> fileNameBuffer = new ArrayList<>();	// 롤백을 위한 버퍼
+	boolean isException = false;
 	Enumeration<String> enu = multi.getFileNames();
 	
 	while (enu.hasMoreElements()) { // 다음요소가 있으면
@@ -77,6 +78,8 @@
 		// 해당 파라미터 이름을 업로드에 사용 안했으면 null이 리턴
 		String realFileName = multi.getFilesystemName(str);
 		if (realFileName != null) {
+			
+			fileNameBuffer.add(realFileName);
 			
 			// 자바빈 AttachVO 객체 생성
 			AttachVO attachVO = new AttachVO();
@@ -102,11 +105,31 @@
 				attachVO.setFiletype("O");
 			}
 			
+			// 갤러리 게시판에서만 이미지 검증
+			if (boardnum.equals("3") && attachVO.getFiletype().equals("O")) {
+				isException = true;
+				break;
+			}
+			
+			boardDao.insertBoard(boardVO);// board 테이블에 인서트
 			// AttachDao 준비
 			AttachDao attachDao = AttachDao.getInstance();
 			// 첨부파일 정보 한개 등록하는 메소드 호출
 			attachDao.insertAttach(attachVO);
 		}
+	}
+	
+	if (isException) {	// 보드넘이 3번일때, 이미지파일이 아닌 파일이 하나라도 포함되어 있을 경우 :
+		for (String realFileName : fileNameBuffer) { // 업로드시킬 모든 파일을 삭제
+			Tools.delFilesWhenException(application, realFileName, boardName);
+		}
+%>
+		<script>
+		alert('It\'s not image format\nYou can upload only images of the this board');
+		history.back();
+		</script>
+<%
+		return;
 	}
 	
 	// ================== 첨부파일 등록 처리 종료 ==========================

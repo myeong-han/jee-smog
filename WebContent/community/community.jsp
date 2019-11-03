@@ -35,9 +35,9 @@
 	
 	int pageSize = 20;
 	int startRow = (pageNum-1) * pageSize + 1;
-	int count = boardDao.getBoardCount(whatS, search);
 	int intBoardnum = Integer.parseInt(boardnum);
 	
+	int count = boardDao.getBoardCount(intBoardnum, whatS, search);
 	MemberDao memberDao = MemberDao.getInstance();
 	List<BoardVO> boardList = boardDao.getBoards(intBoardnum, startRow, pageSize, whatS, search);
 	
@@ -51,7 +51,7 @@
 	<fieldset class="f0">
 		<article>
 		<fieldset class="f1">
-		<legend><h1>Community</h1></legend>
+		<legend><h1><%=search.equals("")?"Community":"Community: "+count+"Results"%></h1></legend>
 		<table id="m_information" border="1">
 			<tr class="board-th">
 				<th>No</th><th class="subject">Title</th><th>Writer</th><th>Date</th><th>Reads</th>
@@ -107,8 +107,8 @@
 		// 이전은 스타트페이지가 다음 화면일 때 부터 나타남
 		if (startPage != 1){
 %>
-			<a href="community.jsp?pageNum=1&search=<%=search%>">[First]</a>
-			<a href="community.jsp?pageNum=<%=startPage-pageBlock %>&search=<%=search%>">[Back]</a>
+			<a href="community.jsp?pageNum=1&what_s=<%=whatS%>&search=<%=search%>">[First]</a>
+			<a href="community.jsp?pageNum=<%=startPage-pageBlock %>&what_s=<%=whatS%>&search=<%=search%>">[Back]</a>
 <%
 		}
 		
@@ -117,12 +117,12 @@
 			if (i == pageNum) {
 %>
 			<b>
-				<a href="community.jsp?pageNum=<%=i%>&search=<%=search%>">[<%=i %>]</a>
+				<a href="community.jsp?pageNum=<%=i%>&what_s=<%=whatS%>&search=<%=search%>">[<%=i %>]</a>
 			</b>
 <%
 			} else {
 %>
-			<a href="community.jsp?pageNum=<%=i%>&search=<%=search%>"><%=i %></a>
+			<a href="community.jsp?pageNum=<%=i%>&what_s=<%=whatS%>&search=<%=search%>"><%=i %></a>
 <%
 			}
 		}
@@ -130,8 +130,8 @@
 		// 다음은 엔드페이지가 페이지카운트와 같을때 나타나지 않음
 		if (endPage != pageCount){
 %>
-			<a href="community.jsp?pageNum=<%=endPage+1 %>&search=<%=search%>">[Next]</a>
-			<a href="community.jsp?pageNum=<%=pageCount %>&search=<%=search%>">[Last]</a>
+			<a href="community.jsp?pageNum=<%=endPage+1 %>&what_s=<%=whatS%>&search=<%=search%>">[Next]</a>
+			<a href="community.jsp?pageNum=<%=pageCount %>&what_s=<%=whatS%>&search=<%=search%>">[Last]</a>
 <%
 		}
 	}
@@ -164,6 +164,7 @@
 		</fieldset>
 		</article>
 	</fieldset>
+	<jsp:include page="../include/topbar.jsp" />
 	<jsp:include page="../include/footer.jsp" />
 	</div>
 <script src="../scripts/jquery-3.4.1.js"></script>

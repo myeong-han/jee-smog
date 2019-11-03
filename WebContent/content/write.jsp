@@ -19,7 +19,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	
-	String boardnum = request.getParameter("boardnum");
+	String boardnum = Tools.getBoardnum(session, request);
 	session.setAttribute("boardnum", boardnum);
 	String boardName = Tools.getBoardName(boardnum);
 	
@@ -30,10 +30,20 @@
 	
 	String id = (String)session.getAttribute("id");
 	if (id == null) {
-		%> <script>
+%>
+		<script>
 		alert('If you want to write,\nyou have to log in.');
 		location.href= '<%=loc%>';
-		</script><%
+		</script>
+<%
+		return;
+	} else if (boardnum.equals("1") && !id.equals("admin")) { // 뉴스 게시판 글쓰기권한 검증
+%>
+		<script>
+		alert('You have no authority.');
+		location.href= '<%=loc%>';
+		</script>
+<%
 		return;
 	}
 %>
@@ -68,6 +78,7 @@
 		</fieldset>
 		</article>
 	</fieldset>
+	<jsp:include page="../include/topbar.jsp" />
 	<jsp:include page="../include/footer.jsp" />
 	</div>
 <script src="../scripts/jquery-3.4.1.js"></script>
@@ -98,6 +109,10 @@ function checkInsBoard() {
 		alert('You must write at least one character.');
 		return false;
 	}
+<%-- 	if (<%=boardnum%>=='3' && wfrm.filename1.value.length == 0) { --%>
+// 		alert('At least one image file must be uploaded.');
+// 		return false;
+// 	}
 }
 
 </script>

@@ -61,6 +61,7 @@
 		</form>
 		</fieldset>
 	</fieldset>
+	<jsp:include page="../include/topbar.jsp" />
 	<jsp:include page="../include/footer.jsp" />
 	</div>
 <script src="../scripts/jquery-3.4.1.js"></script>
