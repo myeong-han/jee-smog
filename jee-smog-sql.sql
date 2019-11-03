@@ -89,12 +89,16 @@ SHOW GRANTS FOR jsp_admin;
 --------------------------------------------------------
 
   ALTER TABLE ATTACHS ADD CONSTRAINT ATTACHS_UUID_PK PRIMARY KEY (UUID);
+  ALTER TABLE ATTACHS ADD CONSTRAINT attachs_bno_fk FOREIGN KEY (bno)
+  REFERENCES boards (num) ON UPDATE CASCADE;
 
 --------------------------------------------------------
 --  Constraints for Table BOARDS
 --------------------------------------------------------
 
   ALTER TABLE BOARDS ADD CONSTRAINT BOARDS_PK PRIMARY KEY (NUM);
+  ALTER TABLE BOARDS ADD CONSTRAINT boards_username_fk FOREIGN KEY (username)
+  REFERENCES members (id) ON UPDATE CASCADE;
 
 --------------------------------------------------------
 --  Constraints for Table MEMBERS
