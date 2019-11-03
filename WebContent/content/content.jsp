@@ -106,7 +106,7 @@
 					</div>
 				</th>
 				<th id="pfs">
-					<h1 style="margin: 0px; font-size: -webkit-xxx-large;"><%=boardVO.getSubject() %></h1>
+					<h1 style="margin: 0px; font-size: -webkit-xxx-large;"><%=boardVO.getReSeq()>0?"Re: "+boardVO.getSubject():boardVO.getSubject()%></h1>
 				</th>
 				<th width="100"><%=sdf.format(boardVO.getRegDate())%></th>
 			</tr>
@@ -179,7 +179,7 @@
 <%
 	if (!boardnum.equals("3")) {
 %>
-		<button type="button" onclick="location.href='writeReply.jsp?boardnum='+<%=boardnum%>+'&reRef='+<%=boardVO.getReRef()%>+'&reLev='+<%=boardVO.getReLev()%>+'&reSeq='+<%=boardVO.getReSeq()%>">Reply</button>
+		<button type="button" onclick="location.href='writeReply.jsp?boardnum='+<%=boardnum%>+'&reRef='+<%=boardVO.getReRef()%>+'&reLev='+<%=boardVO.getReLev()%>+'&reSeq='+<%=boardVO.getReSeq()%>+'&pageNum='+<%=pageNum%>">Reply</button>
 <%
 	}
 %>

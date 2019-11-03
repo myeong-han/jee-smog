@@ -319,6 +319,7 @@ public class BoardDao {
 			
 			sb.append("SELECT * ");
 			sb.append("FROM boards ");
+			sb.append("ORDER BY num DESC ");
 			rs = stmt.executeQuery(sb.toString());
 			
 			while (rs.next()) {

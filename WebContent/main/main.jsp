@@ -46,7 +46,7 @@
 	<jsp:include page="../include/nav.jsp" />
 	<fieldset class="f0">
 		<article>
-		<fieldset class="f1" style="width: 500px; float: left; margin-left: 54px; margin-right: 54px; margin-bottom: 0px;">
+		<fieldset class="f1" style="width: 534px; float: left; margin-left: 54px; margin-right: 20px; margin-bottom: 0px;">
 		<legend><h1>News</h1></legend>
 		<table id="m_information" border="1" style="width: 500px;">
 			<tr class="board-th">
@@ -80,7 +80,7 @@
 		</table>
 		</fieldset>
 		
-		<fieldset class="f1" style="width: 500px; float: left; margin-left: 54px; margin-right: 54px; margin-bottom: 0px;">
+		<fieldset class="f1" style="width: 534px; float: left; margin-left: 20px; margin-right: 54px; margin-bottom: 0px;">
 		<legend><h1>Community</h1></legend>
 		<table id="m_information" border="1" style="width: 500px;">
 			<tr class="board-th">

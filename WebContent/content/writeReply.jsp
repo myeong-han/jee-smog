@@ -36,7 +36,6 @@
 		</script><%
 		return;
 	}
-	
 	String reRef = request.getParameter("reRef");
 	String reLev = request.getParameter("reLev");
 	String reSeq = request.getParameter("reSeq");
@@ -50,6 +49,7 @@
 		<fieldset class="f1">
 		<legend><h1><%=boardName.substring(0, 1).toUpperCase()+boardName.substring(1) %></h1></legend>
 			<form action="writeReplyProcess.jsp" name="wfrm" method="post" onsubmit="return checkInsBoard()" enctype="multipart/form-data">
+			<input type="hidden" name="pageNum" value="<%=pageNum%>" />
 			<input type="hidden" name="reRef" value="<%=reRef%>" />
 			<input type="hidden" name="reLev" value="<%=reLev%>" />
 			<input type="hidden" name="reSeq" value="<%=reSeq%>" />

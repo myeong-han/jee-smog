@@ -69,7 +69,7 @@
 	} else {
 %>
 			<tr>
-				<td colspan="5">No Articles</td>
+				<td colspan="6">No Articles</td>
 			</tr>
 <%
 	}

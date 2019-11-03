@@ -42,6 +42,9 @@
 		e.printStackTrace();
 		return;
 	}
+	
+	String pageNum = multi.getParameter("pageNum");
+	
 	BoardVO boardVO = new BoardVO();
 	
 	boardVO.setUsername(id);
@@ -111,5 +114,5 @@
 	
 	// ================== 첨부파일 등록 처리 종료 ==========================
 	
-	response.sendRedirect("content.jsp?boardnum="+boardnum+"&num="+num+"&pageNum=1");
+	response.sendRedirect("content.jsp?boardnum="+boardnum+"&num="+num+"&pageNum="+pageNum);
 %>

@@ -110,8 +110,6 @@
 				isException = true;
 				break;
 			}
-			
-			boardDao.insertBoard(boardVO);// board 테이블에 인서트
 			// AttachDao 준비
 			AttachDao attachDao = AttachDao.getInstance();
 			// 첨부파일 정보 한개 등록하는 메소드 호출
@@ -133,6 +131,6 @@
 	}
 	
 	// ================== 첨부파일 등록 처리 종료 ==========================
-	
+	boardDao.insertBoard(boardVO);// board 테이블에 인서트
 	response.sendRedirect("content.jsp?boardnum="+boardnum+"&num="+num+"&pageNum=1");
 %>
