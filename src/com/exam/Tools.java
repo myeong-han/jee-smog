@@ -12,7 +12,7 @@ import com.exam.vo.BoardVO;
 import com.exam.vo.MemberVO;
 
 // DB에 접속하지 않지만 반복해서 등장하는 덩치큰 코드 모음
-public class Tools {
+public class Tools { 
 	
 	public static String getBoardName(String boardnum) {
 		String boardName = "";
