@@ -100,22 +100,16 @@ SHOW GRANTS FOR jsp_admin;
 --------------------------------------------------------
 
   ALTER TABLE ATTACHS ADD CONSTRAINT ATTACHS_UUID_PK PRIMARY KEY (UUID);
-<<<<<<< HEAD
   ALTER TABLE ATTACHS ADD CONSTRAINT attachs_bno_fk FOREIGN KEY (bno)
   REFERENCES boards (num);
-=======
->>>>>>> parent of 61ef100... 이제 논다 ㅠㅠ
 
 --------------------------------------------------------
 --  Constraints for Table BOARDS
 --------------------------------------------------------
 
   ALTER TABLE BOARDS ADD CONSTRAINT BOARDS_PK PRIMARY KEY (NUM);
-<<<<<<< HEAD
   ALTER TABLE BOARDS ADD CONSTRAINT boards_username_fk FOREIGN KEY (username)
   REFERENCES members (id);
-=======
->>>>>>> parent of 61ef100... 이제 논다 ㅠㅠ
 
 --------------------------------------------------------
 --  Constraints for Table MEMBERS
