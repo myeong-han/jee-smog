@@ -67,17 +67,6 @@ SHOW GRANTS FOR jsp_admin;
    );
 
 --------------------------------------------------------
---  DDL for Table COMMENTS
---------------------------------------------------------
-
-  CREATE TABLE COMMENTS
-   (	SEQ INT NOT NULL,
-  ID VARCHAR(20) NOT NULL,
- 	CONTENT TEXT NOT NULL,
- 	BNO INT NOT NULL
-    );
-
---------------------------------------------------------
 --  DDL for Index ATTACHS_UUID_PK
 --------------------------------------------------------
 
@@ -101,7 +90,7 @@ SHOW GRANTS FOR jsp_admin;
 
   ALTER TABLE ATTACHS ADD CONSTRAINT ATTACHS_UUID_PK PRIMARY KEY (UUID);
   ALTER TABLE ATTACHS ADD CONSTRAINT attachs_bno_fk FOREIGN KEY (bno)
-  REFERENCES boards (num);
+  REFERENCES boards (num) ON UPDATE CASCADE;
 
 --------------------------------------------------------
 --  Constraints for Table BOARDS
@@ -109,20 +98,10 @@ SHOW GRANTS FOR jsp_admin;
 
   ALTER TABLE BOARDS ADD CONSTRAINT BOARDS_PK PRIMARY KEY (NUM);
   ALTER TABLE BOARDS ADD CONSTRAINT boards_username_fk FOREIGN KEY (username)
-  REFERENCES members (id);
+  REFERENCES members (id) ON UPDATE CASCADE;
 
 --------------------------------------------------------
 --  Constraints for Table MEMBERS
 --------------------------------------------------------
 
   ALTER TABLE MEMBERS ADD CONSTRAINT MEMBERS_PK PRIMARY KEY (ID);
-
---------------------------------------------------------
---  Constraints for Table COMMENTS
---------------------------------------------------------
-
-  ALTER TABLE COMMENTS ADD CONSTRAINT COMMENTS_PK PRIMARY KEY (ID);
-  ALTER TABLE COMMENTS ADD CONSTRAINT COMMENTS_ID_FK FOREIGN KEY (ID)
-  REFERENCES MEMBERS (ID);
-  ALTER TABLE COMMENTS ADD CONSTRAINT COMMENTS_BNO_FK FOREIGN KEY (BNO)
-  REFERENCES BOARDS (NUM);
