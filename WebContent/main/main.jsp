@@ -45,15 +45,10 @@
 	<jsp:include page="../include/header.jsp" />
 	<jsp:include page="../include/nav.jsp" />
 	<fieldset class="f0">
-	<fieldset class="f0_5">
-	<legend><h1>Count</h1></legend>
-	</fieldset>
-	<fieldset class="f0_5">
-	<legend><h1>Hot Clip</h1></legend>
 		<article>
-		<fieldset class="f1" style="width: 430px; float: left; margin-left: 62px; margin-right: 27px; margin-bottom: 0px;">
+		<fieldset class="f1" style="width: 534px; float: left; margin-left: 54px; margin-right: 20px; margin-bottom: 0px;">
 		<legend><h1>News</h1></legend>
-		<table id="m_information" border="1" style="width: 400px;">
+		<table id="m_information" border="1" style="width: 500px;">
 			<tr class="board-th">
 				<th class="subject">Title</th><th>Writer</th><th>Reads</th>
 			</tr>
@@ -85,9 +80,9 @@
 		</table>
 		</fieldset>
 		
-		<fieldset class="f1" style="width: 430px; float: left; margin-left: 27px; margin-right: 62px; margin-bottom: 0px;">
+		<fieldset class="f1" style="width: 534px; float: left; margin-left: 20px; margin-right: 54px; margin-bottom: 0px;">
 		<legend><h1>Community</h1></legend>
-		<table id="m_information" border="1" style="width: 400px;">
+		<table id="m_information" border="1" style="width: 500px;">
 			<tr class="board-th">
 				<th class="subject">Title</th><th>Writer</th><th>Reads</th>
 			</tr>
@@ -119,7 +114,7 @@
 		</table>
 		</fieldset>
 		
-		<fieldset class="f1" style="width: 950px;;">
+		<fieldset class="f1" style="width: 1136px;">
 		<legend><h1>Gallery</h1></legend>
 <%
 	if (gallList.size() > 0) {
@@ -130,7 +125,7 @@
 %>
 			<table border="1" id="table-gall">
 			<caption id="cap-gall" onclick="location.href='../content/content.jsp?boardnum=<%=boardVO.getBoardnum()%>&num=<%=boardVO.getNum()%>&pageNum=1'">
-			<div id="crop-gall" style="width: 284px; height: 284px;">
+			<div id="crop-gall" style="width: 348px; height: 220px;">
 			<img src="../upload/gallery/<%=attachDao.getFirstImageByBno(boardVO.getNum())%>"/>
 			</div>
 			</caption>
@@ -145,7 +140,7 @@
 			</tr>
 			</table>
 <%
-			if (i == 3) {
+			if (i == 6) {
 				break;
 			}
 		}
@@ -156,8 +151,8 @@
 	}
 %>
 		</fieldset>
+		
 		</article>
-	</fieldset>
 	</fieldset>
 	<jsp:include page="../include/topbar.jsp" />
 	<jsp:include page="../include/footer.jsp" />
