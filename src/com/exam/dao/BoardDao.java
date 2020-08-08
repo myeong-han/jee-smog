@@ -28,7 +28,7 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sql = "SELECT MAX(num) FROM boards ";
+			sql = "SELECT MAX(NUM) FROM BOARDS ";
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
 			
@@ -54,9 +54,9 @@ public class BoardDao {
 		
 		try {
 			con = DBManager.getConnection();
-			sb.append("INSERT INTO boards ");
-			sb.append("(num, boardnum, username, subject, content, ");
-			sb.append(" readcount, ip, reg_date, re_ref, re_lev, re_seq) ");
+			sb.append("INSERT INTO BOARDS ");
+			sb.append("(NUM, BOARDNUM, USERNAME, SUBJECT, CONTENT, ");
+			sb.append(" READCOUNT, IP, REG_DATE, RE_REF, RE_LEV, RE_SEQ) ");
 			sb.append("VALUES (?,?,?,?,?,?,?,?,?,?,?) ");
 			pstmt = con.prepareStatement(sb.toString());
 			
@@ -89,10 +89,10 @@ public class BoardDao {
 		StringBuilder sb = new StringBuilder();
 		try {
 			con = DBManager.getConnection();
-			sb.append("UPDATE boards ");
-			sb.append("SET re_seq = re_seq+1 ");
-			sb.append("WHERE re_ref = ? ");
-			sb.append("AND re_seq > ? ");
+			sb.append("UPDATE BOARDS ");
+			sb.append("SET RE_SEQ = RE_SEQ+1 ");
+			sb.append("WHERE RE_REF = ? ");
+			sb.append("AND RE_SEQ > ? ");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, boardVO.getReRef());
 			pstmt.setInt(2, boardVO.getReSeq());
@@ -101,9 +101,9 @@ public class BoardDao {
 			pstmt.close();
 			
 			sb.setLength(0);
-			sb.append("INSERT INTO boards ");
-			sb.append("(num, boardnum, username, subject, content, ");
-			sb.append(" readcount, ip, reg_date, re_ref, re_lev, re_seq) ");
+			sb.append("INSERT INTO BOARDS ");
+			sb.append("(NUM, BOARDNUM, USERNAME, SUBJECT, CONTENT, ");
+			sb.append(" READCOUNT, IP, REG_DATE, RE_REF, RE_LEV, RE_SEQ) ");
 			sb.append("VALUES (?,?,?,?,?,?,?,?,?,?,?) ");
 			pstmt = con.prepareStatement(sb.toString());
 			
@@ -141,8 +141,8 @@ public class BoardDao {
 			con = DBManager.getConnection();
 			
 			sb.append("SELECT * ");
-			sb.append("FROM boards ");
-			sb.append("WHERE num = ?");
+			sb.append("FROM BOARDS ");
+			sb.append("WHERE NUM = ?");
 			
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, num);
@@ -150,17 +150,17 @@ public class BoardDao {
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
-				boardVO.setNum(rs.getInt("num"));
-				boardVO.setBoardnum(rs.getInt("boardnum"));
-				boardVO.setUsername(rs.getString("username"));
-				boardVO.setSubject(rs.getString("subject"));
-				boardVO.setContent(rs.getString("content"));
-				boardVO.setReadcount(rs.getInt("readcount"));
-				boardVO.setIp(rs.getString("ip"));
-				boardVO.setRegDate(rs.getTimestamp("reg_date"));
-				boardVO.setReRef(rs.getInt("re_ref"));
-				boardVO.setReLev(rs.getInt("re_lev"));
-				boardVO.setReSeq(rs.getInt("re_seq"));
+				boardVO.setNum(rs.getInt("NUM"));
+				boardVO.setBoardnum(rs.getInt("BOARDNUM"));
+				boardVO.setUsername(rs.getString("USERNAME"));
+				boardVO.setSubject(rs.getString("SUBJECT"));
+				boardVO.setContent(rs.getString("CONTENT"));
+				boardVO.setReadcount(rs.getInt("READCOUNT"));
+				boardVO.setIp(rs.getString("IP"));
+				boardVO.setRegDate(rs.getTimestamp("REG_DATE"));
+				boardVO.setReRef(rs.getInt("RE_REF"));
+				boardVO.setReLev(rs.getInt("RE_LEV"));
+				boardVO.setReSeq(rs.getInt("RE_SEQ"));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -184,21 +184,21 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			String sql = "SET @rownum:=?";
+			String sql = "SET @ROWNUM:=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow-1);
 			pstmt.executeUpdate(); 	// rownum값 세팅
 			pstmt.close();
 			
-			sb.append("SELECT *, @rownum:=@rownum+1 AS \"rownum\" ");
-			sb.append("FROM boards ");
-			sb.append("WHERE boardnum = ? ");
+			sb.append("SELECT *, @ROWNUM:=@ROWNUM+1 AS \"ROWNUM\" ");
+			sb.append("FROM BOARDS ");
+			sb.append("WHERE BOARDNUM = ? ");
 		if (!(search == null || search.equals(""))) {
 			sb.append("AND ");
-			sb.append(whatS.equals("subject")?"subject ":"username ");
+			sb.append(whatS.equals("SUBJECT")?"SUBJECT ":"USERNAME ");
 			sb.append("LIKE ? ");
 		}
-			sb.append("ORDER BY re_ref DESC, re_seq ");
+			sb.append("ORDER BY RE_REF DESC, RE_SEQ ");
 			sb.append("LIMIT ? OFFSET ? ");
 			
 			pstmt = con.prepareStatement(sb.toString());
@@ -216,17 +216,17 @@ public class BoardDao {
 			while (rs.next()) {
 				BoardVO boardVO = new BoardVO();
 				boardVO.setNum(rs.getInt("num"));
-				boardVO.setBoardnum(rs.getInt("boardnum"));
-				boardVO.setUsername(rs.getString("username"));
-				boardVO.setSubject(rs.getString("subject"));
-				boardVO.setContent(rs.getString("content"));
-				boardVO.setReadcount(rs.getInt("readcount"));
-				boardVO.setIp(rs.getString("ip"));
-				boardVO.setRegDate(rs.getTimestamp("reg_date"));
-				boardVO.setReRef(rs.getInt("re_ref"));
-				boardVO.setReLev(rs.getInt("re_lev"));
-				boardVO.setReSeq(rs.getInt("re_seq"));
-				boardVO.setRownum(rs.getInt("rownum"));
+				boardVO.setBoardnum(rs.getInt("BOARDNUM"));
+				boardVO.setUsername(rs.getString("USERNAME"));
+				boardVO.setSubject(rs.getString("SUBJECT"));
+				boardVO.setContent(rs.getString("CONTENT"));
+				boardVO.setReadcount(rs.getInt("READCOUNT"));
+				boardVO.setIp(rs.getString("IP"));
+				boardVO.setRegDate(rs.getTimestamp("REG_DATE"));
+				boardVO.setReRef(rs.getInt("RE_REF"));
+				boardVO.setReLev(rs.getInt("RE_LEV"));
+				boardVO.setReSeq(rs.getInt("RE_SEQ"));
+				boardVO.setRownum(rs.getInt("ROWNUM"));
 				boardList.add(boardVO);
 			}
 		} catch (Exception e) {
@@ -251,20 +251,20 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			String sql = "SET @rownum:=?";
+			String sql = "SET @ROWNUM:=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, startRow-1);
 			pstmt.executeUpdate(); 	// rownum값 세팅
 			pstmt.close();
 			
-			sb.append("SELECT *, @rownum:=@rownum+1 AS \"rownum\" ");
-			sb.append("FROM boards ");
+			sb.append("SELECT *, @ROWNUM:=@ROWNUM+1 AS \"ROWNUM\" ");
+			sb.append("FROM BOARDS ");
 		if (!(search == null || search.equals(""))) {
 			sb.append("WHERE ");
-			sb.append(whatS.equals("subject")?"subject ":"username ");
+			sb.append(whatS.equals("SUBJECT")?"SUBJECT ":"USERNAME ");
 			sb.append("LIKE ? ");
 		}
-			sb.append("ORDER BY re_ref DESC, re_seq ");
+			sb.append("ORDER BY RE_REF DESC, RE_SEQ ");
 			sb.append("LIMIT ? OFFSET ? ");
 			
 			pstmt = con.prepareStatement(sb.toString());
@@ -280,18 +280,18 @@ public class BoardDao {
 			
 			while (rs.next()) {
 				BoardVO boardVO = new BoardVO();
-				boardVO.setNum(rs.getInt("num"));
-				boardVO.setBoardnum(rs.getInt("boardnum"));
-				boardVO.setUsername(rs.getString("username"));
-				boardVO.setSubject(rs.getString("subject"));
-				boardVO.setContent(rs.getString("content"));
-				boardVO.setReadcount(rs.getInt("readcount"));
-				boardVO.setIp(rs.getString("ip"));
-				boardVO.setRegDate(rs.getTimestamp("reg_date"));
-				boardVO.setReRef(rs.getInt("re_ref"));
-				boardVO.setReLev(rs.getInt("re_lev"));
-				boardVO.setReSeq(rs.getInt("re_seq"));
-				boardVO.setRownum(rs.getInt("rownum"));
+				boardVO.setNum(rs.getInt("NUM"));
+				boardVO.setBoardnum(rs.getInt("BOARDNUM"));
+				boardVO.setUsername(rs.getString("USERNAME"));
+				boardVO.setSubject(rs.getString("SUBJECT"));
+				boardVO.setContent(rs.getString("CONTENT"));
+				boardVO.setReadcount(rs.getInt("READCOUNT"));
+				boardVO.setIp(rs.getString("IP"));
+				boardVO.setRegDate(rs.getTimestamp("REG_DATE"));
+				boardVO.setReRef(rs.getInt("RE_REF"));
+				boardVO.setReLev(rs.getInt("RE_LEV"));
+				boardVO.setReSeq(rs.getInt("RE_SEQ"));
+				boardVO.setRownum(rs.getInt("ROWNUM"));
 				boardList.add(boardVO);
 			}
 		} catch (Exception e) {
@@ -318,23 +318,23 @@ public class BoardDao {
 			stmt = con.createStatement();
 			
 			sb.append("SELECT * ");
-			sb.append("FROM boards ");
-			sb.append("ORDER BY num DESC ");
+			sb.append("FROM BOARDS ");
+			sb.append("ORDER BY NUM DESC ");
 			rs = stmt.executeQuery(sb.toString());
 			
 			while (rs.next()) {
 				BoardVO boardVO = new BoardVO();
-				boardVO.setNum(rs.getInt("num"));
-				boardVO.setBoardnum(rs.getInt("boardnum"));
-				boardVO.setUsername(rs.getString("username"));
-				boardVO.setSubject(rs.getString("subject"));
-				boardVO.setContent(rs.getString("content"));
-				boardVO.setReadcount(rs.getInt("readcount"));
-				boardVO.setIp(rs.getString("ip"));
-				boardVO.setRegDate(rs.getTimestamp("reg_date"));
-				boardVO.setReRef(rs.getInt("re_ref"));
-				boardVO.setReLev(rs.getInt("re_lev"));
-				boardVO.setReSeq(rs.getInt("re_seq"));
+				boardVO.setNum(rs.getInt("NUM"));
+				boardVO.setBoardnum(rs.getInt("BOARDNUM"));
+				boardVO.setUsername(rs.getString("USERNAME"));
+				boardVO.setSubject(rs.getString("SUBJECT"));
+				boardVO.setContent(rs.getString("CONTENT"));
+				boardVO.setReadcount(rs.getInt("READCOUNT"));
+				boardVO.setIp(rs.getString("IP"));
+				boardVO.setRegDate(rs.getTimestamp("REG_DATE"));
+				boardVO.setReRef(rs.getInt("RE_REF"));
+				boardVO.setReLev(rs.getInt("RE_LEV"));
+				boardVO.setReSeq(rs.getInt("RE_SEQ"));
 				boardList.add(boardVO);
 			}
 		} catch (Exception e) {
@@ -360,15 +360,15 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			String sql = "SET @rownum:=0";
+			String sql = "SET @ROWNUM:=0";
 			pstmt = con.prepareStatement(sql);
 			pstmt.executeUpdate(); 	// rownum값 세팅
 			pstmt.close();
 			
-			sb.append("SELECT num, boardnum, username, subject, @rownum:=@rownum+1 AS \"rownum\" ");
-			sb.append("FROM boards ");
-			sb.append("WHERE boardnum = ? ");
-			sb.append("ORDER BY re_ref DESC, re_seq ");
+			sb.append("SELECT NUM, BOARDNUM, USERNAME, SUBJECT, @ROWNUM:=@ROWNUM+1 AS \"ROWNUM\" ");
+			sb.append("FROM BOARDS ");
+			sb.append("WHERE BOARDNUM = ? ");
+			sb.append("ORDER BY RE_REF DESC, RE_SEQ ");
 			
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, boardnum);
@@ -376,11 +376,11 @@ public class BoardDao {
 			
 			while (rs.next()) {
 				BoardVO boardVO = new BoardVO();
-				boardVO.setNum(rs.getInt("num"));
-				boardVO.setBoardnum(rs.getInt("boardnum"));
-				boardVO.setUsername(rs.getString("username"));
-				boardVO.setSubject(rs.getString("subject"));
-				boardVO.setRownum(rs.getInt("rownum"));
+				boardVO.setNum(rs.getInt("NUM"));
+				boardVO.setBoardnum(rs.getInt("BOARDNUM"));
+				boardVO.setUsername(rs.getString("USERNAME"));
+				boardVO.setSubject(rs.getString("SUBJECT"));
+				boardVO.setRownum(rs.getInt("ROWNUM"));
 				boardList.add(boardVO);
 			}
 		} catch (Exception e) {
@@ -405,11 +405,11 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sql = "SELECT count(*) FROM boards ";
-			sql += "WHERE boardnum = ? ";
+			sql = "SELECT COUNT(*) FROM BOARDS ";
+			sql += "WHERE BOARDNUM = ? ";
 		if (!(search == null || search.equals(""))) {
 			sql += "AND ";
-			sql += whatS.equals("subject")?"subject ":"username "; 
+			sql += whatS.equals("SUBJECT")?"SUBJECT ":"USERNAME "; 
 			sql += "LIKE ? ";
 		}
 			
@@ -444,10 +444,10 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sql = "SELECT count(*) FROM boards ";	
+			sql = "SELECT COUNT(*) FROM BOARDS ";	
 		if (!(search == null || search.equals(""))) {
 			sql += "WHERE ";
-			sql += whatS.equals("subject")?"subject ":"username "; 
+			sql += whatS.equals("SUBJECT")?"SUBJECT ":"USERNAME "; 
 			sql += "LIKE ? ";
 		}
 			
@@ -477,8 +477,8 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			sb.append("DELETE ");
-			sb.append("FROM boards ");
-			sb.append("WHERE num = ? ");
+			sb.append("FROM BOARDS ");
+			sb.append("WHERE NUM = ? ");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, num);
 			
@@ -503,15 +503,15 @@ public class BoardDao {
 		StringBuilder sb = new StringBuilder();
 		try {
 			con = DBManager.getConnection();
-			sb.append("SELECT boardnum ");
-			sb.append("FROM boards ");
-			sb.append("WHERE num = ? ");
+			sb.append("SELECT BOARDNUM ");
+			sb.append("FROM BOARDS ");
+			sb.append("WHERE NUM = ? ");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, num);
 			
 			rs = pstmt.executeQuery();
 			rs.next();
-			boardnum = rs.getInt("boardnum");
+			boardnum = rs.getInt("BOARDNUM");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -530,9 +530,9 @@ public class BoardDao {
 		StringBuilder sb = new StringBuilder();
 		try {
 			con = DBManager.getConnection();
-			sb.append("UPDATE boards ");
-			sb.append("SET readcount = readcount+1 ");
-			sb.append("WHERE num = ? ");
+			sb.append("UPDATE BOARDS ");
+			sb.append("SET READCOUNT = READCOUNT+1 ");
+			sb.append("WHERE NUM = ? ");
 			
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, num);
@@ -558,8 +558,8 @@ public class BoardDao {
 			con = DBManager.getConnection();
 			
 			sb.append("SELECT COUNT(*) ");
-			sb.append("FROM boards ");
-			sb.append("WHERE username = ? ");
+			sb.append("FROM BOARDS ");
+			sb.append("WHERE USERNAME = ? ");
 			
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, username);
@@ -588,9 +588,9 @@ public class BoardDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sb.append("UPDATE boards ");
-			sb.append("SET subject=?, content=? ");
-			sb.append("WHERE num=? ");
+			sb.append("UPDATE BOARDS ");
+			sb.append("SET SUBJECT=?, CONTENT=? ");
+			sb.append("WHERE NUM=? ");
 			
 			pstmt = con.prepareStatement(sb.toString());
 			

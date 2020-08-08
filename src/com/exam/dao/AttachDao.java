@@ -24,7 +24,7 @@ public class AttachDao {
 		StringBuffer sb = new StringBuffer();
 		try {
 			con = DBManager.getConnection();
-			sb.append("INSERT INTO attachs (uuid,uploadpath,filename,filetype,bno) ");
+			sb.append("INSERT INTO ATTACHS (UUID,UPLOADPATH,FILENAME,FILETYPE,BNO) ");
 			sb.append("VALUES (?,?,?,?,?) ");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, attachVO.getUuid());
@@ -51,8 +51,8 @@ public class AttachDao {
 			con = DBManager.getConnection();
 			
 			sb.append("DELETE ");
-			sb.append("FROM attachs ");
-			sb.append("WHERE bno = ? ");
+			sb.append("FROM ATTACHS ");
+			sb.append("WHERE BNO = ? ");
 			
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, bno);
@@ -78,18 +78,18 @@ public class AttachDao {
 		try {
 			con = DBManager.getConnection();
 			sb.append("SELECT * ");
-			sb.append("FROM attachs ");
-			sb.append("WHERE bno = ? ");
+			sb.append("FROM ATTACHS ");
+			sb.append("WHERE BNO = ? ");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, bno);
 			
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				AttachVO attachVO = new AttachVO();
-				attachVO.setUuid(rs.getString("uuid"));
-				attachVO.setUploadpath(rs.getString("uploadpath"));
-				attachVO.setFiletype(rs.getString("filetype"));
-				attachVO.setFilename(rs.getString("filename"));
+				attachVO.setUuid(rs.getString("UUID"));
+				attachVO.setUploadpath(rs.getString("UPLOADPATH"));
+				attachVO.setFiletype(rs.getString("FILETYPE"));
+				attachVO.setFilename(rs.getString("FILENAME"));
 				attachVO.setBno(bno);
 				
 				attachList.add(attachVO);
@@ -115,16 +115,16 @@ public class AttachDao {
 		try {
 			con = DBManager.getConnection();
 			sb.append("SELECT * ");
-			sb.append("FROM attachs ");
-			sb.append("WHERE bno = ? ");
-			sb.append("AND filetype = 'I' ");
+			sb.append("FROM ATTACHS ");
+			sb.append("WHERE BNO = ? ");
+			sb.append("AND FILETYPE = 'I' ");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, bno);
 			
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
-				firstImage = rs.getString("filename");
+				firstImage = rs.getString("FILENAME");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -145,9 +145,9 @@ public class AttachDao {
 		StringBuilder sb = new StringBuilder();
 		try {
 			con = DBManager.getConnection();
-			sb.append("SELECT count(*) ");
-			sb.append("FROM attachs ");
-			sb.append("WHERE bno = ? ");
+			sb.append("SELECT COUNT(*) ");
+			sb.append("FROM ATTACHS ");
+			sb.append("WHERE BNO = ? ");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, bno);
 			

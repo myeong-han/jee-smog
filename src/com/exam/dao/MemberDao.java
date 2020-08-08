@@ -45,8 +45,8 @@ public class MemberDao {
 		try {
 			con = DBManager.getConnection();
 			sql += "SELECT * ";
-			sql += "FROM members ";
-			sql += "WHERE id=? ";
+			sql += "FROM MEMBERS ";
+			sql += "WHERE ID=? ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			
@@ -72,9 +72,9 @@ public class MemberDao {
 		ResultSet rs = null;
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT passwd ");
-		sb.append("FROM members ");
-		sb.append("WHERE id = ? ");
+		sb.append("SELECT PASSWD ");
+		sb.append("FROM MEMBERS ");
+		sb.append("WHERE ID = ? ");
 		
 		try {
 			con = DBManager.getConnection();
@@ -110,9 +110,9 @@ public class MemberDao {
 		
 		try {
 			con = DBManager.getConnection();
-			sql += "INSERT INTO members ";
-			sql += "(id, passwd, name, reg_date, age, gender, email, address, ";
-			sql	+= " tel, mtel, birth_, interested, f_uuid, f_path, f_name) ";
+			sql += "INSERT INTO MEMBERS ";
+			sql += "(ID, PASSWD, NAME, REG_DATE, AGE, GENDER, EMAIL, ADDRESS, ";
+			sql	+= " TEL, MTEL, BIRTH_, INTERESTED, F_UUID, F_PATH, F_NAME) ";
 			sql += "VALUES ";
 			sql += "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 			pstmt = con.prepareStatement(sql);
@@ -165,31 +165,31 @@ public class MemberDao {
 		try {
 			con = DBManager.getConnection();
 			sql += "SELECT * ";
-			sql += "FROM members ";
-			sql += "WHERE id = ? ";
+			sql += "FROM MEMBERS ";
+			sql += "WHERE ID = ? ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				memberVO.setId(rs.getString("id"));
-				memberVO.setPasswd(rs.getString("passwd"));
-				memberVO.setName(rs.getString("name"));
-				memberVO.setRegDate(rs.getTimestamp("reg_date"));
-				memberVO.setAge(rs.getInt("age"));
-				memberVO.setGender(rs.getString("gender"));
-				memberVO.setEmail(rs.getString("email"));
-				memberVO.setAddress(rs.getString("address"));
-				memberVO.setTel(rs.getString("tel"));
-				memberVO.setMtel(rs.getString("mtel"));
-				memberVO.setBirth(rs.getTimestamp("birth_"));
-				if (rs.getString("interested")!=null) {
-					String[] interesteds = rs.getString("interested").split("/");
+				memberVO.setId(rs.getString("ID"));
+				memberVO.setPasswd(rs.getString("PASSWD"));
+				memberVO.setName(rs.getString("NAME"));
+				memberVO.setRegDate(rs.getTimestamp("REG_DATE"));
+				memberVO.setAge(rs.getInt("AGE"));
+				memberVO.setGender(rs.getString("GENDER"));
+				memberVO.setEmail(rs.getString("EMAIL"));
+				memberVO.setAddress(rs.getString("ADDRESS"));
+				memberVO.setTel(rs.getString("TEL"));
+				memberVO.setMtel(rs.getString("MTEL"));
+				memberVO.setBirth(rs.getTimestamp("BIRTH_"));
+				if (rs.getString("INTERESTED")!=null) {
+					String[] interesteds = rs.getString("INTERESTED").split("/");
 					memberVO.setInterested(interesteds);
 				}
-				memberVO.setfUuid(rs.getString("f_uuid"));
-				memberVO.setfPath(rs.getString("f_path"));
-				memberVO.setfName(rs.getString("f_name"));
+				memberVO.setfUuid(rs.getString("F_UUID"));
+				memberVO.setfPath(rs.getString("F_PATH"));
+				memberVO.setfName(rs.getString("F_NAME"));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -208,10 +208,10 @@ public class MemberDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sb.append("UPDATE 	members ");
-			sb.append("SET 		passwd=?,name=?,birth_=?,age=?,gender=?,email=?,address=?, ");
-			sb.append("			tel=?,mtel=?,interested=?,f_uuid=?,f_path=?,f_name=? ");
-			sb.append("WHERE 	id=? ");
+			sb.append("UPDATE 	MEMBERS ");
+			sb.append("SET 		PASSWD=?,NAME=?,BIRTH_=?,AGE=?,GENDER=?,EMAIL=?,ADDRESS=?, ");
+			sb.append("			TEL=?,MTEL=?,INTERESTED=?,F_UUID=?,F_PATH=?,F_NAME=? ");
+			sb.append("WHERE 	ID=? ");
 			
 			pstmt = con.prepareStatement(sb.toString());
 			
@@ -254,7 +254,7 @@ public class MemberDao {
 	public void deleteMember(String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String sql = "DELETE FROM members WHERE id = ? ";
+		String sql = "DELETE FROM MEMBERS WHERE ID = ? ";
 		try {
 			con = DBManager.getConnection();
 			pstmt = con.prepareStatement(sql);
@@ -282,12 +282,12 @@ public class MemberDao {
 			con = DBManager.getConnection();
 			
 			sb.append("SELECT * ");
-			sb.append("FROM members ");
+			sb.append("FROM MEMBERS ");
 		// 검색어 search가 있을때는 검색조건절 where를 추가함
 		if (!(search == null || search.equals(""))) {
-			sb.append("WHERE id LIKE ? ");
+			sb.append("WHERE ID LIKE ? ");
 		}
-			sb.append("ORDER BY reg_date DESC ");
+			sb.append("ORDER BY REG_DATE DESC ");
 			sb.append("LIMIT ? OFFSET ? ");
 			
 			pstmt = con.prepareStatement(sb.toString());
@@ -305,15 +305,15 @@ public class MemberDao {
 			while(rs.next()) {
 				MemberVO memberVO = new MemberVO();
 				
-				memberVO.setfName(rs.getString("f_name"));
-				memberVO.setId(rs.getString("id"));
-				memberVO.setRegDate(rs.getTimestamp("reg_date"));
-				memberVO.setName(rs.getString("name"));
-				memberVO.setBirth(rs.getTimestamp("birth_"));
-				memberVO.setGender(rs.getString("gender"));
-				memberVO.setEmail(rs.getString("email"));
-				if (rs.getString("interested")!=null) {
-					String[] interesteds = rs.getString("interested").split("/");
+				memberVO.setfName(rs.getString("F_NAME"));
+				memberVO.setId(rs.getString("ID"));
+				memberVO.setRegDate(rs.getTimestamp("REG_DATE"));
+				memberVO.setName(rs.getString("NAME"));
+				memberVO.setBirth(rs.getTimestamp("BIRTH_"));
+				memberVO.setGender(rs.getString("GENDER"));
+				memberVO.setEmail(rs.getString("EMAIL"));
+				if (rs.getString("INTERESTED")!=null) {
+					String[] interesteds = rs.getString("INTERESTED").split("/");
 					memberVO.setInterested(interesteds);
 				}
 				memberList.add(memberVO);
@@ -340,10 +340,10 @@ public class MemberDao {
 		try {
 			con = DBManager.getConnection();
 			
-			sql = "SELECT count(*) FROM members ";
+			sql = "SELECT COUNT(*) FROM MEMBERS ";
 			
 		if (!(search == null || search.equals(""))) {
-			sql += "WHERE id LIKE ? ";
+			sql += "WHERE ID LIKE ? ";
 		}
 			
 			pstmt = con.prepareStatement(sql);

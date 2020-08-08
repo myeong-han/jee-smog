@@ -7,8 +7,8 @@
 		auth="Container"
 		
 		driverClassName="com.mysql.cj.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/smog?useUnicode=true&amp;characterEncoding=utf8&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=Asia/Seoul"
-		username="jsp_admin"
-		password="jsp_admin"
+		url="jdbc:mysql://ames1118.ddns.net:3306/SMOG?useUnicode=true&amp;characterEncoding=utf8&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=Asia/Seoul"
+		username="ames1118"
+		password="ames1118"
 	/>
 </Context>
